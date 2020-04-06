@@ -14,13 +14,19 @@
     <nav class="border-b border-gray-800">
         <div class="container mx-auto flex justify-between px-4 py-6">
             <ul class="flex items-center">
-                <li><a href="">Movies</a></li>
-                <li><a href="">TV Shows</a></li>
-                <li><a href="">Actors</a></li>
+                <li class="ml-16"><a href="">Movie App</a></li>
+                <li class="ml-6"><a href="">Movies</a></li>
+                <li class="ml-6"><a href="">TV Shows</a></li>
+                <li class="ml-6"><a href="">Actors</a></li>
             </ul>
             <div class="flex items-center">
                 <div class="relative">
                     <input type="text" class="bg-gray-800 px-5 w-65 pl-8 py-1 rounded-full focus:outline-none focus:shadow-outline" placeholder="search">
+                </div>
+                <div class="ml-4">
+                    <a href="">
+                        <img src="" alt="" class="rounded-full w-8 h-8">
+                    </a>
                 </div>
 
             </div>
