@@ -14,8 +14,8 @@
     <nav class="border-b border-gray-800">
         <div class="container mx-auto flex justify-between px-4 py-6">
             <ul class="flex items-center">
-                <li class="ml-16"><a href="">Movie App</a></li>
-                <li class="ml-6"><a href="">Movies</a></li>
+                <li class="ml-16"><a href="{{route('movies')}}">Movie App</a></li>
+                <li class="ml-6"><a href="{{route('movies')}}">Movies</a></li>
                 <li class="ml-6"><a href="">TV Shows</a></li>
                 <li class="ml-6"><a href="">Actors</a></li>
             </ul>

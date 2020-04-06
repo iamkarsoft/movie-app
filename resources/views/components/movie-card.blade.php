@@ -1,5 +1,7 @@
 <div class="mt-8">
-          <img src="{{'https://image.tmdb.org/t/p/w500/'.$movie['poster_path']}}" alt="">
+    <a href="{{route('movie.show',$movie['id'])}}">
+      <img src="{{'https://image.tmdb.org/t/p/w500/'.$movie['poster_path']}}" alt="">
+
        <div class="mt-2">
          <a href="" class=" text-lg mt-2  hover:opacity-75 transition ease-in-out  hover:text-gray-300">{{$movie['title']}}</a>
              <div class="flex items-center text-gray-400 mt-1">
@@ -12,4 +14,5 @@
               {{-- {{$movie['genres']}}@if(!$loop->last) , @endif --}}
              </div>
          </div>
+      </a>
    </div>
