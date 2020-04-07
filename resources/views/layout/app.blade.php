@@ -8,6 +8,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
+    <livewire:styles>
     <!-- Styles -->
 </head>
 <body class="font-sans bg-gray-900 text-white">
@@ -20,9 +21,7 @@
                 <li class="ml-6"><a href="">Actors</a></li>
             </ul>
             <div class="flex items-center">
-                <div class="relative">
-                    <input type="text" class="bg-gray-800 px-5 w-65 pl-8 py-1 rounded-full focus:outline-none focus:shadow-outline" placeholder="search">
-                </div>
+                <livewire:search-dropdown>
                 <div class="ml-4">
                     <a href="">
                         <img src="" alt="" class="rounded-full w-8 h-8">
@@ -33,6 +32,6 @@
         </div>
     </nav>
         @yield('content')
-
+<livewire:scripts>
 </body>
 </html>
