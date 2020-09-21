@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/main.css">
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <livewire:styles>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
