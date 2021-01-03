@@ -46,6 +46,29 @@ class MovieController extends Controller {
 		]);
 	}
 
+	public function movies() {
+		// movies
+
+		$popularMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
+			->json()['results'];
+		$genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
+			->json()['genres'];
+
+		$nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+			->get('https://api.themoviedb.org/3/movie/now_playing')
+			->json()['results'];
+
+		$genres = Http::withToken(config('services.tmdb.token'))
+			->get('https://api.themoviedb.org/3/genre/movie/list')
+			->json()['genres'];
+
+		return view('movies', [
+			'popularMovies' => $popularMovies,
+			'nowPlayingMovies' => $nowPlayingMovies,
+			'genres' => $genres,
+		]);
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *

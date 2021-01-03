@@ -22,7 +22,9 @@
              @endforeach
              </div>
          </div>
-
+      <p class="text-gray-300 mt-8 mb-8">
+             {{ $tv['overview']}}
+            </p>
          <div class="mt-2">
             <h3 class="text-2xl  hover:opacity-75 transition ease-in-out  hover:text-gray-300">Seasons</h3>
             <ul>
@@ -31,9 +33,7 @@
              @endforeach
             </ul>
          </div>
-            <p class="text-gray-300 mt-8">
-             {{ $tv['overview']}}
-            </p>
+
 
             <div class="mt-12">
               <h4 class="text-white font-semibold">Cast</h4>
