@@ -19,7 +19,7 @@
                 <li class="ml-16"><a href="{{route('movies')}}">Movie App</a></li>
                 <li class="ml-6"><a href="{{route('movie.list')}}">Movies</a></li>
                 <li class="ml-6"><a href="{{route('tv.list')}}">TV Shows</a></li>
-                <li class="ml-6"><a href="">Actors</a></li>
+                {{-- <li class="ml-6"><a href="">Actors</a></li> --}}
             </ul>
             <div class="flex items-center">
                 <livewire:search-dropdown>
