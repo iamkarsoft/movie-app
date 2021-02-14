@@ -21,18 +21,20 @@ class MovieController extends Controller {
 		$genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
 			->json()['genres'];
 
-		$nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
-			->get('https://api.themoviedb.org/3/movie/now_playing')
-			->json()['results'];
+		// $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+		// 	->get('https://api.themoviedb.org/3/movie/now_playing')
+		// 	->json()['results'];
 
 		$genres = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/genre/movie/list')
 			->json()['genres'];
 
 		// tv shows
-		$tvShows = Http::withToken(config('services.tmdb.token'))
+		$tvShow = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/tv/on_the_air')
 			->json()['results'];
+
+		$tvShows = collect($tvShow)->sortBy('last_episode_to_air')->reverse()->toArray();
 
 		$tvGenres = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/genre/tv/list')
@@ -40,7 +42,7 @@ class MovieController extends Controller {
 
 		return view('index', [
 			'popularMovies' => $popularMovies,
-			'nowPlayingMovies' => $nowPlayingMovies,
+			// 'nowPlayingMovies' => $nowPlayingMovies,
 			'genres' => $genres,
 			'tvShows' => $tvShows,
 			'tvGenres' => $tvGenres,
