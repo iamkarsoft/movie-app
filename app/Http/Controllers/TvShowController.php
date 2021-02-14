@@ -13,9 +13,13 @@ class TvShowController extends Controller {
 			->get('https://api.themoviedb.org/3/tv/popular')
 			->json()['results'];
 
-		$tvShows = Http::withToken(config('services.tmdb.token'))
+		$popularShow = collect($popularShow)->sortBy('last_episode_to_air ')->reverse()->toArray();
+
+		$tvShow = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/tv/on_the_air')
 			->json()['results'];
+
+		$tvShows = collect($tvShow)->sortBy('last_episode_to_air ')->reverse()->toArray();
 
 		$tvGenres = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/genre/tv/list')

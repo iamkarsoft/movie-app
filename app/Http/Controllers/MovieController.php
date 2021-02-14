@@ -15,8 +15,9 @@ class MovieController extends Controller {
 
 		// movies
 
-		$popularMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
+		$popularMovie = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
 			->json()['results'];
+		$popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
 		$genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
 			->json()['genres'];
 
@@ -49,14 +50,18 @@ class MovieController extends Controller {
 	public function movies() {
 		// movies
 
-		$popularMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
+		$popularMovie = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
 			->json()['results'];
+
+		$popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
 		$genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
 			->json()['genres'];
 
-		$nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+		$nowPlayingMovie = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/movie/now_playing')
 			->json()['results'];
+
+		$nowPlayingMovies = collect($nowPlayingMovie)->sortBy('vote_average')->reverse()->toArray();
 
 		$genres = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/genre/movie/list')
