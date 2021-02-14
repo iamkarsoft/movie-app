@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
 
-<div class="container px-4 pt-16">
+<div class="container px-4 pt-16 mx-auto pb-16">
 
         {{-- on air --}}
     <div class="popular-show mt-8">
