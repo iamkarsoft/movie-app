@@ -37,6 +37,25 @@
                     </li>
                 </ul>
 
+                @elseif($searchTvResults->count() >0)
+                 <ul>
+                    <li class="border-b border-gray-700  px-4">
+                      @foreach($searchTvResults as $result)
+                        <a
+                          @if($loop->last) @keydown.tab="isOpen = false" @endif
+                        href="{{route('tv.show',$result['id'])}}" class="block hover:bg-gray-700 py-3 flex">
+                  @if($result['poster_path'])
+                          <img src="https://image.tmdb.org/t/p/w92/{{$result['poster_path']}}" class="w-8" alt="">
+                          <span class="text-lg px-2">{{$result['name']}}</span></a>
+                  @else
+
+                  @endif
+                      @endforeach
+
+
+                    </li>
+                </ul>
+
                 @else
                 <div class="py-3 px-3">No Results for {{$search}}</div>
                 @endif
