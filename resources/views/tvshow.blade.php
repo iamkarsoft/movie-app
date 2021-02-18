@@ -3,7 +3,7 @@
   <div class="movie-info border-b border-gray-800">
     <div class="container mx-auto px-4 py-16 flex flex-col  md:flex-row">
      <div class="flex-none">
-         <img src="{{'https://image.tmdb.org/t/p/w500/'.$tv['poster_path']}}" alt="" class="w-64 lg:w-94">
+         <img src="{{'https://image.tmdb.org/t/p/w500/'.$tv['poster_path']}}" alt="" class="w-full md:w-64 lg:w-94">
      </div>
 
       <div class="md:ml-24 px-8">
