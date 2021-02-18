@@ -88,7 +88,7 @@
   <div class="container mx-auto px-4 py-16">
     <h2 class="text-4xl font-semibold">Cast</h2>
   </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x gap-8 px-4 ">
+        <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x gap-8 px-4 ">
            @foreach($tv['credits']['cast'] as $cast)
            @if($loop->index < 8)
       <div class="mt-8">

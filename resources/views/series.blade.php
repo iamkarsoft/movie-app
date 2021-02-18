@@ -10,7 +10,7 @@
         </h2>
 
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 md:gap-8">
         @foreach($popularShow as $tv)
            <x-show-card :tv="$tv" :tvGenres="$tvGenres"/>
         @endforeach
@@ -24,9 +24,9 @@
         </h2>
 
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-auto">
         @foreach($tvShows as $tv)
-           <x-show-card :tv="$tv" :tvGenres="$tvGenres"/>
+           <x-show-card :tv="$tv" :tvGenres="$tvGenres" class="mx-auto/>
         @endforeach
       </div>
     </div><!-- end of series-->
