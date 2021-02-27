@@ -18,6 +18,7 @@
 @if(strlen($search)>2)
             <div  class="absolute bg-gray-800 text-sm rounded w-full lg:w-64 mt-4" x-show="isOpen"
             >
+            @if($searchResults->count()>0 || $searchTvResults->count()>0)
               @if($searchResults->count() >0)
                 <ul>
                     <li class="border-b border-gray-700  px-4">
@@ -29,15 +30,16 @@
                           <img src="https://image.tmdb.org/t/p/w92/{{$result['poster_path']}}" class="w-8" alt="">
                           <span class="text-lg px-2">{{$result['title']}}</span></a>
                   @else
-
+                     <img src="{{asset('img/blank_movie_poster.jfif')}}" class="w-8" alt="">
+                          <span class="text-lg px-2">{{$result['title']}}</span></a>
                   @endif
                       @endforeach
 
 
                     </li>
                 </ul>
-
-                @elseif($searchTvResults->count() >0)
+                @endif
+                @if($searchTvResults->count() >0)
                  <ul>
                     <li class="border-b border-gray-700  px-4">
                       @foreach($searchTvResults as $result)
@@ -48,6 +50,8 @@
                           <img src="https://image.tmdb.org/t/p/w92/{{$result['poster_path']}}" class="w-8" alt="">
                           <span class="text-lg px-2">{{$result['name']}}</span></a>
                   @else
+                    <img src="{{asset('img/blank_movie_poster.jfif')}}" class="w-8" alt="">
+                          <span class="text-lg px-2">{{$result['name']}}</span></a>
 
                   @endif
                       @endforeach
@@ -55,7 +59,7 @@
 
                     </li>
                 </ul>
-
+                @endif
                 @else
                 <div class="py-3 px-3">No Results for {{$search}}</div>
                 @endif
