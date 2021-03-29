@@ -26,7 +26,7 @@
 
       <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-auto">
         @foreach($tvShows as $tv)
-           <x-show-card :tv="$tv" :tvGenres="$tvGenres" class="mx-auto/>
+           <x-show-card :tv="$tv" :tvGenres="$tvGenres" class="mx-auto"/>
         @endforeach
       </div>
     </div><!-- end of series-->
