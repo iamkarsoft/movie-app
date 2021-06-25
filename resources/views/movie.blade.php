@@ -63,7 +63,7 @@
           </div>
           <div class="modal-body px-8 py-8">
             <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
-              <iframe src="https://youtube.com/embed/{{ $movie['videos']['results'][0]['key']}}" width="560" height="315" class="responsive-iframe absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; encrypted-media" style="border:0"></iframe>
+              <iframe id="ytfullplayer" src="https://youtube.com/embed/{{ $movie['videos']['results'][0]['key']}}" width="560" height="315" class="responsive-iframe absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; encrypted-media" style="border:0"></iframe>
             </div>
           </div>
         </div>
@@ -127,9 +127,9 @@
       <div class="container mx-auto lg:px-32 rounded-lg overflow-y-hidden">
         <div class="bg-gray-900 rounded">
           <div class="flex justify-end pr-4 pt-2">
-            <button class="text-3xl leading-none hover:text-gray-300"
+            <button class="text-3xl leading-none hover:text-gray-300 close-modal"
             @keydown.escape.window="isOpen=false"
-            @click="isOpen=false">&times;</button>
+            @click="isOpen=false,player.stopVideo():Void"  >&times;</button>
           </div>
           <div class="modal-body px-8 py-8">
 
@@ -144,5 +144,19 @@
   </div><!-- end  movie info-->
 
 </div>
+
+<script>
+
+  let playVideoButton = document.querySelector('.ytp-play-button');
+  let closeModal = document.querySelector('.close-modal');
+
+
+
+  closeModal.addEventListener('click', function(){
+        console.log('stopped');
+  })
+
+
+</script>
 
 @endsection

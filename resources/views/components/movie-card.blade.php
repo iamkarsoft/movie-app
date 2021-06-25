@@ -10,7 +10,7 @@
 </svg>
                <span class="ml-1">{{ $movie['vote_average'] * 10 . '%'}}</span>
                <span class="mx-2">|</span>
-               <span>{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y')}}</span>
+               {{-- <span>{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y')}}</span> --}}
              </div>
              <div class="text-gray-400 text-sm">
               {{-- {{$movie['genres']}}@if(!$loop->last) , @endif --}}
