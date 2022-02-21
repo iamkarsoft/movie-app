@@ -8,5 +8,9 @@ environment:
 #services:
 #  - mysql: 5.7
 
+
 pipeline:
   - name: Setup
+    cmd: |
+      composer install --no-interaction --prefer-dist --optimize-autoloader
+
