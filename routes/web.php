@@ -11,10 +11,16 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
 Route::get('/', 'MovieController@index')->name('movies');
 Route::get('movie/{movie}', 'MovieController@show')->name('movie.show');
 Route::get('movies', 'MovieController@movies')->name('movie.list');
 Route::get('tvshow/{tv}', 'TvShowController@show')->name('tv.show');
 Route::get('tvshow', 'TvShowController@index')->name('tv.list');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

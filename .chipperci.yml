@@ -12,8 +12,5 @@ environment:
 pipeline:
   - name: Setup
     cmd: |
-      ssh root@167.71.17.50 'bash -c "cd /var/www/movieapp.kofi.work/public_html \
-      && git pull origin master \
-      && php artisan migrate --force"'
       composer install --no-interaction --prefer-dist --optimize-autoloader
 
