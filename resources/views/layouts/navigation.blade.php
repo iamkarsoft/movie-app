@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                     <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
+                     <x-nav-link :href="route('watchlist')" :active="request()->routeIs('watchlist')">
                         {{ __('Wish List') }}
                     </x-nav-link>
                     <x-nav-link :href="route('movie.list')" >
@@ -80,7 +80,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-             <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
+             <x-responsive-nav-link :href="route('watchlist')" :active="request()->routeIs('watchlist')">
                 {{ __('Wish List') }}
             </x-responsive-nav-link>
         </div>
