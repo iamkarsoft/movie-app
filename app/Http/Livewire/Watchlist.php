@@ -42,10 +42,14 @@ class Watchlist extends Component
             $watchlist->type = Movie::Series;
             $watchlist->name = $this->watchItem['original_name'];
             $watchlist->release_date = $this->watchItem['first_air_date'];
+            $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'];
+             $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'];
         } else {
             $watchlist->release_date = $this->watchItem['release_date'];
             $watchlist->type = Movie::Movies;
             $watchlist->name = $this->watchItem['title'];
+            $watchlist->next_air_date = null;
+            $watchlist->last_air_date = null;
         }
 
         if ($watchlist->save()) {

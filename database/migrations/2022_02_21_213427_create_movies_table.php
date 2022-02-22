@@ -18,6 +18,8 @@ class CreateMoviesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->date('release_date')->nullable();
+            $table->date('last_air_date')->nullable();
+            $table->date('next_air_date')->nullable();
             $table->integer('type')->default(0);
             $table->foreignUuid('user_id')->constrained();
             $table->timestamps();
