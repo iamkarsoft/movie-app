@@ -19,6 +19,22 @@ class Watchlist extends Component
 
 //        dd($this->watchItem);
 
+        // check if user has watch listed this movie / series
+
+        if(array_key_exists('first_air_date',$this->watchItem)){
+            $item = $this->watchItem['original_name'];
+        }else{
+            $item = $this->watchItem['title'];
+        }
+
+        $movie = Movie::where('name',$item)->first();
+
+        if($movie){
+             session()->flash('watchlist-message', 'Already on your watch list');
+             return;
+        }
+
+
         $watchlist = new Movie();
         $watchlist->user_id = auth()->id();
         if(array_key_exists('first_air_date',$this->watchItem)){
