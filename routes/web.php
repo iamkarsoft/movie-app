@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\WatchlistController;
+use App\Http\Livewire\Watchlist;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,10 @@ Route::get('movie/{movie}', 'MovieController@show')->name('movie.show');
 Route::get('movies', 'MovieController@movies')->name('movie.list');
 Route::get('tvshow/{tv}', 'TvShowController@show')->name('tv.show');
 Route::get('tvshow', 'TvShowController@index')->name('tv.list');
+
+// WatchListing routes
+Route::get('/watchlist',[WatchlistController::class,'index'])->name('watchlist');
+Route::post('/watchlist/add',[Watchlist::class])->name('watchlist.add');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
