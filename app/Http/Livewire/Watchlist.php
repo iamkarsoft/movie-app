@@ -25,7 +25,7 @@ class Watchlist extends Component
             $item = $this->watchItem['original_name'];
         } else {
             $item = $this->watchItem['title'];
-        }::
+        }
 
         $movie = Movie::where(['name' => $item,'user_id' => auth()->id()])->first();
 
