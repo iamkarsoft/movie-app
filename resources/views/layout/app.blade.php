@@ -15,6 +15,11 @@
                 defer></script>
         </head>
 <body class="font-sans bg-gray-900 text-white">
+ <section class="text-white font-extrabold">
+                @if(session()->has('message'))
+                    <span>{{ session('message')}}</span>
+                @endif
+            </section>
 <nav class="border-b border-gray-800">
     <div class="container mx-auto md:flex justify-between px-4 py-6">
         <ul class="md:flex items-center">

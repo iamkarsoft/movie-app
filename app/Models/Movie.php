@@ -17,6 +17,15 @@ class Movie extends Model
     const Live_show = 4;
     const Award_show = 5;
     const Talent_show= 6;
+    const Watching = 0;
+    const Watched = 1;
+    const Abandoned = 2;
+
+
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 
 
 }

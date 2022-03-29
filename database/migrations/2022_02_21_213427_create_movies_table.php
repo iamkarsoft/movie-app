@@ -22,6 +22,7 @@ class CreateMoviesTable extends Migration
             $table->date('next_air_date')->nullable();
             $table->integer('type')->default(0);
             $table->foreignUuid('user_id')->constrained();
+            $table->integer('watch_type')->default(0);
             $table->timestamps();
 
         });
