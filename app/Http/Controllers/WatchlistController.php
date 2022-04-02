@@ -9,7 +9,7 @@ class WatchlistController extends Controller
 {
 
     public function index(){
-        $watchlist = Movie::where('user_id',auth()->id())->get();
+        $watchlist = Movie::where('user_id',auth()->id())->latest()->get();
 
         return view('watchlist',['watchlist'=>$watchlist]);
     }
