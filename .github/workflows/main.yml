@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   laravel-continuous-deployment:
     runs-on: ${{ matrix.operating-system }}
@@ -23,14 +24,15 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
+      - name: Deploy
+        env:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          key: ${{ secrets.PUB_KEY }}
           port: ${{ secrets.PORT }}
-          script: 'cd /var/www/movieapp.kofi.work/public_html'
+          ssh_known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          private_ssh_key: ${{ secrets.KEY }}
+          base_directory: '/var/www/movieapp.kofi.work/public_html'
 
       - name: Install Node dependencies
         run: npm install
