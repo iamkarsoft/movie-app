@@ -40,7 +40,7 @@ jobs:
           host: $host
           username: $username
           key: $key
-          port: $port
+          port: 22
           script: 'cd /var/www/movieapp.kofi.work/public_html'
 
       - name: Install Node dependencies
