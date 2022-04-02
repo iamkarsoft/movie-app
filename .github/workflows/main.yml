@@ -14,8 +14,6 @@ jobs:
           - 12
           - 14
     #name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -25,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
-       - name: executing remote ssh commands using ssh key
+      - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
