@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -108,21 +109,28 @@ class MovieController extends Controller {
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id) {
 		$movie = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=credits,videos,images')
 			->json();
 
-		return view('movie', compact('movie'));
+
+         if($movie['original_title']){
+            $identifiable = $movie['original_title'];
+        }else{
+            $identifiable = $movie['title'];
+        }
+
+        $movie_db = Movie::where('name', $identifiable)->first();
+
+		return view('movie', compact('movie','movie_db'));
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
 		//

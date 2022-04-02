@@ -24,7 +24,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                      <x-nav-link :href="route('watchlist')" :active="request()->routeIs('watchlist')">
-                        {{ __('Wish List') }}
+                        {{ __('Watch List') }}
                     </x-nav-link>
                     <x-nav-link :href="route('movie.list')" >
                         {{ __('Movies') }}

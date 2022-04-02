@@ -20,6 +20,7 @@ class Movie extends Model
     const Watching = 0;
     const Watched = 1;
     const Abandoned = 2;
+    const Listed = 3;
 
 
 

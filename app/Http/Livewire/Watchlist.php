@@ -70,7 +70,7 @@ class Watchlist extends Component
             $watchlist->next_air_date = null;
             $watchlist->last_air_date = null;
         }
-            sleep(2);
+//            sleep(2);
             session()->flash('message', 'Added to watch list');
 
             $watchlist->save();

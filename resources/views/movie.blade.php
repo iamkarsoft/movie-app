@@ -51,6 +51,7 @@
 
                   @auth
                   <livewire:watchlist  :watchItem="$movie"/>
+                  <livewire:watch-actions :status="$movie" />
                   @endauth
               </div>
 
