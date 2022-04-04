@@ -20,12 +20,15 @@ class Movie extends Model
     const Watching = 0;
     const Watched = 1;
     const Abandoned = 2;
-    const Listed = 3;
 
 
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 

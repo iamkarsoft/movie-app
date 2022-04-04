@@ -10,18 +10,27 @@ class Watchlist extends Component
 
     public Movie $movie;
     public $watchItem;
+    public $movie_db;
 
 
-    protected $listeners = ['watchItem' => 'store'];
+    protected $listeners = ['watchItem' => 'store','movie_db'=>'destroy'];
+
+       public function mount(){
+             if($this->watchItem['original_title']){
+            $identifiable = $this->watchItem['original_title'];
+        }else{
+            $identifiable = $this->watchItem['title'];
+        }
+        $the_movie = Movie::where('name',$identifiable)->first();
+             $this->watch_item = $the_movie;
+//            dd($this->watching);
+
+
+    }
 
     public function store()
     {
-
-//        dd($this->watchItem);
-
         // check if user has watch listed this movie / series
-
-
         if (array_key_exists('first_air_date', $this->watchItem)) {
             $item = $this->watchItem['original_name'];
         } else {
@@ -77,6 +86,13 @@ class Watchlist extends Component
 
             return redirect()->back();
 
+
+    }
+
+    public function destroy(){
+           $movie = Movie::where(['name' => $this->movie_db->name,'user_id' => auth()->id()])->delete();
+           session()->flash('message', 'removed to watch list');
+            return redirect()->back();
 
     }
 

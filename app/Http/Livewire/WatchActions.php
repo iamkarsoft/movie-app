@@ -9,8 +9,13 @@ class WatchActions extends Component
 {
     public Movie $movie;
     public $status;
+    public $watching;
 
      protected $listeners = ['status' => 'watched'];
+
+
+
+
 
     public function watched(){
 
@@ -27,7 +32,7 @@ class WatchActions extends Component
             if($watchStatus->watch_type!=Movie::Watched){
                 $watchStatus->watch_type= Movie::Watched;
             }else{
-                $watchStatus->watch_type = Movie::Listed;
+                $watchStatus->watch_type = Movie::Watching;
             }
         }else{
               if($watchStatus->watch_type!=Movie::Watching){

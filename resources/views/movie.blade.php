@@ -50,8 +50,12 @@
                 </button>
 
                   @auth
-                  <livewire:watchlist  :watchItem="$movie"/>
+{{--                      @dd($movie_db)--}}
+                  <livewire:watchlist  :watchItem="$movie" :movie_db="$movie_db"/>
+
+                  @if($movie_db)
                   <livewire:watch-actions :status="$movie" />
+                  @endif
                   @endauth
               </div>
 

@@ -1,4 +1,4 @@
-<div class="w-full relative mt-3 md:mt-8" x-data="{isOpen : true}" @click.away="isOpen = false">
+<div class="w-full relative mt-3 md:mt-0" x-data="{isOpen : true}" @click.away="isOpen = false">
     <input wire:model.debounce.500ms="search" type="text" class="bg-gray-800 px-5 w-65 pl-8 py-1 w-full  rounded-full focus:outline-none focus:shadow-outline" placeholder="search"
 
     x-ref="search"
