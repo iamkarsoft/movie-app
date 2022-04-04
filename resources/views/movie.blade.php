@@ -68,7 +68,7 @@
       <div class="container mx-auto lg:px-32 rounded-lg overflow-y-hidden">
         <div class="bg-gray-900 rounded">
           <div class="flex justify-end pr-4 pt-2">
-            <button class="text-3xl leading-none hover:text-gray-300" @click="isOpen=false">&times;</button>
+            <button class="text-3xl leading-none hover:text-gray-300 close-modal" @click="isOpen=false;stopVideos()">&times;</button>
           </div>
           <div class="modal-body px-8 py-8">
             <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
@@ -127,29 +127,6 @@
    @endforeach
 
 </div><!-- /images -->
-              <!-- modal -->
-    <div
-      style="background-color: rgba(0,0,0,0.5);"
-      class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
-      x-show="isOpen"
-    >
-      <div class="container mx-auto lg:px-32 rounded-lg overflow-y-hidden">
-        <div class="bg-gray-900 rounded">
-          <div class="flex justify-end pr-4 pt-2">
-            <button class="text-3xl leading-none hover:text-gray-300 close-modal"
-            @keydown.escape.window="isOpen=false"
-            @click="isOpen=false,player.stopVideo():Void"  >&times;</button>
-          </div>
-          <div class="modal-body px-8 py-8">
-
-             <img :src="image" alt="poster">
-
-          </div>
-        </div>
-
-      </div>
-
-    </div> <!-- modal end -->
   </div><!-- end  movie info-->
 
 </div>
@@ -157,15 +134,22 @@
 <script>
 
   let playVideoButton = document.querySelector('.ytp-play-button');
+  let player = document.querySelector('#ytfullplayer');
   let closeModal = document.querySelector('.close-modal');
 
 
 
-  closeModal.addEventListener('click', function(){
-        console.log('stopped');
-  })
-
-
+let stopVideos = function () {
+	let videos = document.querySelectorAll('iframe, video');
+	Array.prototype.forEach.call(videos, function (video) {
+		if (video.tagName.toLowerCase() === 'video') {
+			video.pause();
+		} else {
+			let src = video.src;
+			video.src = src;
+		}
+	});
+};
 </script>
 
 @endsection
