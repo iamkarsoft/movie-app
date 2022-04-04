@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: 22
-          script: 'cd /var/www/movieapp.kofi.work/public_html'
+          script: 'cd /var/www/movieapp.kofi.work/public_html/'
 
       - name: Install Node dependencies
         run: npm install
