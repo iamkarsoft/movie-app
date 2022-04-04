@@ -10,12 +10,12 @@ class WatchActions extends Component
     public Movie $movie;
     public $status;
     public $watching;
+     public $movie_db;
 
      protected $listeners = ['status' => 'watched'];
 
 
-
-
+//
 
     public function watched(){
 

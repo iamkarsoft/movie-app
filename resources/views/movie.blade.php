@@ -54,7 +54,7 @@
                   <livewire:watchlist  :watchItem="$movie" :movie_db="$movie_db"/>
 
                   @if($movie_db)
-                  <livewire:watch-actions :status="$movie" />
+                  <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
                   @endif
                   @endauth
               </div>
