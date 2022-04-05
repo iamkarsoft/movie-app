@@ -27,21 +27,12 @@ jobs:
       - name: Deploy
         uses: appleboy/ssh-action@master
 
-        env:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PUB_KEY }}
-          port: ${{ secrets.PORT }}
-          ssh_known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-          private_ssh_key: ${{ secrets.KEY }}
-          base_directory: '/var/www/movieapp.kofi.work/public_html'
-
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: 22
-          script: 'cd /var/www/movieapp.kofi.work/public_html/'
+          script: 'cd /var/www/movieapp.kofi.work/public_html'
 
       - name: Install Node dependencies
         run: npm install
