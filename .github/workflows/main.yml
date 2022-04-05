@@ -29,7 +29,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PUB_KEY }}
+          key: ${{ secrets.KEY }}
           port: 22
           script: 'cd /var/www/movieapp.kofi.work/public_html'
 
