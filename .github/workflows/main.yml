@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: [7.4]
+        php-versions: [8.1]
         node_version:
           - 12
-#          - 14
+#         - 14
     #name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout code
