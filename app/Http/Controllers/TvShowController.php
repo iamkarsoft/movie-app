@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Http;
 
 class TvShowController extends Controller {
@@ -36,6 +37,14 @@ class TvShowController extends Controller {
 			->get('https://api.themoviedb.org/3/tv/' . $id . '?append_to_response=credits,videos,images,')
 			->json();
 
-		return view('tvshow', compact('tv'));
+
+          if($tv['original_name']){
+            $identifiable = $tv['original_name'];
+        }else{
+            $identifiable = $tv['name'];
+        }
+          $movie_db = Movie::where('name', $identifiable)->first();
+
+		return view('tvshow', compact('tv','movie_db'));
 	}
 }

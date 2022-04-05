@@ -19,11 +19,18 @@ class WatchActions extends Component
 
     public function watched(){
 
-
-         if($this->status['original_title']){
-            $identifiable = $this->status['original_title'];
+        if(array_key_exists('original_title', $this->status)) {
+            if ($this->status['original_title']) {
+                $identifiable = $this->status['original_title'];
+            } else {
+                $identifiable = $this->status['title'];
+            }
         }else{
-            $identifiable = $this->status['title'];
+            if ($this->status['original_name']) {
+                $identifiable = $this->status['original_name'];
+            } else {
+                $identifiable = $this->status['name'];
+            }
         }
 
         $watchStatus = Movie::where('name',$identifiable)->first();
