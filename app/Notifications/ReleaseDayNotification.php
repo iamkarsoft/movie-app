@@ -10,7 +10,6 @@ use Illuminate\Notifications\Notification;
 class ReleaseDayNotification extends Notification
 {
     public $upcomings;
-    public $episodes;
     use Queueable;
 
     /**
@@ -18,10 +17,9 @@ class ReleaseDayNotification extends Notification
      *
      * @return void
      */
-    public function __construct($upcomings,$episodes)
+    public function __construct($upcomings)
     {
-        $this->upcomings = $upcomings;
-        $this->episodes = $episodes;
+        $this->releases = $upcomings;
     }
 
     /**
@@ -43,8 +41,12 @@ class ReleaseDayNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view(
-        'email.realease', ['upcomings' => $this->upcomings,'episodes'=>$this->episodes]);
+
+
+
+             return (new MailMessage)->markdown(
+        'email.realease', ['releases' => $this->releases]);
+
     }
 
     /**
