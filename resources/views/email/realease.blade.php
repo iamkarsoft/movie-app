@@ -1,4 +1,4 @@
-{{--@component('mail::message')--}}
+@component('mail::message')
 # Released Today
 <ul>
 
@@ -12,4 +12,4 @@
 
 Thanks,<br>
 {{ config('app.name') }}
-{{--@endcomponent--}}
+@endcomponent

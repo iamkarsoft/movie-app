@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+//use Illuminate\Mail\Mailable;
 
 class ReleaseDayNotification extends Notification
 {
@@ -41,9 +42,6 @@ class ReleaseDayNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
-
-
              return (new MailMessage)->markdown(
         'email.realease', ['releases' => $this->releases]);
 
