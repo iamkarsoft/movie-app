@@ -10,8 +10,13 @@ class DashboardController extends Controller
 {
     //
     public function index(){
-        $upcomings = Movie::where('release_date','>=',Carbon::today())->get();
-        $episodes= Movie::where('next_air_date','>=',Carbon::today())->get();
+        $upcomings = Movie::where('release_date','>=',Carbon::today())
+        ->where('user_id',auth()->id())
+        ->get();
+
+        $episodes= Movie::where('next_air_date','>=',Carbon::today())
+        ->where('user_id',auth()->id())
+        ->get();
             return view('dashboard',['upcomings'=>$upcomings,'episodes'=>$episodes]);
     }
 }
