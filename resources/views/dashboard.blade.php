@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mt-5 w-full mx-auto px-4 lg:w-4 /5 mb-14 my-6">
+        <div class="mt-5 w-full mx-auto px-4 lg:w-4/5 mb-14 my-6">
               <h3 class="my-8 px-4 text-4xl font-extrabold">Upcoming Movies & Series</h3>
         <div class="flex flex-col mt-6 w-full px-4">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
