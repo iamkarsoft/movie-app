@@ -56,8 +56,8 @@
                     </div>
                 </div>
                 <div x-data="{isOpen : false }">
+                    <div class="mt-12 flex">
                     @if(count($tv['videos']['results']) > 0)
-                        <div class="mt-12 flex">
                             <button @click=" isOpen = true"
                                     class=" mx-4 inline-flex items-center bg-purple-500 text-gray-900 rounded font-semibold px-4 py-4 transition ease-in-out hover:bg-purple-600">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round"
@@ -69,6 +69,8 @@
                                 </svg>
                                 <span class="ml-2">Play Trailer</span>
                             </button>
+                        @endif
+
                             @auth
                                 {{--                      @dd($movie_db)--}}
                                 <livewire:watchlist :watchItem="$tv" :movie_db="$movie_db"/>
@@ -79,7 +81,9 @@
                             @endauth
                         </div>
 
-                        <!-- modal -->
+
+
+                       <!-- modal -->
                         <div
                             style="background-color: rgba(0,0,0,0.5);"
                             class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
@@ -108,9 +112,7 @@
                             </div>
 
                         </div> <!-- modal end -->
-                    @endif
                 </div>
-
             </div>
         </div>
 
