@@ -15,29 +15,29 @@ class Watchlist extends Component
 
     protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
-    public function mount()
-    {
-        if(array_key_exists('original_title', $this->watchItem)) {
-            if ($this->watchItem['original_title']) {
-                $identifiable = $this->watchItem['original_title'];
-            } else {
-                $identifiable = $this->watchItem['title'];
-            }
-        }else{
-            if ($this->watchItem['original_name']) {
-                $identifiable = $this->watchItem['original_name'];
-            } else {
-                $identifiable = $this->watchItem['name'];
-            }
-        }
-
-
-        $the_movie = Movie::where('name', $identifiable)->first();
-        $this->watch_item = $the_movie;
-//            dd($this->watching);
-
-
-    }
+//    public function mount()
+//    {
+//        if(array_key_exists('original_title', $this->watchItem)) {
+//            if ($this->watchItem['original_title']) {
+//                $identifiable = $this->watchItem['original_title'];
+//            } else {
+//                $identifiable = $this->watchItem['title'];
+//            }
+//        }else{
+//            if ($this->watchItem['original_name']) {
+//                $identifiable = $this->watchItem['original_name'];
+//            } else {
+//                $identifiable = $this->watchItem['name'];
+//            }
+//        }
+//
+//
+//        $the_movie = Movie::where('name', $identifiable)->first();
+//        $this->watch_item = $the_movie;
+////            dd($this->watching);
+//
+//
+//    }
 
     public function store()
     {
@@ -59,6 +59,7 @@ class Watchlist extends Component
         $watchlist = new Movie();
         $watchlist->user_id = auth()->id();
         $watchlist->watch_type = Movie::Watching;
+        $watchlist->movie_id = $this->watchItem['id'];
         if (array_key_exists('first_air_date', $this->watchItem)) {
             $watchlist->type = Movie::Series;
 

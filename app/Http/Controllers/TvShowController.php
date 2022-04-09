@@ -43,7 +43,7 @@ class TvShowController extends Controller {
         }else{
             $identifiable = $tv['name'];
         }
-          $movie_db = Movie::where('name', $identifiable)->first();
+          $movie_db = Movie::where('name', $identifiable)->orWhere('movie_id',$tv['id'])->first();
 
 		return view('tvshow', compact('tv','movie_db'));
 	}

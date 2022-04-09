@@ -3,8 +3,8 @@
 
     x-ref="search"
     @keydown.window="
-        if(event.keycode === 191){
-        event.preventDefault();
+        if(e.keycode === 191){
+        e.preventDefault();
         $refs.search.focus();
       }
     "

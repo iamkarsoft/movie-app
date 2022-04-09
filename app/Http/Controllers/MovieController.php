@@ -113,12 +113,20 @@ class MovieController extends Controller {
 		$movie = Http::withToken(config('services.tmdb.token'))
 			->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=credits,videos,images')
 			->json();
-         if($movie['original_title']){
-            $identifiable = $movie['original_title'];
+          if(array_key_exists('original_title', $movie)) {
+            if ( $movie['title']) {
+                $identifiable = $movie['title'];
+            } else {
+                $identifiable = $movie['original_title'];
+            }
         }else{
-            $identifiable = $movie['title'];
+            if ($movie['original_name']) {
+                $identifiable = $movie['original_name'];
+            } else {
+                $identifiable = $movie['name'];
+            }
         }
-        $movie_db = Movie::where('name', $identifiable)->first();
+        $movie_db = Movie::where('name', $identifiable)->orWhere('movie_id',$movie['id'])->first();
 
 		return view('movie', compact('movie','movie_db'));
 	}
