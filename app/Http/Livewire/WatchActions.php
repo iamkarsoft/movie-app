@@ -48,7 +48,10 @@ class WatchActions extends Component
             }
         }
 
-         session()->flash('message', 'Updated');
+//         session()->flash('message', 'Updated');
+          toast()
+            ->success('Status Updated', 'Notification')
+            ->push();
 
             $watchStatus->save();
 
