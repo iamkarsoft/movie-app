@@ -11,9 +11,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <livewire:styles>
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-                defer></script>
-        </head>
+        @toastScripts
+        <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
 <body class="font-sans bg-gray-900 text-white">
  <section class="text-white font-extrabold">
                 @if(session()->has('message'))

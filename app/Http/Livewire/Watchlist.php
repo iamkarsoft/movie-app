@@ -4,10 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class Watchlist extends Component
 {
-
+ use WireToast;
     public Movie $movie;
     public $watchItem;
     public $movie_db;
@@ -51,7 +52,10 @@ class Watchlist extends Component
         $movie = Movie::where(['name' => $item, 'user_id' => auth()->id()])->first();
 
         if ($movie) {
-            session()->flash('message', 'Already on your watch list');
+//            session()->flash('message', 'Already on your watch list');
+            toast()
+                ->info('Already on your watch list...', 'Notification')
+                ->push();
             return;
         }
 
@@ -92,8 +96,10 @@ class Watchlist extends Component
             $watchlist->last_air_date = null;
         }
 //            sleep(2);
-        session()->flash('message', 'Added to watch list');
-
+//        session()->flash('message', 'Added to watch list');
+        toast()
+            ->success('Added to watch list', 'Notification')
+            ->push();
         $watchlist->save();
 
         return redirect()->back();
@@ -104,7 +110,10 @@ class Watchlist extends Component
     public function destroy()
     {
         $movie = Movie::where(['name' => $this->movie_db->name, 'user_id' => auth()->id()])->delete();
-        session()->flash('message', 'removed to watch list');
+//        session()->flash('message', 'removed to watch list');
+        toast()
+                ->success('Removed to watch list', 'Notification')
+                ->push();
         return redirect()->back();
 
     }

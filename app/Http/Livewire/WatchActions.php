@@ -33,8 +33,7 @@ class WatchActions extends Component
             }
         }
 
-        $watchStatus = Movie::where('name',$identifiable)->first();
-
+        $watchStatus = Movie::where('name',$identifiable)->orWhere('name',$this->status['title'])->first();
         if($watchStatus->type==Movie::Movies || $watchStatus->type==Movie::Award_show || $watchStatus->type==Movie::Documentary){
             if($watchStatus->watch_type!=Movie::Watched){
                 $watchStatus->watch_type= Movie::Watched;
