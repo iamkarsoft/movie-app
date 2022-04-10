@@ -109,11 +109,21 @@ class Watchlist extends Component
 
     public function destroy()
     {
-        $movie = Movie::where(['name' => $this->movie_db->name, 'user_id' => auth()->id()])->delete();
+//        dd($this->movie_db);
+        $movie = Movie::where(['name' => $this->movie_db->name, 'user_id' => auth()->id()])
+            ->orWhere(['movie_id'=>$this->movie_db['movie_id'],'user_id'=>auth()->id()])
+            ->first();
+
+        if($movie) {
 //        session()->flash('message', 'removed to watch list');
-        toast()
+            toast()
                 ->success('Removed to watch list', 'Notification')
                 ->push();
+        }else{
+             toast()
+                ->danger('Movie not your watchlist', 'Notification')
+                ->push();
+        }
         return redirect()->back();
 
     }
