@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="font-sans bg-gray-900 text-white">
+<livewire:toasts />
  <section class="text-white font-extrabold">
                 @if(session()->has('message'))
                     <span>{{ session('message')}}</span>
