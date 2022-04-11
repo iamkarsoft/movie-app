@@ -12,7 +12,7 @@ class WatchActions extends Component
     public $watching;
     public $movie_db;
 
-    protected $listeners = ['status' => 'watched'];
+    protected $listeners = ['status' => 'watched','refreshStoreMovie'=>'$refresh'];
 
 
 //
@@ -55,7 +55,8 @@ class WatchActions extends Component
             ->success('Status Updated', 'Notification')
             ->push();
         $watchStatus->save();
-        return redirect()->back();
+
+        // return redirect()->back();
     }
 
 

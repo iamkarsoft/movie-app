@@ -8,37 +8,13 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class Watchlist extends Component
 {
- use WireToast;
+    use WireToast;
     public Movie $movie;
     public $watchItem;
     public $movie_db;
 
 
-    protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
-
-//    public function mount()
-//    {
-//        if(array_key_exists('original_title', $this->watchItem)) {
-//            if ($this->watchItem['original_title']) {
-//                $identifiable = $this->watchItem['original_title'];
-//            } else {
-//                $identifiable = $this->watchItem['title'];
-//            }
-//        }else{
-//            if ($this->watchItem['original_name']) {
-//                $identifiable = $this->watchItem['original_name'];
-//            } else {
-//                $identifiable = $this->watchItem['name'];
-//            }
-//        }
-//
-//
-//        $the_movie = Movie::where('name', $identifiable)->first();
-//        $this->watch_item = $the_movie;
-////            dd($this->watching);
-//
-//
-//    }
+    protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy', 'refresh-movie-store' => '$refresh'];
 
     public function store()
     {
@@ -52,7 +28,7 @@ class Watchlist extends Component
         $movie = Movie::where(['name' => $item, 'user_id' => auth()->id()])->first();
 
         if ($movie) {
-//            session()->flash('message', 'Already on your watch list');
+            //            session()->flash('message', 'Already on your watch list');
             toast()
                 ->info('Already on your watch list...', 'Notification')
                 ->push();
@@ -64,6 +40,7 @@ class Watchlist extends Component
         $watchlist->user_id = auth()->id();
         $watchlist->watch_type = Movie::Watching;
         $watchlist->movie_id = $this->watchItem['id'];
+
         if (array_key_exists('first_air_date', $this->watchItem)) {
             $watchlist->type = Movie::Series;
 
@@ -74,7 +51,7 @@ class Watchlist extends Component
             }
             $watchlist->release_date = $this->watchItem['first_air_date'];
 
-//            dd($this->watchItem);
+            //            dd($this->watchItem);
             if ($this->watchItem['next_episode_to_air'] == Null) {
                 $watchlist->next_air_date = null;
             } else {
@@ -86,8 +63,6 @@ class Watchlist extends Component
             } else {
                 $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'];
             }
-
-
         } else {
             $watchlist->release_date = $this->watchItem['release_date'];
             $watchlist->type = Movie::Movies;
@@ -95,39 +70,40 @@ class Watchlist extends Component
             $watchlist->next_air_date = null;
             $watchlist->last_air_date = null;
         }
-//            sleep(2);
-//        session()->flash('message', 'Added to watch list');
+        //            sleep(2);
+        //        session()->flash('message', 'Added to watch list');
         toast()
             ->success('Added to watch list', 'Notification')
             ->push();
         $watchlist->save();
+        $this->emitSelf('refresh-movie-store');
 
-        return redirect()->back();
+        // return redirect()->back();
 
 
     }
 
+
     public function destroy()
     {
-        $movie = Movie::where('name',$this->movie_db->name)
-            ->orWhere('movie_id',$this->movie_db->movie_id)
-            ->where('user_id',auth()->id())
+        $movie = Movie::where('name', $this->movie_db->name)
+            ->orWhere('movie_id', $this->movie_db->movie_id)
+            ->where('user_id', auth()->id())
             ->first();
 
-
-        if($movie) {
+        if ($movie) {
             $movie->delete();
-//        session()->flash('message', 'removed to watch list');
+            //        session()->flash('message', 'removed to watch list');
             toast()
                 ->success('Removed to watch list', 'Notification')
                 ->push();
-        }else{
-             toast()
+        } else {
+
+            toast()
                 ->danger('Movie not your watchlist', 'Notification')
                 ->push();
         }
         return redirect()->back();
-
     }
 
 

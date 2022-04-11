@@ -1,17 +1,17 @@
 @extends('layout.app')
 @section('content')
-    <div class="movie-info border-b border-gray-800">
-        <div class="container mx-auto px-4 py-16 flex flex-col  md:flex-row">
+    <div class="border-b border-gray-800 movie-info">
+        <div class="container flex flex-col px-4 py-16 mx-auto md:flex-row">
             <div class="flex-none">
                 <img src="{{'https://image.tmdb.org/t/p/w500/'.$movie['poster_path']}}" alt=""
                      class="w-full md:w-64 lg:w-94">
             </div>
 
-            <div class="md:ml-24 px-8">
-                <h2 class=" text-4xl mt-2  hover:opacity-75 transition ease-in-out  hover:text-gray-300">{{$movie['title']}}</h2>
+            <div class="px-8 md:ml-24">
+                <h2 class="mt-2 text-4xl transition ease-in-out hover:opacity-75 hover:text-gray-300">{{$movie['title']}}</h2>
 
                 <div class="mt-2">
-                    <div class="flex items-center text-gray-400 mt-1">
+                    <div class="flex items-center mt-1 text-gray-400">
                <span>   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                              fill="currentColor" class="w-6 h-6 text-red-600">
   <path
@@ -21,23 +21,23 @@
                         <span class="mx-2">|</span>
                         <span>{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y')}}</span>
                     </div>
-                    <div class="text-gray-400 text-sm">
+                    <div class="text-sm text-gray-400">
                         @foreach($movie['genres'] as $genre)
                             {{$genre['name']}}
                         @endforeach
                     </div>
                 </div>
-                <p class="text-gray-300 mt-8">
+                <p class="mt-8 text-gray-300">
                     {{ $movie['overview']}}
                 </p>
 
                 <div class="mt-12">
-                    <h4 class="text-white font-semibold">Cast</h4>
+                    <h4 class="font-semibold text-white">Cast</h4>
                     <div class="flex mt-4">
                         @foreach($movie['credits']['crew'] as $crew)
                             @if($loop->index <4)
                                 <div class="mx-4">
-                                    <div class="font-bold text-lg">{{$crew['name']}}</div>
+                                    <div class="text-lg font-bold">{{$crew['name']}}</div>
                                     <div>{{$crew['job']}}</div>
                                 </div>
                             @endif
@@ -45,11 +45,11 @@
                     </div>
                 </div>
                 <div x-data="{isOpen : false }">
-                    <div class="mt-12 flex ">
+                    <div class="flex mt-12 ">
 
                         @if(count($movie['videos']['results']) > 0)
                             <button @click=" isOpen = true"
-                                    class=" mx-4 inline-flex items-center bg-purple-500 text-gray-900 rounded font-semibold px-4 py-4 transition ease-in-out hover:bg-purple-600">
+                                    class="inline-flex items-center px-4 py-4 mx-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round"
                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
                                      class="w-6 h-6">
@@ -66,10 +66,10 @@
 
                         @auth
                             {{--                      @dd($movie_db)--}}
-                            <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db"/>
+                            <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db" />
 
                             @if($movie_db)
-                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db"/>
+                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
                             @endif
                         @endauth
                     </div>
@@ -78,24 +78,24 @@
                     <!-- modal -->
                     <div
                         style="background-color: rgba(0,0,0,0.5);"
-                        class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
+                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg"
                         x-show="isOpen"
                     >
-                        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-hidden">
+                        <div class="container mx-auto overflow-y-hidden rounded-lg lg:px-32">
                             <div class="bg-gray-900 rounded">
-                                <div class="flex justify-end pr-4 pt-2">
+                                <div class="flex justify-end pt-2 pr-4">
                                     <button
                                         class="text-3xl leading-none hover:text-gray-300 close-modal"
                                         @click="isOpen=false;stopVideos()">&times;
                                     </button>
                                 </div>
-                                <div class="modal-body px-8 py-8">
-                                    <div class="responsive-container overflow-hidden relative"
+                                <div class="px-8 py-8 modal-body">
+                                    <div class="relative overflow-hidden responsive-container"
                                          style="padding-top: 56.25%">
                                         <iframe id="ytfullplayer"
                                                 src="https://youtube.com/embed/{{ $movie['videos']['results'][0]['key']}}"
                                                 width="560" height="315"
-                                                class="responsive-iframe absolute top-0 left-0 w-full h-full"
+                                                class="absolute top-0 left-0 w-full h-full responsive-iframe"
                                                 frameborder="0" allow="autoplay; encrypted-media"
                                                 style="border:0"></iframe>
                                     </div>
@@ -109,12 +109,12 @@
             </div>
         </div>
 
-        <div class="movie-cast border-b border-gray-800">
-            <div class="container mx-auto px-4 py-16">
+        <div class="border-b border-gray-800 movie-cast">
+            <div class="container px-4 py-16 mx-auto">
                 <h2 class="text-4xl font-semibold">Cast</h2>
             </div>
             <div
-                class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x gap-8 px-4 ">
+                class="grid-cols-1 gap-8 px-4 md:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x ">
                 @foreach($movie['credits']['cast'] as $cast)
                     @if($loop->index < 8)
                         <div class="mt-8">
@@ -122,7 +122,7 @@
                             <img src="{{'https://image.tmdb.org/t/p/w500/'.$cast['profile_path']}}"
                                  alt="">
                             <div class="mx-4">
-                                <div class="font-bold text-lg">{{$cast['name']}}</div>
+                                <div class="text-lg font-bold">{{$cast['name']}}</div>
                                 <div>{{$cast['character']}}</div>
                             </div>
 
@@ -133,12 +133,12 @@
         </div><!-- /cast -->
 
 
-        <div class="movie-cast border-b border-gray-800" x-data="{isOpen:false,image:''}">
-            <div class="container mx-auto px-4 py-16">
+        <div class="border-b border-gray-800 movie-cast" x-data="{isOpen:false,image:''}">
+            <div class="container px-4 py-16 mx-auto">
                 <h2 class="text-4xl font-semibold">Back Drops</h2>
             </div>
             <div
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x gap-8 px-4 ">
+                class="grid grid-cols-1 gap-8 px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 x ">
                 @foreach($movie['images']['backdrops'] as $images)
                     @if($loop->index < 8)
                         <div class="mt-8">
