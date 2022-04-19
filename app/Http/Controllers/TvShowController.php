@@ -37,7 +37,7 @@ class TvShowController extends Controller {
 			->get('https://api.themoviedb.org/3/tv/' . $id . '?append_to_response=credits,videos,images,')
 			->json();
 
-
+        // dd($tv);
           if($tv['original_name']){
             $identifiable = $tv['original_name'];
         }else{

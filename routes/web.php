@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UpdateMoviesController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Livewire\Watchlist;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,13 @@ Route::get('tvshow/{tv}', 'TvShowController@show')->name('tv.show');
 Route::get('tvshow', 'TvShowController@index')->name('tv.list');
 
 // WatchListing routes
-Route::get('/watchlist',[WatchlistController::class,'index'])->name('watchlist');
-Route::post('/watchlist/add',[Watchlist::class])->name('watchlist.add');
+Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist');
+Route::post('/watchlist/add', [Watchlist::class])->name('watchlist.add');
 
-Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+// Update database
+
+Route::get('/update/movies', 'UpdateMoviesController')->name('movies.update');
+
+require __DIR__ . '/auth.php';
