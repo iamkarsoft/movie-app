@@ -43,21 +43,28 @@ class NotifyMember extends Command
      */
     public function handle(Movie $movie)
     {
-        $users = User::all();
-        foreach($users as $user){
+        $users = User::get();
+        foreach ($users as $user) {
             $upcomings_stuff = $user->movies()->where('release_date', '=', Carbon::today())
                 ->OrWhere('next_air_date', '=', Carbon::today())
-                ->where('user_id',$user->id)
+                ->where('user_id', $user->id)
                 ->get();
 
-            $upcomings=[];
+            if (!empty($upcomings_stuff)) {
 
-            foreach($upcomings_stuff as $upcoming){
-                    $upcomings[]=$upcoming;
+
+                $upcomings = [];
+
+                foreach ($upcomings_stuff as $upcoming) {
+                    $upcomings[] = $upcoming;
+                }
+
+
+                $user->notify(new ReleaseDayNotification($upcomings));
+                return 'mailed';
+            } else {
+                return 'nothing to mail';
             }
-
-
-              $user->notify(new ReleaseDayNotification($upcomings));
         }
     }
 }
