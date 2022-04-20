@@ -13,7 +13,7 @@ class WatchlistController extends Controller
 
     public function index()
     {
-        $watchlist = auth()->user()->movies()->latest()->paginate(2);
+        $watchlist = auth()->user()->movies()->latest()->paginate(10);
         //        $watchlist = Movie::with('users')->get();
 
         return view('watchlist', ['watchlist' => $watchlist]);
