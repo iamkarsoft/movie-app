@@ -78,6 +78,8 @@ class Watchlist extends Component
         $watchlist->save();
         $this->emitSelf('refresh-movie-store');
 
+
+        return redirect(request()->header('Referer'));
         // return redirect()->back();
 
 
@@ -103,7 +105,7 @@ class Watchlist extends Component
                 ->danger('Movie not your watchlist', 'Notification')
                 ->push();
         }
-        return redirect()->back();
+        return redirect(request()->header('Referer'));
     }
 
 
