@@ -50,7 +50,13 @@
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="font-bold">
-                                                    {{ $upcoming['name'] }}
+                                                    @if ($upcoming['type'] == 0)
+                                                        <a href="{{ URL::to('/movie/' . $upcoming['movie_id']) }}"
+                                                            target="_blank">{{ $upcoming['name'] }}</a>
+                                                    @elseif($upcoming['type'] == 1)
+                                                        <a href="{{ URL::to('/tvshow/' . $upcoming['movie_id']) }}"
+                                                            target="_blank">{{ $upcoming['name'] }}</a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -133,7 +139,13 @@
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="font-bold">
-                                                    {{ $episode['name'] }}
+                                                    @if ($episode['type'] == 0)
+                                                        <a href="{{ URL::to('/movie/' . $episode['movie_id']) }}"
+                                                            target="_blank">{{ $episode['name'] }}</a>
+                                                    @elseif($episode['type'] == 1)
+                                                        <a href="{{ URL::to('/tvshow/' . $episode['movie_id']) }}"
+                                                            target="_blank">{{ $episode['name'] }}</a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">

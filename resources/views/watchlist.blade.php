@@ -34,6 +34,10 @@
                                         scope="col">
                                         Status
                                     </th>
+                                    <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
+                                        scope="col">
+                                        Update on
+                                    </th>
                                     <th class="relative px-6 py-3" scope="col">
                                         <span class="sr-only">Edit</span>
                                     </th>
@@ -44,7 +48,12 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="font-bold">
-                                                {{ $item['name'] }}
+
+                                                @if($item['type']==0)
+                                                    <a href="{{ URL::to('/movie/'.$item['movie_id'])}}" target="_blank">{{ $item['name'] }}</a>
+                                                @elseif($item['type']==1)
+                                                    <a href="{{ URL::to('/tvshow/'.$item['movie_id'])}}" target="_blank">{{ $item['name'] }}</a>
+                                                @endif
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -55,6 +64,9 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $item['next_air_date'] }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $item['updated_at'] }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
