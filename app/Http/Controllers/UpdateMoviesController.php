@@ -35,7 +35,6 @@ class UpdateMoviesController extends Controller
 
                 if (array_key_exists('release_date', $movie_request)) {
                     $movie->release_date = $movie_request['release_date'];
-                    $movie->updated_at = Carbon::now();
                 }
             }
 
