@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -23,6 +24,8 @@ class UpdateMoviesController extends Controller
 
         $movies = Movie::get();
 
+
+
         foreach ($movies as $movie) {
             if ($movie->type == 0) {
                 $movie_request = Http::withToken(config('services.tmdb.token'))
@@ -32,7 +35,7 @@ class UpdateMoviesController extends Controller
 
                 if (array_key_exists('release_date', $movie_request)) {
                     $movie->release_date = $movie_request['release_date'];
-                    $movie->save();
+                    $movie->updated_at = Carbon::now();
                 }
             }
 
@@ -51,10 +54,11 @@ class UpdateMoviesController extends Controller
                     } else {
                         $movie->next_air_date = Null;
                     }
-
-                    $movie->save();
                 }
             }
+            dump($movie->name);
+            $movie->updated_at = Carbon::now();
+            $movie->save();
         }
 
         // dd($movies);

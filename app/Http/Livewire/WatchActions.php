@@ -4,18 +4,20 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class WatchActions extends Component
 {
+    use WireToast;
     public Movie $movie;
     public $status;
     public $watching;
     public $movie_db;
 
-    protected $listeners = ['status' => 'watched','refreshStoreMovie'=>'$refresh'];
+    protected $listeners = ['status' => 'watched', 'refreshStoreMovie' => '$refresh'];
 
 
-//
+    //
 
     public function watched()
     {
@@ -50,13 +52,14 @@ class WatchActions extends Component
             }
         }
 
-//         session()->flash('message', 'Updated');
         toast()
             ->success('Status Updated', 'Notification')
             ->push();
+
+
         $watchStatus->save();
 
-        // return redirect()->back();
+        return redirect(request()->header('Referer'));
     }
 
 
