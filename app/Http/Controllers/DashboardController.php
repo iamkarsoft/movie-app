@@ -22,7 +22,7 @@ class DashboardController extends Controller
             ->where('next_air_date', '>=', Carbon::today())
             ->where('user_id', auth()->id())
             ->where('watch_type', !Movie::Watched)
-            ->oldest()
+            ->orderBy('next_air_date', 'ASC')
             ->get();
         return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
     }
