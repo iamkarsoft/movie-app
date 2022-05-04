@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $episodes = Movie::query()
             ->where('next_air_date', '>=', Carbon::today())
             ->where('user_id', auth()->id())
-            ->where('watch_type', Movie::Watched)
+            ->where('watch_type', !Movie::Watched)
             ->oldest()
             ->get();
         return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
