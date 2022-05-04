@@ -16,29 +16,10 @@ jobs:
 #         - 14
     #name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
-      - name: Set Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node_version }}
-
-      - name: Deploy files
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          script: 'cd /var/www/movieapp.kofi.work/public_html'
-
-      - name: Install Node dependencies
-        run: npm install
-
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 
 
