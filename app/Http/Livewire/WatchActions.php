@@ -13,17 +13,16 @@ class WatchActions extends Component
     public $status;
     public $watching;
     public $movie_db;
-
+    public $watch_status;
     protected $listeners = ['status' => 'watched', 'refreshStoreMovie' => '$refresh'];
 
 
     //
 
-    public function watched()
+    public function watched($data)
     {
 
 
-        dd($this->watch_action);
         if (array_key_exists('original_title', $this->status)) {
             if ($this->status['original_title']) {
                 $identifiable = $this->status['original_title'];
@@ -42,8 +41,7 @@ class WatchActions extends Component
 
         if ($watchStatus->type == Movie::Movies || $watchStatus->type == Movie::Award_show || $watchStatus->type == Movie::Documentary) {
 
-            // $watchStatus->watch_type ;
-
+            $watchStatus->watch_type = $data;
         }
 
         toast()
