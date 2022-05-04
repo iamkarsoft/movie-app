@@ -24,7 +24,7 @@ Route::get('tvshow/{tv}', 'TvShowController@show')->name('tv.show');
 Route::get('tvshow', 'TvShowController@index')->name('tv.list');
 
 // WatchListing routes
-Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist');
+Route::get('/watchlist/{filter?}', [WatchlistController::class, 'index'])->name('watchlist');
 Route::post('/watchlist/add', [Watchlist::class])->name('watchlist.add');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');

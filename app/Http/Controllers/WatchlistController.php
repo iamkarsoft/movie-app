@@ -11,10 +11,13 @@ class WatchlistController extends Controller
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public function index()
+    public function index($filter = null)
     {
-        $watchlist = auth()->user()->movies()->latest('next_air_date')->paginate(10);
-        //        $watchlist = Movie::with('users')->get();
+        if ($filter != null) {
+            $watchlist = auth()->user()->movies()->latest('next_air_date')->where('watch_type', $filter)->paginate(10);
+        } else {
+            $watchlist = auth()->user()->movies()->latest('next_air_date')->paginate(10);
+        }
 
         return view('watchlist', ['watchlist' => $watchlist]);
     }
