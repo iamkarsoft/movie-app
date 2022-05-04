@@ -14,7 +14,7 @@ class Watchlist extends Component
     public $movie_db;
 
 
-    protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy', 'refresh-movie-store' => '$refresh'];
+    protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
     public function store()
     {
@@ -76,7 +76,6 @@ class Watchlist extends Component
             ->success('Added to watch list', 'Notification')
             ->push();
         $watchlist->save();
-        $this->emitSelf('refresh-movie-store');
 
 
         return redirect(request()->header('Referer'));

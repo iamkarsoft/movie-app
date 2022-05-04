@@ -22,6 +22,8 @@ class WatchActions extends Component
     public function watched()
     {
 
+
+        dd($this->watch_action);
         if (array_key_exists('original_title', $this->status)) {
             if ($this->status['original_title']) {
                 $identifiable = $this->status['original_title'];
@@ -39,17 +41,9 @@ class WatchActions extends Component
         $watchStatus = Movie::where('name', $identifiable)->orWhere('name', $this->status['title'])->first();
 
         if ($watchStatus->type == Movie::Movies || $watchStatus->type == Movie::Award_show || $watchStatus->type == Movie::Documentary) {
-            if ($watchStatus->watch_type != Movie::Watched) {
-                $watchStatus->watch_type = Movie::Watched;
-            } else {
-                $watchStatus->watch_type = Movie::Watching;
-            }
-        } else {
-            if ($watchStatus->watch_type != Movie::Watching) {
-                $watchStatus->watch_type = Movie::Watching;
-            } else {
-                $watchStatus->watch_type = Movie::Abandoned;
-            }
+
+            // $watchStatus->watch_type ;
+
         }
 
         toast()
