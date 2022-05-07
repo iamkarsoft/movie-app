@@ -23,13 +23,14 @@ class WatchActions extends Component
     {
 
 
+
         if (array_key_exists('original_title', $this->status)) {
             if ($this->status['original_title']) {
                 $identifiable = $this->status['original_title'];
             } else {
                 $identifiable = $this->status['title'];
             }
-        } else {
+        } elseif (array_key_exists('original_name', $this->status)) {
             if ($this->status['original_name']) {
                 $identifiable = $this->status['original_name'];
             } else {
@@ -37,7 +38,7 @@ class WatchActions extends Component
             }
         }
 
-        $watchStatus = Movie::where('name', $identifiable)->orWhere('name', $this->status['title'])->first();
+        $watchStatus = Movie::where('name', $identifiable)->first();
 
         if ($watchStatus->type == Movie::Movies || $watchStatus->type == Movie::Award_show || $watchStatus->type == Movie::Documentary) {
 
