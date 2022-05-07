@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $upcomings = Movie::query()
             ->where('release_date', '>=', Carbon::today())
             ->where('user_id', auth()->id())
-            ->where('watch_type', Movie::Watched)
+            ->where('watch_type', !Movie::Watched)
             ->orderBy('next_air_date', 'ASC')
             ->get();
 
