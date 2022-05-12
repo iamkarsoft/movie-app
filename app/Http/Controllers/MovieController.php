@@ -132,7 +132,14 @@ class MovieController extends Controller
                 $identifiable = $movie['name'];
             }
         }
-        $movie_db = Movie::where('name', $identifiable)->orWhere('movie_id', $movie['id'])->first();
+        $movie_db = Movie::query()
+            ->where('name', $identifiable)
+            ->where('id', auth()->user()->id)
+            ->orWhere('movie_id', $movie['id'])
+            ->where('id', auth()->user()->id)
+            ->first();
+
+        dd($movie_db);
 
         return view('movie', compact('movie', 'movie_db'));
     }
