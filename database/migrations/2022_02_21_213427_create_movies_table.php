@@ -22,7 +22,6 @@ class CreateMoviesTable extends Migration
             $table->date('next_air_date')->nullable();
             $table->unsignedInteger('movie_id')->nullable();
             $table->integer('type')->default(0);
-            $table->integer('watch_type')->default(0);
             $table->timestamps();
         });
     }
