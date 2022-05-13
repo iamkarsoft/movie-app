@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use Livewire\Component;
+use App\Models\MovieUser;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class WatchActions extends Component
@@ -38,7 +39,14 @@ class WatchActions extends Component
             }
         }
 
-        $watchStatus = Movie::where('name', $identifiable)->first();
+        // $watchStatus = Movie::where('name', $identifiable)->first();
+
+        $watchStatus = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
+            ->join('users', 'users.id', '=', 'movie_user.user_id')
+            ->select('users.*', 'movies.*', 'movie_user.*')
+            ->where('movies.name',  $identifiable)
+            ->where('movie_user.user_id', auth()->user()->id)
+            ->first();
 
         if ($watchStatus->type == Movie::Movies || $watchStatus->type == Movie::Award_show || $watchStatus->type == Movie::Documentary) {
 

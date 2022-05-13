@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use Livewire\Component;
+use App\Models\MovieUser;
 use Illuminate\Http\Request;
 use Usernotnull\Toast\Concerns\WireToast;
 
@@ -27,8 +28,14 @@ class Watchlist extends Component
         }
 
         $movie = Movie::where('name', $item)->first();
+        $user_movie = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
+            ->join('users', 'users.id', '=', 'movie_user.user_id')
+            ->select('users.*', 'movies.*', 'movie_user.*')
+            ->where('movies.name',  $item)
+            ->where('movie_user.user_id', auth()->user()->id)
+            ->first();
 
-        if ($movie) {
+        if ($user_movie) {
             //            session()->flash('message', 'Already on your watch list');
             toast()
                 ->info('Already on your watch list...', 'Notification')
@@ -36,42 +43,45 @@ class Watchlist extends Component
             return;
         }
 
+        if (!$movie) {
+            $watchlist = new Movie();
 
-        $watchlist = new Movie();
+            if (array_key_exists('first_air_date', $this->watchItem)) {
+                $watchlist->type = Movie::Series;
 
-        if (array_key_exists('first_air_date', $this->watchItem)) {
-            $watchlist->type = Movie::Series;
+                if ($this->watchItem['name']) {
+                    $watchlist->name = $this->watchItem['name'];
+                } else {
+                    $watchlist->name = $this->watchItem['original_name'];
+                }
+                $watchlist->release_date = $this->watchItem['first_air_date'];
 
-            if ($this->watchItem['name']) {
-                $watchlist->name = $this->watchItem['name'];
+                //            dd($this->watchItem);
+                if ($this->watchItem['next_episode_to_air'] == null) {
+                    $watchlist->next_air_date = null;
+                } else {
+                    $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'];
+                }
+
+                if ($this->watchItem['last_episode_to_air']['air_date'] == null) {
+                    $watchlist->last_air_date = null;
+                } else {
+                    $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'];
+                }
             } else {
-                $watchlist->name = $this->watchItem['original_name'];
-            }
-            $watchlist->release_date = $this->watchItem['first_air_date'];
-
-            //            dd($this->watchItem);
-            if ($this->watchItem['next_episode_to_air'] == Null) {
+                $watchlist->release_date = $this->watchItem['release_date'];
+                $watchlist->type = Movie::Movies;
+                $watchlist->name = $this->watchItem['title'];
                 $watchlist->next_air_date = null;
-            } else {
-                $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'];
-            }
-
-            if ($this->watchItem['last_episode_to_air']['air_date'] == Null) {
                 $watchlist->last_air_date = null;
-            } else {
-                $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'];
             }
+            $watchlist->save();
         } else {
-            $watchlist->release_date = $this->watchItem['release_date'];
-            $watchlist->type = Movie::Movies;
-            $watchlist->name = $this->watchItem['title'];
-            $watchlist->next_air_date = null;
-            $watchlist->last_air_date = null;
+            $watchlist = $movie;
         }
         toast()
             ->success('Added to watch list', 'Notification')
             ->push();
-        $watchlist->save();
 
         $request->user()->movies()->syncWithoutDetaching($watchlist);
 
@@ -80,25 +90,35 @@ class Watchlist extends Component
     }
 
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-        $movie = Movie::where('name', $this->movie_db->name)
-            ->orWhere('movie_id', $this->movie_db->movie_id)
-            ->where('user_id', auth()->id())
+        // $movie = Movie::where('name', $this->movie_db->name)
+        //     ->orWhere('movie_id', $this->movie_db->movie_id)
+        //     ->first();
+
+
+        $movie = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
+            ->join('users', 'users.id', '=', 'movie_user.user_id')
+            ->select('users.*', 'movies.*', 'movie_user.*')
+            ->where('movie_user.movie_id',  $this->movie_db->movie_id)
+            ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
-        if ($movie) {
-            $movie->delete();
-            //        session()->flash('message', 'removed to watch list');
-            toast()
-                ->success('Removed to watch list', 'Notification')
-                ->push();
-        } else {
+        // dd([$this->movie_db, $movie]);
 
-            toast()
-                ->danger('Movie not your watchlist', 'Notification')
-                ->push();
-        }
+
+
+        $movie->delete();
+
+        toast()
+            ->success('Removed to watch list', 'Notification')
+            ->push();
+        // } else {
+
+        //     toast()
+        //         ->danger('Movie not your watchlist', 'Notification')
+        //         ->push();
+        // }
         return redirect(request()->header('Referer'));
     }
 
