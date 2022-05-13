@@ -142,8 +142,11 @@ class MovieController extends Controller
         //     ->first();
 
 
-        $movie_db = Movie::query()
-            ->where('movie_id', $identifiable)
+        $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
+            ->join('users', 'users.id', '=', 'movie_user.user_id')
+            ->select('users.*', 'movies.*', 'movie_user.watch_type')
+            ->where('movies.name',  $identifiable)
+            ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
         // $movie_db =  MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')

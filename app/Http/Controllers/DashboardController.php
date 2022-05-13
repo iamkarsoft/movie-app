@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->join('users', 'users.id', '=', 'movie_user.user_id')
             ->select('users.*', 'movies.*', 'movie_user.watch_type', 'movies.release_date')
             ->where('movies.release_date', '>=', Carbon::today())
-            // ->where('movie_user.watch_type', !Movie::Watched)
+            ->where('movie_user.watch_type', !Movie::Watched)
             ->where('movie_user.user_id', auth()->user()->id)
             ->orderBy('movies.release_date', 'ASC')
             ->get();
@@ -43,7 +43,7 @@ class DashboardController extends Controller
             ->select('users.*', 'movies.*', 'movie_user.watch_type')
             ->where('movies.next_air_date', '>=', Carbon::today())
             ->where('movie_user.watch_type', !Movie::Watched)
-            ->where('users.id', auth()->user()->id)
+            ->where('movie_user.user_id', auth()->user()->id)
             ->orderBy('movies.next_air_date', 'ASC')
             ->get();
         return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
