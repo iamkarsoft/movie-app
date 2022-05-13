@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Movie;
+use App\Models\MovieUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Models\Movie;
 
 class MovieController extends Controller
 {
@@ -119,6 +121,7 @@ class MovieController extends Controller
         $movie = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=credits,videos,images')
             ->json();
+
         if (array_key_exists('original_title', $movie)) {
             if ($movie['original_title']) {
                 $identifiable = $movie['original_title'];
@@ -132,14 +135,27 @@ class MovieController extends Controller
                 $identifiable = $movie['name'];
             }
         }
+
+        // $movie_db = MovieUser::query()
+        //     ->where('user_id', auth()->user()->id)
+        //     ->where('movie_id', $movie['id'])
+        //     ->first();
+
+
         $movie_db = Movie::query()
-            ->where('name', $identifiable)
-            ->where('id', auth()->user()->id)
-            ->orWhere('movie_id', $movie['id'])
-            ->where('id', auth()->user()->id)
+            ->where('movie_id', $identifiable)
             ->first();
 
-        dd($movie_db);
+        // $movie_db =  MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
+        //     ->join('users', 'users.id', '=', 'movie_user.user_id')
+        //     ->select('users.*', 'movies.*')
+        //     ->where('users.id', auth()->user()->id)
+        //     ->first();
+
+
+
+
+
 
         return view('movie', compact('movie', 'movie_db'));
     }

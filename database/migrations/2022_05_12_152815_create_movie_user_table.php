@@ -15,6 +15,9 @@ class CreateMovieUserTable extends Migration
     {
         Schema::create('movie_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignUuid('movie_id');
+            $table->foreignUuid('user_id');
+            $table->integer('watch_type')->default(0);
             $table->timestamps();
         });
     }

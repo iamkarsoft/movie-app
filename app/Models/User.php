@@ -39,7 +39,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function movies(){
-        return $this->hasMany(Movie::class);
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class)->withTimestamps();
     }
 }

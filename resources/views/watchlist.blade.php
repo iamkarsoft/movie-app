@@ -63,6 +63,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
+
                             @foreach ($watchlist as $item)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">

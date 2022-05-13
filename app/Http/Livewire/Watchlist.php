@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Movie;
 use Livewire\Component;
+use Illuminate\Http\Request;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Watchlist extends Component
@@ -16,7 +17,7 @@ class Watchlist extends Component
 
     protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
-    public function store()
+    public function store(Request $request)
     {
         // check if user has watch listed this movie / series
         if (array_key_exists('first_air_date', $this->watchItem)) {
@@ -25,7 +26,7 @@ class Watchlist extends Component
             $item = $this->watchItem['title'];
         }
 
-        $movie = Movie::where(['name' => $item, 'user_id' => auth()->id()])->first();
+        $movie = Movie::where('name', $item)->first();
 
         if ($movie) {
             //            session()->flash('message', 'Already on your watch list');
@@ -37,9 +38,6 @@ class Watchlist extends Component
 
 
         $watchlist = new Movie();
-        $watchlist->user_id = auth()->id();
-        $watchlist->watch_type = Movie::Watching;
-        $watchlist->movie_id = $this->watchItem['id'];
 
         if (array_key_exists('first_air_date', $this->watchItem)) {
             $watchlist->type = Movie::Series;
@@ -70,18 +68,15 @@ class Watchlist extends Component
             $watchlist->next_air_date = null;
             $watchlist->last_air_date = null;
         }
-        //            sleep(2);
-        //        session()->flash('message', 'Added to watch list');
         toast()
             ->success('Added to watch list', 'Notification')
             ->push();
         $watchlist->save();
 
+        $request->user()->movies()->syncWithoutDetaching($watchlist);
+
 
         return redirect(request()->header('Referer'));
-        // return redirect()->back();
-
-
     }
 
 

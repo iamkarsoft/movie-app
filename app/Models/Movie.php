@@ -16,20 +16,20 @@ class Movie extends Model
     const Documentary = 2;
     const Live_show = 4;
     const Award_show = 5;
-    const Talent_show= 6;
+    const Talent_show = 6;
     const Watching = 0;
     const Watched = 1;
     const Abandoned = 2;
 
 
 
-    public function users(){
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-
-
 }

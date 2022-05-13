@@ -62,15 +62,15 @@
                         @endif
 
 
-                        <livewire:update-movie-data :updatemovie="$movie"/>
+                        {{-- <livewire:update-movie-data :updatemovie="$movie"/> --}}
 
                         @auth
                             {{--                      @dd($movie_db)--}}
                             <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db" />
 
-                            @if($movie_db)
-                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
-                            @endif
+                            {{-- @if($movie_db) --}}
+                                {{-- <livewire:watch-actions :status="$movie" :movie_db="$movie_db" /> --}}
+                            {{-- @endif --}}
                         @endauth
                     </div>
 
