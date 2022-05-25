@@ -50,7 +50,7 @@ class NotifyMember extends Command
                 ->where('user_id', $user->id)
                 ->get();
 
-            if (!empty($upcomings_stuff)) {
+            if ($upcomings_stuff->count() > 0) {
 
 
                 $upcomings = [];
@@ -61,9 +61,6 @@ class NotifyMember extends Command
 
 
                 $user->notify(new ReleaseDayNotification($upcomings));
-                return 'mailed';
-            } else {
-                return 'nothing to mail';
             }
         }
     }
