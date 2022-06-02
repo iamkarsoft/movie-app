@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
-use Illuminate\Http\Request;
 use Livewire\WithPagination;
 
 class WatchlistController extends Controller

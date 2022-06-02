@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\MovieUser;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

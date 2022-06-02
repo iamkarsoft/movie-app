@@ -78,6 +78,7 @@ $rules = [
     'no_mixed_echo_print' => [
         'use' => 'echo',
     ],
+    'no_unused_imports' => true,
     'no_multiline_whitespace_around_double_arrow' => true,
     'no_short_bool_cast' => true,
     'no_singleline_whitespace_before_semicolons' => true,
