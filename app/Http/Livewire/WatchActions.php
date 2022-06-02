@@ -3,28 +3,30 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use Livewire\Component;
 use App\Models\MovieUser;
+use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class WatchActions extends Component
 {
     use WireToast;
-    public Movie $movie;
-    public $status;
-    public $watching;
-    public $movie_db;
-    public $watch_status;
-    protected $listeners = ['status' => 'watched', 'refreshStoreMovie' => '$refresh'];
 
+    public Movie $movie;
+
+    public $status;
+
+    public $watching;
+
+    public $movie_db;
+
+    public $watch_status;
+
+    protected $listeners = ['status' => 'watched', 'refreshStoreMovie' => '$refresh'];
 
     //
 
     public function watched($data)
     {
-
-
-
         if (array_key_exists('original_title', $this->status)) {
             if ($this->status['original_title']) {
                 $identifiable = $this->status['original_title'];
@@ -44,12 +46,11 @@ class WatchActions extends Component
         $watchStatus = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
             ->select('users.*', 'movies.*', 'movie_user.*')
-            ->where('movies.name',  $identifiable)
+            ->where('movies.name', $identifiable)
             ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
         if ($watchStatus->type == Movie::Movies || $watchStatus->type == Movie::Award_show || $watchStatus->type == Movie::Documentary) {
-
             $watchStatus->watch_type = $data;
         }
 
@@ -57,12 +58,10 @@ class WatchActions extends Component
             ->success('Status Updated', 'Notification')
             ->push();
 
-
         $watchStatus->save();
 
         return redirect(request()->header('Referer'));
     }
-
 
     public function render()
     {

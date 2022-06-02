@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Movie;
 use App\Models\MovieUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -25,8 +25,6 @@ class MovieController extends Controller
         $popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
         $genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
             ->json()['genres'];
-
-
 
         // $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
         //  ->get('https://api.themoviedb.org/3/movie/now_playing')
@@ -50,8 +48,6 @@ class MovieController extends Controller
         // upcoming movies
 
         $upcomingMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/upcoming')->json()['results'];
-
-
 
         return view('index', [
             'popularMovies' => $popularMovies,
@@ -119,7 +115,7 @@ class MovieController extends Controller
     public function show($id)
     {
         $movie = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=credits,videos,images')
+            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
             ->json();
 
         if (array_key_exists('original_title', $movie)) {
@@ -145,29 +141,22 @@ class MovieController extends Controller
             $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
                 ->join('users', 'users.id', '=', 'movie_user.user_id')
                 ->select('users.*', 'movies.*', 'movie_user.*')
-                ->where('movies.name',  $identifiable)
+                ->where('movies.name', $identifiable)
                 ->where('movie_user.user_id', auth()->user()->id)
-                ->first();
-        else :
+                ->first(); else :
 
             $movie_db = Movie::query()
-                ->where('movies.name',  $identifiable);
+                ->where('movies.name', $identifiable);
 
         endif;
 
         // dd($movie_db);
-
 
         // $movie_db =  MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
         //     ->join('users', 'users.id', '=', 'movie_user.user_id')
         //     ->select('users.*', 'movies.*')
         //     ->where('users.id', auth()->user()->id)
         //     ->first();
-
-
-
-
-
 
         return view('movie', compact('movie', 'movie_db'));
     }

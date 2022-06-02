@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Webpatser\Uuid\Uuid;
 
-
 trait Uuids
 {
     /**

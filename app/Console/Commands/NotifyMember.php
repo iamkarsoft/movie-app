@@ -39,7 +39,6 @@ class NotifyMember extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle(Movie $movie)
     {
@@ -51,14 +50,11 @@ class NotifyMember extends Command
                 ->get();
 
             if ($upcomings_stuff->count() > 0) {
-
-
                 $upcomings = [];
 
                 foreach ($upcomings_stuff as $upcoming) {
                     $upcomings[] = $upcoming;
                 }
-
 
                 $user->notify(new ReleaseDayNotification($upcomings));
             }

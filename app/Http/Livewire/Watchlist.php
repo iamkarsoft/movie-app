@@ -3,18 +3,20 @@
 namespace App\Http\Livewire;
 
 use App\Models\Movie;
-use Livewire\Component;
 use App\Models\MovieUser;
 use Illuminate\Http\Request;
+use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Watchlist extends Component
 {
     use WireToast;
-    public Movie $movie;
-    public $watchItem;
-    public $movie_db;
 
+    public Movie $movie;
+
+    public $watchItem;
+
+    public $movie_db;
 
     protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
@@ -31,7 +33,7 @@ class Watchlist extends Component
         $user_movie = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
             ->select('users.*', 'movies.*', 'movie_user.*')
-            ->where('movies.name',  $item)
+            ->where('movies.name', $item)
             ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
@@ -40,10 +42,11 @@ class Watchlist extends Component
             toast()
                 ->info('Already on your watch list...', 'Notification')
                 ->push();
+
             return;
         }
 
-        if (!$movie) {
+        if (! $movie) {
             $watchlist = new Movie();
 
             if (array_key_exists('first_air_date', $this->watchItem)) {
@@ -85,10 +88,8 @@ class Watchlist extends Component
 
         $request->user()->movies()->syncWithoutDetaching($watchlist);
 
-
         return redirect(request()->header('Referer'));
     }
-
 
     public function destroy(Request $request)
     {
@@ -96,17 +97,14 @@ class Watchlist extends Component
         //     ->orWhere('movie_id', $this->movie_db->movie_id)
         //     ->first();
 
-
         $movie = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
             ->select('users.*', 'movies.*', 'movie_user.*')
-            ->where('movie_user.movie_id',  $this->movie_db->movie_id)
+            ->where('movie_user.movie_id', $this->movie_db->movie_id)
             ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
         // dd([$this->movie_db, $movie]);
-
-
 
         $movie->delete();
 
@@ -121,7 +119,6 @@ class Watchlist extends Component
         // }
         return redirect(request()->header('Referer'));
     }
-
 
     public function render()
     {

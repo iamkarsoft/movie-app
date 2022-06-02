@@ -8,9 +8,8 @@ use Livewire\Component;
 class UpdateMovieData extends Component
 {
     public Movie $movie;
+
     public $updatemovie;
-
-
 
     // public function mount()
     // {
@@ -44,7 +43,6 @@ class UpdateMovieData extends Component
     //         $movie_to_update->save();
     //     }
     // }
-
 
     public function render()
     {

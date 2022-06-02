@@ -39,6 +39,7 @@ class UpdateDb extends Command
     {
         $controller = app()->make('App\Http\Controllers\UpdateMoviesController');
         app()->call($controller);
+
         return 0;
     }
 }

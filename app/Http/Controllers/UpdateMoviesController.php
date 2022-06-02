@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Movie;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -19,12 +19,7 @@ class UpdateMoviesController extends Controller
     {
         //
 
-
-
-
         $movies = Movie::get();
-
-
 
         foreach ($movies as $movie) {
             if ($movie->type == 0) {
@@ -43,15 +38,13 @@ class UpdateMoviesController extends Controller
                     ->get("https://api.themoviedb.org/3/tv/{$movie->movie_id}")
                     ->json();
 
-
-
                 if (array_key_exists('last_episode_to_air', $tv_request)) {
                     $movie->last_air_date = $tv_request['last_episode_to_air']['air_date'];
 
                     if (isset($tv_request['next_episode_to_air']['air_date'])) {
                         $movie->next_air_date = $tv_request['next_episode_to_air']['air_date'];
                     } else {
-                        $movie->next_air_date = Null;
+                        $movie->next_air_date = null;
                     }
                 }
             }

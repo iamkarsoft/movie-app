@@ -9,6 +9,5 @@ class MovieUser extends Model
 {
     use HasFactory;
 
-
-    protected $table = "movie_user";
+    protected $table = 'movie_user';
 }

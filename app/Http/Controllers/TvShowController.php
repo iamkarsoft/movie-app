@@ -36,10 +36,11 @@ class TvShowController extends Controller
             'tvGenres' => $tvGenres,
         ]);
     }
+
     public function show($id)
     {
         $tv = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/tv/' . $id . '?append_to_response=credits,videos,images,')
+            ->get('https://api.themoviedb.org/3/tv/'.$id.'?append_to_response=credits,videos,images,')
             ->json();
 
         // dd($tv);
@@ -53,13 +54,12 @@ class TvShowController extends Controller
             $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
                 ->join('users', 'users.id', '=', 'movie_user.user_id')
                 ->select('users.*', 'movies.*', 'movie_user.*')
-                ->where('movies.name',  $identifiable)
+                ->where('movies.name', $identifiable)
                 ->where('movie_user.user_id', auth()->user()->id)
-                ->first();
-        else :
+                ->first(); else :
 
             $movie_db = Movie::query()
-                ->where('movies.name',  $identifiable);
+                ->where('movies.name', $identifiable);
 
         endif;
 

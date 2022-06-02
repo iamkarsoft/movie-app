@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class WatchlistController extends Controller
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
 
     public function index($filter = null)

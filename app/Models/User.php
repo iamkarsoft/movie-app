@@ -9,7 +9,6 @@ class User extends Authenticatable
 {
     use Notifiable, Uuids;
 
-
     public $incrementing = false;
 
     /**
