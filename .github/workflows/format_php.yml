@@ -1,19 +1,18 @@
 name: Format (PHP)
 
-
 on:
   push:
     branches:
-      - 'master'
+      - "master"
 
   pull_request:
     paths:
-      - '**.php'
-      - '**.blade.php'
+      - "**.php"
+      - "**.blade.php"
 
 jobs:
   php-cs-fixer:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
