@@ -1,29 +1,28 @@
 name: Format (PHP)
 
 on:
-  push:
-    branches:
-      - "master"
-
-  pull_request:
-    paths:
-      - "**.php"
-      - "**.blade.php"
+    push:
+        branches:
+            - 'master'
+    pull_request:
+        paths:
+            - '**.php'
+            - '*.blade.php'
 
 jobs:
-  php-cs-fixer:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
+    php-cs-fixer:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.head_ref }}
 
-    - name: Install
-      run: composer install --ignore-platform-reqs
+            - name: Install
+              run: composer install
 
-    - name: Run php-cs-fixer
-      run: ./vendor/bin/php-cs-fixer fix
+            - name: Run php-cs-fixer
+              run: ./vendor/bin/php-cs-fixer fix
 
-    - users: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Apply php-cs-fixer changes
+            - uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: Apply php-cs-fixer changes
