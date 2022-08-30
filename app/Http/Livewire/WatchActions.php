@@ -50,7 +50,6 @@ class WatchActions extends Component
             ->where('movie_user.user_id', auth()->user()->id)
             ->first();
 
-
         if ($watchStatus) {
             $watchStatus->watch_type = $data;
         }
@@ -59,7 +58,7 @@ class WatchActions extends Component
             ->success('Status Updated', 'Notification')
             ->push();
 
-        ray( $watchStatus->watch_type,$watchStatus);
+        ray($watchStatus->watch_type, $watchStatus);
 
         $watchStatus->save();
 
