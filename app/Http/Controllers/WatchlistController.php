@@ -17,7 +17,7 @@ class WatchlistController extends Controller
             $watchlist = auth()->user()->movies()->latest('next_air_date')->where('watch_type', $filter)->paginate(10);
             $watchlist = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type', 'movies.movie_id as movie_id')
+            ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type' )
             ->where('movie_user.user_id', auth()->user()->id)
                  ->latest('next_air_date')->where('watch_type', $filter)
             ->paginate(10);
@@ -25,7 +25,7 @@ class WatchlistController extends Controller
 //            $watchlist = auth()->user()->movies()->latest('next_air_date')->paginate(10);
             $watchlist = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.*', 'movies.movie_id as movie_id')
+            ->select('users.*', 'movies.*', 'movie_user.*')
             ->where('movie_user.user_id', auth()->user()->id)
               ->latest('next_air_date')
             ->paginate(10);
