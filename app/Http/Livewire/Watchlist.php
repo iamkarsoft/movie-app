@@ -20,18 +20,18 @@ class Watchlist extends Component
 
     protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
-    public function mount(){
-
-         if (array_key_exists('first_air_date', $this->watchItem)) {
+    public function mount()
+    {
+        if (array_key_exists('first_air_date', $this->watchItem)) {
             $item = $this->watchItem['original_name'];
         } else {
             $item = $this->watchItem['title'];
         }
         $movie = Movie::where('name', $item)->first();
 
-        if($movie && blank($movie->movie_id)){
+        if ($movie && blank($movie->movie_id)) {
             $movie->update([
-                'movie_id'=> $this->watchItem['id']
+                'movie_id'=> $this->watchItem['id'],
             ]);
         }
     }
@@ -55,8 +55,6 @@ class Watchlist extends Component
 
         if ($user_movie) {
             //            session()->flash('message', 'Already on your watch list');
-
-
             toast()
                 ->info('Already on your watch list...', 'Notification')
                 ->push();
@@ -77,8 +75,7 @@ class Watchlist extends Component
                 }
                 $watchlist->release_date = $this->watchItem['first_air_date'];
 
-                //            dd($this->watchItem);
-                if (blank($this->watchItem['next_episode_to_air']) ) {
+                if (blank($this->watchItem['next_episode_to_air'])) {
                     $watchlist->next_air_date = null;
                 } else {
                     $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'];
