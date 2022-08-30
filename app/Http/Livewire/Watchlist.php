@@ -20,6 +20,22 @@ class Watchlist extends Component
 
     protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy'];
 
+    public function mount(){
+
+         if (array_key_exists('first_air_date', $this->watchItem)) {
+            $item = $this->watchItem['original_name'];
+        } else {
+            $item = $this->watchItem['title'];
+        }
+        $movie = Movie::where('name', $item)->first();
+
+        if($movie && blank($movie->movie_id)){
+            $movie->update([
+                'movie_id'=> $this->watchItem['id']
+            ]);
+        }
+    }
+
     public function store(Request $request)
     {
         // check if user has watch listed this movie / series
@@ -39,6 +55,8 @@ class Watchlist extends Component
 
         if ($user_movie) {
             //            session()->flash('message', 'Already on your watch list');
+
+
             toast()
                 ->info('Already on your watch list...', 'Notification')
                 ->push();
@@ -60,13 +78,13 @@ class Watchlist extends Component
                 $watchlist->release_date = $this->watchItem['first_air_date'];
 
                 //            dd($this->watchItem);
-                if ($this->watchItem['next_episode_to_air'] == null) {
+                if (blank($this->watchItem['next_episode_to_air']) ) {
                     $watchlist->next_air_date = null;
                 } else {
                     $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'];
                 }
 
-                if ($this->watchItem['last_episode_to_air']['air_date'] == null) {
+                if (blank($this->watchItem['last_episode_to_air']) || blank($this->watchItem['last_air_date'])) {
                     $watchlist->last_air_date = null;
                 } else {
                     $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'];
@@ -75,6 +93,7 @@ class Watchlist extends Component
                 $watchlist->release_date = $this->watchItem['release_date'];
                 $watchlist->type = Movie::Movies;
                 $watchlist->name = $this->watchItem['title'];
+                $watchlist->movie_id = $this->watchItem['id'];
                 $watchlist->next_air_date = null;
                 $watchlist->last_air_date = null;
             }

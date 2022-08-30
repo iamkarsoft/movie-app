@@ -30,6 +30,8 @@ class Movie extends Model
 
     const Abandoned = 2;
 
+    public $guarded = [];
+
     public function users()
     {
         return $this->hasMany(User::class);

@@ -68,7 +68,6 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="font-bold">
-
                                             @if ($item['type'] == 0)
                                                 <a href="{{ URL::to('/movie/' . $item['movie_id']) }}"
                                                     target="_blank">{{ $item['name'] }}</a>
@@ -87,11 +86,8 @@
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         {{ $item['next_air_date'] }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $item['updated_at'] }}
-                                    </td>
 
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                      <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         @if ($item['watch_type'] == 0)
                                             <span class="">Watching</span>
                                         @elseif($item['watch_type'] == 1)
@@ -100,6 +96,12 @@
                                             <span>Abandoned</span>
                                         @endif
                                     </td>
+
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        {{ $item['updated_at'] }}
+                                    </td>
+
+
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <a class="text-indigo-600 hover:text-indigo-900" href="#">Edit</a>
                                     </td>
