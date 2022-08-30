@@ -1,5 +1,5 @@
- <div class="mt-8">
 
+<div class="mt-8">
     <a href="{{route('tv.show',$tv['id'])}}">
       <img src="{{'https://image.tmdb.org/t/p/w500/'.$tv['poster_path']}}" alt="">
 
