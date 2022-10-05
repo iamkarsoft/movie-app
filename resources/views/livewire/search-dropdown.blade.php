@@ -20,6 +20,7 @@
             >
             @if($searchResults->count()>0 || $searchTvResults->count()>0)
               @if($searchResults->count() >0)
+                <h3 class="text-xl text-bold my-2">Movies</h3>
                 <ul>
                     <li class="border-b border-gray-700  px-4">
                       @foreach($searchResults as $result)
@@ -40,6 +41,7 @@
                 </ul>
                 @endif
                 @if($searchTvResults->count() >0)
+                <h3 class="text-xl text-bold my-2">Series</h3>
                  <ul>
                     <li class="border-b border-gray-700  px-4">
                       @foreach($searchTvResults as $result)
