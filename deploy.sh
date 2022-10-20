@@ -13,7 +13,7 @@ echo "Deploying application ..."
     composer install --no-interaction --prefer-dist --optimize-autoloader
 
     # Migrate database
-    php artisan migrate --force
+    # php artisan migrate --force
 
     # Note: If you're using queue workers, this is the place to restart them.
     # ...
