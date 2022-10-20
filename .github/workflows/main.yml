@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        script: 'cd /var/www/movieapp.kofi.work'
+        script: 'cd /var/www/movieapp.kofi.work/public_html'
 
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
