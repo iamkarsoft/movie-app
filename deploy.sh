@@ -14,7 +14,8 @@ echo "Deploying application ..."
     # composer install --no-interaction --prefer-dist --optimize-autoloader
     composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     # Migrate database
-    php artisan migrate
+    composer dump-autoload
+    # php artisan migrate --force
 
     # Note: If you're using queue workers, this is the place to restart them.
     # ...
