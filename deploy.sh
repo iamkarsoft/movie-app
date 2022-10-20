@@ -12,9 +12,9 @@ echo "Deploying application ..."
 
     # Install dependencies based on lock file
     # composer install --no-interaction --prefer-dist --optimize-autoloader
-
+    composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     # Migrate database
-    # php artisan migrate --force
+    php artisan migrate
 
     # Note: If you're using queue workers, this is the place to restart them.
     # ...
