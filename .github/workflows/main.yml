@@ -16,10 +16,20 @@ jobs:
 #         - 14
     #name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
+
     - uses: actions/checkout@v2
 
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: 'cd /var/www/movieapp.kofi.work/public_html && ./deploy.sh'
 
 
 
