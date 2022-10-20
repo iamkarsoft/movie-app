@@ -12,16 +12,16 @@ echo "Deploying application ..."
 
     # Install dependencies based on lock file
     # composer install --no-interaction --prefer-dist --optimize-autoloader
-    composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    composer install -q --no-interaction --prefer-dist
     # Migrate database
-    composer dump-autoload
+
     # php artisan migrate --force
 
     # Note: If you're using queue workers, this is the place to restart them.
     # ...
 
     # Clear cache
-    # php artisan optimize
+    php artisan optimize
 
     # Reload PHP to update opcache
     #echo "" | sudo -S service php7.4-fpm reload
