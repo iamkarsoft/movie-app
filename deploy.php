@@ -23,7 +23,7 @@ set('allow_anonymous_stats', false);
 // Hosts
 
 host('167.71.17.50')
-    ->set('remote_user','user')
+    ->set('remote_user','root')
     ->set('deploy_path', '/var/www/movieapp.kofi.work/public_html');
     
 // Tasks
