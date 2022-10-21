@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="mt-5 w-full mx-auto px-4 lg:w-4/5 mb-14 my-6">
-            <h3 class="my-8 px-4 text-4xl font-extrabold text-red-700">Upcoming Releases</h3>
+            <h3 class="my-8 px-4 text-4xl font-extrabold text-red-700">Upcoming Releases Next Month</h3>
             <div class="flex flex-col mt-6 w-full px-4">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
