@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -116,12 +115,10 @@ class MovieController extends Controller
             ->json();
 
         if (array_key_exists('original_title', $movie)) {
-
             $identifiable = $movie['original_name'] ?? $movie['title'];
         } else {
             $identifiable = $movie['original_name'] ?? $movie['name'];
         }
-
 
         if (auth()->user()) :
             $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')

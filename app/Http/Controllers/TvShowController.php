@@ -51,8 +51,7 @@ class TvShowController extends Controller
                 ->select('users.*', 'movies.*', 'movie_user.*')
                 ->where('movies.name', $identifiable)
                 ->where('movie_user.user_id', auth()->user()->id)
-                ->first();
-        else :
+                ->first(); else :
 
             $movie_db = Movie::query()
                 ->where('movies.name', $identifiable);
