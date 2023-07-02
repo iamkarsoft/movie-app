@@ -116,23 +116,12 @@ class MovieController extends Controller
             ->json();
 
         if (array_key_exists('original_title', $movie)) {
-            if ($movie['original_title']) {
-                $identifiable = $movie['original_title'];
-            } else {
-                $identifiable = $movie['title'];
-            }
+
+            $identifiable = $movie['original_name'] ?? $movie['title'];
         } else {
-            if ($movie['original_name']) {
-                $identifiable = $movie['original_name'];
-            } else {
-                $identifiable = $movie['name'];
-            }
+            $identifiable = $movie['original_name'] ?? $movie['name'];
         }
 
-        // $movie_db = MovieUser::query()
-        //     ->where('user_id', auth()->user()->id)
-        //     ->where('movie_id', $movie['id'])
-        //     ->first();
 
         if (auth()->user()) :
             $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
@@ -144,16 +133,7 @@ class MovieController extends Controller
 
             $movie_db = Movie::query()
                 ->where('movies.name', $identifiable);
-
         endif;
-
-        // dd($movie_db);
-
-        // $movie_db =  MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
-        //     ->join('users', 'users.id', '=', 'movie_user.user_id')
-        //     ->select('users.*', 'movies.*')
-        //     ->where('users.id', auth()->user()->id)
-        //     ->first();
 
         return view('movie', compact('movie', 'movie_db'));
     }

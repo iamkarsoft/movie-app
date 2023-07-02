@@ -43,12 +43,7 @@ class TvShowController extends Controller
             ->get('https://api.themoviedb.org/3/tv/'.$id.'?append_to_response=credits,videos,images,')
             ->json();
 
-        // dd($tv);
-        if ($tv['original_name']) {
-            $identifiable = $tv['original_name'];
-        } else {
-            $identifiable = $tv['name'];
-        }
+        $identifiable = $tv['original_name'] ?? $tv['name'];
 
         if (auth()->user()) :
             $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
@@ -56,7 +51,8 @@ class TvShowController extends Controller
                 ->select('users.*', 'movies.*', 'movie_user.*')
                 ->where('movies.name', $identifiable)
                 ->where('movie_user.user_id', auth()->user()->id)
-                ->first(); else :
+                ->first();
+        else :
 
             $movie_db = Movie::query()
                 ->where('movies.name', $identifiable);
