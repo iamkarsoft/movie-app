@@ -23,6 +23,6 @@ class ShowCard extends Component
      */
     public function render()
     {
-        return view('components.show-card');
+        return view('components.tv-card');
     }
 }
