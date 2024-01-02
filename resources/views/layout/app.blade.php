@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <livewire:styles>
+    <livewire:styles />
 
-        </head>
+</head>
 <body class="font-sans bg-gray-900 text-white">
  @toastScripts
 <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
