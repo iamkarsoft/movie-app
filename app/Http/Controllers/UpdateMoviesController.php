@@ -26,7 +26,6 @@ class UpdateMoviesController extends Controller
                 $movie_request = Http::withToken(config('services.tmdb.token'))
                     ->get("https://api.themoviedb.org/3/movie/{$movie->movie_id}")
                     ->json();
-                // dd($movie_request);
 
                 if (array_key_exists('release_date', $movie_request)) {
                     $movie->release_date = $movie_request['release_date'];
@@ -48,7 +47,6 @@ class UpdateMoviesController extends Controller
                     }
                 }
             }
-            dump($movie->name);
             $movie->updated_at = Carbon::now();
             $movie->save();
         }
