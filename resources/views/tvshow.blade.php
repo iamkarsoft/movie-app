@@ -41,6 +41,18 @@
                     </ul>
                 </div>
 
+                <div class="mt-6">
+                        @auth
+                            @if(!is_null($movie_db) && $movie_db['type'] == 1)
+                                <h2 class="text-xl">Last Episode</h2>
+
+                                <livewire:modals.update-episodes :movie_db="$movie_db" />
+
+                            @endif
+
+                        @endauth
+                </div>
+
 
                 <div class="mt-12">
                     <h4 class="font-semibold text-white">Cast</h4>
@@ -71,15 +83,16 @@
                             </button>
                         @endif
 
-                            @auth
-                                {{--                      @dd($movie_db)--}}
-                                <livewire:watchlist :watchItem="$tv" :movie_db="$movie_db"/>
-                                <livewire:update-movie-data :updatemovie="$tv"/>
-                                @if($movie_db)
-                                    <livewire:watch-actions :status="$tv" :movie_db="$movie_db"/>
-                                @endif
-                            @endauth
+                        @auth
+                            <livewire:watchlist :watchItem="$tv" :movie_db="$movie_db"/>
+                            <livewire:update-movie-data :updatemovie="$tv"/>
+                            @if($movie_db)
+                                <livewire:watch-actions :status="$tv" :movie_db="$movie_db"/>
+                            @endif
+                        @endauth
                         </div>
+
+
 
 
 
