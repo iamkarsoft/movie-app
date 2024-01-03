@@ -40,8 +40,6 @@ class UpdateEpisodes extends Component
         $this->movie_db['season'] = $this->season;
         $this->movie_db->save();
         $this->closeModal();
-
-        ray($this->movie_db);
     }
 
     public function render()
