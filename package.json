@@ -13,7 +13,7 @@
         "@tailwindcss/forms": "^0.4.0",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
-        "axios": "^0.21",
+        "axios": "^0.28",
         "browser-sync": "^2.29.3",
         "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^7.0",
