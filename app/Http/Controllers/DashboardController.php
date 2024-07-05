@@ -1,48 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Movie;
-use App\Models\MovieUser;
-use Carbon\Carbon;
+    use App\Models\Movie;
+    use App\Models\MovieUser;
+    use Carbon\Carbon;
 
-class DashboardController extends Controller
-{
-    //
-    public function index()
+    class DashboardController extends Controller
     {
-        // $upcomings = MovieUser::query()
-        //     ->where('release_date', '>=', Carbon::today())
-        //     ->where('user_id', auth()->id())
-        //     ->where('watch_type', !Movie::Watched)
-        //     ->orderBy('release_date', 'ASC')
-        //     ->get();
+        //
+        public function index()
+        {
+            $userId = auth()->id();
+            $today = Carbon::today();
 
-        $upcomings = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
-            ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.watch_type', 'movies.release_date')
-            ->where('movies.release_date', '>=', Carbon::today())
-            ->where('movie_user.watch_type', ! Movie::Watched)
-            ->where('movie_user.user_id', auth()->user()->id)
-            ->orderBy('movies.release_date', 'ASC')
-            ->get();
+            $upcomings = Movie::select('movies.*', 'movie_user.watch_type')
+                ->join('movie_user', 'movies.id', '=', 'movie_user.movie_id')
+                ->where('movies.release_date', '>=', $today)
+                ->where('movie_user.watch_type', '!=', Movie::Watched)
+                ->where('movie_user.watch_type', '!=', Movie::Abandoned)
+                ->where('movie_user.user_id', $userId)
+                ->orderBy('movies.release_date', 'ASC')
+                ->get();
 
-        // $episodes = Movie::query()
-        //     ->where('next_air_date', '>=', Carbon::today())
-        //     ->where('user_id', auth()->id())
-        //     ->where('watch_type', !Movie::Watched)
-        //     ->orderBy('next_air_date', 'ASC')
-        //     ->get();
-
-        $episodes = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
-            ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.watch_type')
-            ->where('movies.next_air_date', '>=', Carbon::today())
-            ->where('movie_user.watch_type', ! Movie::Watched)
-            ->where('movie_user.user_id', auth()->user()->id)
-            ->orderBy('movies.next_air_date', 'ASC')
-            ->get();
-
-        return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
+            $episodes = Movie::select('movies.*', 'movie_user.watch_type')
+                ->join('movie_user', 'movies.id', '=', 'movie_user.movie_id')
+                ->where('movies.next_air_date', '>=', $today)
+                ->where('movie_user.watch_type', '!=', Movie::Watched)
+                ->where('movie_user.watch_type', '!=', Movie::Abandoned)
+                ->where('movie_user.user_id', $userId)
+                ->orderBy('movies.next_air_date', 'ASC')
+                ->get();
+            return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
+        }
     }
-}

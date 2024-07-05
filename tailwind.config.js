@@ -1,5 +1,5 @@
 const colors = require('tailwindcss/colors')
-
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
     mode: 'jit',
     content: [
@@ -9,8 +9,12 @@ module.exports = {
         './vendor/usernotnull/tall-toasts/config/**/*.php',
         './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
     ],
-    theme: {
-        extend: {},
-    },
+   theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+          },
+        },
+      },
     plugins: [],
 }

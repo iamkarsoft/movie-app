@@ -58,8 +58,6 @@ class WatchActions extends Component
             ->success('Status Updated', 'Notification')
             ->push();
 
-        ray($watchStatus->watch_type, $watchStatus);
-
         $watchStatus->save();
 
         return redirect(request()->header('Referer'));

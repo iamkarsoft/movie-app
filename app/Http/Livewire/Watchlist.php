@@ -22,6 +22,8 @@ class Watchlist extends Component
 
     public function mount()
     {
+
+
         if (array_key_exists('first_air_date', $this->watchItem)) {
             $item = $this->watchItem['original_name'];
         } else {
