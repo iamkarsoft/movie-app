@@ -32,7 +32,7 @@
             {{-- <li class="ml-6"><a href="">Actors</a></li> --}}
         </ul>
         <div class="flex items-center">
-            <livewire:search-dropdown>
+            <livewire:search-dropdown />
                 <div class="ml-4 hidden md:flex">
                     @auth
                         <div x-data="{show: false}" class="relative">
@@ -62,18 +62,13 @@
                                 </form>
                             </div>
                         </div>
-
                     @else
-
                         <div class="flex">
-
                             <a href="{{route('login')}}" class="mx-2">Login</a>
                             <a href="{{route('register')}}" class="mx-2">register</a>
                         </div>
-
                     @endif
                 </div>
-
         </div>
     </div>
 </nav>
