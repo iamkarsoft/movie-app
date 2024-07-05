@@ -1,9 +1,8 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
     use App\Models\Movie;
-    use App\Models\MovieUser;
     use Carbon\Carbon;
 
     class DashboardController extends Controller
@@ -31,6 +30,7 @@
                 ->where('movie_user.user_id', $userId)
                 ->orderBy('movies.next_air_date', 'ASC')
                 ->get();
+
             return view('dashboard', ['upcomings' => $upcomings, 'episodes' => $episodes]);
         }
     }
