@@ -20,7 +20,7 @@
         "monolog/monolog": "^2.4",
         "s-ichikawa/laravel-sendgrid-driver": "2.1.1",
         "spatie/laravel-ray": "^1.30",
-        "spatie/ray": "^1.37",
+        "spatie/ray": "^1.41",
         "usernotnull/tall-toasts": "^1.4",
         "webpatser/laravel-uuid": "^4.0"
     },

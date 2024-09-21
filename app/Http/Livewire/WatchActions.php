@@ -27,21 +27,9 @@ class WatchActions extends Component
 
     public function watched($data)
     {
-        if (array_key_exists('original_title', $this->status)) {
-            if ($this->status['original_title']) {
-                $identifiable = $this->status['original_title'];
-            } else {
-                $identifiable = $this->status['title'];
-            }
-        } elseif (array_key_exists('original_name', $this->status)) {
-            if ($this->status['original_name']) {
-                $identifiable = $this->status['original_name'];
-            } else {
-                $identifiable = $this->status['name'];
-            }
-        }
 
-        // $watchStatus = Movie::where('name', $identifiable)->first();
+        $identifiable = $this->status['original_title'] ?? $this->status['title'] ??
+                $this->status['original_name'] ?? $this->status['name'] ?? null;
 
         $watchStatus = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
@@ -60,7 +48,8 @@ class WatchActions extends Component
 
         $watchStatus->save();
 
-        return redirect(request()->header('Referer'));
+        $this->emit('refreshStoreMovie');
+
     }
 
     public function render()

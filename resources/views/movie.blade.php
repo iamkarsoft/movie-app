@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
     @php
-       $searchTitle = urlencode(\Str::slug($movie['title'], '%20'));
+        $searchTitle = urlencode(\Str::slug($movie['title'], '%20'));
     @endphp
     <div class="border-b border-gray-800 movie-info">
         <div class="container flex flex-col px-4 py-16 mx-auto md:flex-row">
@@ -48,11 +48,10 @@
                     </div>
                 </div>
                 <div x-data="{isOpen : false }">
-                    <div class="flex mt-12 ">
-
+                    <div class="flex gap-2 mt-12">
                         @if(count($movie['videos']['results']) > 0)
                             <button @click=" isOpen = true"
-                                    class="inline-flex items-center px-4 py-4 mx-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
+                                    class="inline-flex items-center px-4 py-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round"
                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
                                      class="w-6 h-6">
@@ -68,33 +67,36 @@
                         <livewire:update-movie-data :updatemovie="$movie"/>
 
                         @auth
-                            <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db" />
+                            <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db"/>
 
                             @if($movie_db)
-                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
+                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db"/>
                             @endif
                         @endauth
 
                     </div>
 
-        <div class="mt-4 text-gray-400 text-sm flex gap-2 my-2">
-            <a href="https://lookmovie2.to/movies/search/?q={{$searchTitle}}" target="_blank" class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>Viewing Option 1</span>
-            </a> &nbsp;
+                    <div class="mt-4 text-gray-400 text-sm flex gap-2 my-2">
+                        <a href="https://lookmovie2.to/movies/search/?q={{$searchTitle}}"
+                           target="_blank" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-6 text-red-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z"/>
+                            </svg>
+                            <span>1</span>
+                        </a> &nbsp;
 
-            <a href="https://sflix.to/search/{{\Str::kebab($movie['title'])}}" target="_blank" class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>Viewing Option 2</span>
-            </a>
-        </div>
-
+                        <a href="https://sflix.to/search/{{\Str::kebab($movie['title'])}}"
+                           target="_blank" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-6 text-red-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z"/>
+                            </svg>
+                            <span>2</span>
+                        </a>
+                    </div>
 
                     <!-- modal -->
                     <div
@@ -126,7 +128,6 @@
 
                     </div> <!-- modal end -->
                 </div>
-
             </div>
         </div>
 

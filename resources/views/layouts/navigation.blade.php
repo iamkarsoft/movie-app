@@ -26,10 +26,10 @@
                      <x-nav-link :href="route('watchlist')" :active="request()->routeIs('watchlist')">
                         {{ __('Watch List') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('movie.list')" >
+                    <x-nav-link target="_blank" :href="route('movie.list')" >
                         {{ __('Movies') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('tv.list')" >
+                    <x-nav-link target="_blank" :href="route('tv.list')" >
                         {{ __('Tv Shows') }}
                     </x-nav-link>
                 </div>
