@@ -11,21 +11,25 @@ class Watchlist extends Component
 {
     use WireToast;
 
-    public Movie $movie;
     public $watchItem;
     public $movie_db;
-    protected $listeners = ['watchItem' => 'store', 'movie_db' => 'destroy', 'refreshComponent' => '$refresh'];
+    public $isInWatchlist = false;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount()
     {
         $this->updateWatchlistStatus();
     }
 
-    public function updateWatchlistStatus(): void
+    public function updateWatchlistStatus()
     {
-        $item = array_key_exists('first_air_date', $this->watchItem)
-            ? $this->watchItem['original_name']
-            : $this->watchItem['title'];
+        if (!$this->watchItem) {
+            $this->isInWatchlist = false;
+            return;
+        }
+
+        $item = $this->getItemName();
 
         $movie = Movie::where('name', $item)->first();
 
@@ -36,7 +40,7 @@ class Watchlist extends Component
         }
     }
 
-    public function toggleWatchlist(): void
+    public function toggleWatchlist()
     {
         if (!auth()->check()) {
             toast()
@@ -45,9 +49,14 @@ class Watchlist extends Component
             return;
         }
 
-        $item = array_key_exists('first_air_date', $this->watchItem)
-            ? $this->watchItem['original_name']
-            : $this->watchItem['title'];
+        if (!$this->watchItem) {
+            toast()
+                ->error('Unable to add to watchlist. Please try again.', 'Error')
+                ->push();
+            return;
+        }
+
+        $item = $this->getItemName();
 
         $movie = Movie::where('name', $item)->first();
 
@@ -94,8 +103,14 @@ class Watchlist extends Component
         }
 
         $watchlist->save();
-        ray($watchlist);
         return $watchlist;
+    }
+
+    private function getItemName()
+    {
+        return isset($this->watchItem['first_air_date'])
+            ? ($this->watchItem['original_name'] ?? $this->watchItem['name'])
+            : ($this->watchItem['title'] ?? '');
     }
 
     public function render()

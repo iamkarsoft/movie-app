@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WatchlistController;
+use App\Http\Livewire\MovieWatchList;
 use App\Http\Livewire\Watchlist;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::get('tvshow', 'TvShowController@index')->name('tv.list');
 
 // WatchListing routes
 Route::get('/watchlist/{filter?}', [WatchlistController::class, 'index'])->name('watchlist');
+
 Route::post('/watchlist/add', [Watchlist::class])->name('watchlist.add');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');

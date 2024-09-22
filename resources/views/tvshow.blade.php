@@ -42,15 +42,15 @@
                 </div>
 
                 <div class="mt-6">
-                        @auth
-                            @if(!is_null($movie_db) && $movie_db['type'] == 1)
-                                <h2 class="text-xl">Last Episode</h2>
+                    @auth
+                        @if(!is_null($movie_db) && $movie_db['type'] == 1)
+                            <h2 class="text-xl">Last Episode</h2>
 
-                                <livewire:modals.update-episodes :movie_db="$movie_db" />
+                            <livewire:modals.update-episodes :movie_db="$movie_db" />
 
-                            @endif
+                        @endif
 
-                        @endauth
+                    @endauth
                 </div>
 
                 <div>

@@ -17,9 +17,9 @@
                   </svg><span>Filter Movies</span></button>
                 <ul x-show="filter" x-on:click.away="filter=false" class="absolute z-50 w-40 bg-gray-100 border-t-2 border-slate-200 lg:mt-2 lg:left-0">
                     <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a href="{{ route('watchlist') }}" class="block">All</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 1) }}"" class="block ">Watched</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 0) }}"" class="block ">Watching</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a href="{{ route('watchlist', 2) }}"" class="block ">Abandonned</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 1) }}" class="block ">Watched</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 0) }}" class="block ">Watching</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a href="{{ route('watchlist', 2) }}" class="block ">Abandonned</a></li>
                 </ul>
 
             </div>
@@ -117,7 +117,6 @@
             {{ $watchlist->links() }}
 
         </div>
-    </div>
     </div>
 
 </x-app-layout>
