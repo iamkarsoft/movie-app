@@ -37,7 +37,7 @@ class UpdateDb extends Command
      */
     public function handle()
     {
-        $controller = app()->make('App\Http\Controllers\UpdateMoviesController');
+        $controller = app()->make(\App\Http\Controllers\UpdateMoviesController::class);
         app()->call($controller);
 
         return 0;
