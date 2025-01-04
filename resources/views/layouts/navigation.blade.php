@@ -26,9 +26,9 @@
                      <x-nav-link :href="route('watchlist')" :active="request()->routeIs('watchlist')">
                         {{ __('Watch List') }}
                     </x-nav-link>
-                     <x-nav-link :href="route('watchlist.two')" :active="request()->routeIs('watchlist-2')">
-                        {{ __('Watch List 2') }}
-                    </x-nav-link>
+{{--                     <x-nav-link :href="route('watchlist.two')" :active="request()->routeIs('watchlist-2')">--}}
+{{--                        {{ __('Watch List 2') }}--}}
+{{--                    </x-nav-link>--}}
                     <x-nav-link target="_blank" :href="route('movie.list')" >
                         {{ __('Movies') }}
                     </x-nav-link>
