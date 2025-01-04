@@ -11,11 +11,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <livewire:styles />
-
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans bg-gray-900 text-white">
  @toastScripts
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <livewire:toasts/>
 <section class="text-white font-extrabold">
     @if(session()->has('message'))
