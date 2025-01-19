@@ -28,7 +28,7 @@
             </li>
             <li class="ml-6 my-4"><a href="{{route('movie.list')}}">Movies</a></li>
             <li class="ml-6 my-4"><a href="{{route('tv.list')}}">TV Shows</a></li>
-            {{-- <li class="ml-6"><a href="">Actors</a></li> --}}
+            <!-- <li class="ml-6"><a href="">Actors</a></li> -->
         </ul>
         <div class="flex items-center">
             <livewire:search-dropdown />
@@ -79,5 +79,7 @@
                       class="underline hover:text-gray-300">TMDb API</a>
     </div>
     <livewire:scripts />
+</footer>
+
 </body>
 </html>
