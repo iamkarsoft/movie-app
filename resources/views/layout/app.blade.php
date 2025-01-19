@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Movie App</title>
     <!-- Fonts -->
-    {{-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> --}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <livewire:styles />
-
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans bg-gray-900 text-white">
  @toastScripts
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <livewire:toasts/>
 <section class="text-white font-extrabold">
     @if(session()->has('message'))
@@ -29,7 +28,7 @@
             </li>
             <li class="ml-6 my-4"><a href="{{route('movie.list')}}">Movies</a></li>
             <li class="ml-6 my-4"><a href="{{route('tv.list')}}">TV Shows</a></li>
-            {{-- <li class="ml-6"><a href="">Actors</a></li> --}}
+            <!-- <li class="ml-6"><a href="">Actors</a></li> -->
         </ul>
         <div class="flex items-center">
             <livewire:search-dropdown />
@@ -76,9 +75,11 @@
 
 <footer class="border border-t border-gray-800 mt-4">
     <div class="container mx-auto text-sm px-4 py-6">
-        Powered by <a href="https://www.themoviedb.org/documentation/api"
+        Powered by <a target="_blank" href="https://www.themoviedb.org/documentation/api"
                       class="underline hover:text-gray-300">TMDb API</a>
     </div>
-    <livewire:scripts>
+    <livewire:scripts />
+</footer>
+
 </body>
 </html>

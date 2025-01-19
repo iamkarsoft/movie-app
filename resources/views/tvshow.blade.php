@@ -42,15 +42,15 @@
                 </div>
 
                 <div class="mt-6">
-                        @auth
-                            @if(!is_null($movie_db) && $movie_db['type'] == 1)
-                                <h2 class="text-xl">Last Episode</h2>
+                    @auth
+                        @if(!is_null($movie_db) && $movie_db['type'] == 1)
+                            <h2 class="text-xl">Last Episode</h2>
 
-                                <livewire:modals.update-episodes :movie_db="$movie_db" />
+                            <livewire:modals.update-episodes :movie_db="$movie_db" />
 
-                            @endif
+                        @endif
 
-                        @endauth
+                    @endauth
                 </div>
 
                 <div>
@@ -73,7 +73,7 @@
                      </div>
 
                 </div>
-
+@ray($tv)
 
                 <div class="mt-12">
                     <h4 class="font-semibold text-white">Cast</h4>
@@ -131,6 +131,7 @@
                                         </button>
                                     </div>
                                     <div class="px-8 py-8 modal-body">
+                                        @if(isset($tv['videos']['results'][0]) || array_key_exists(0, $tv['videos']['results']))
                                         <div class="relative overflow-hidden responsive-container"
                                              style="padding-top: 56.25%">
                                             <iframe
@@ -140,6 +141,7 @@
                                                 frameborder="0" allow="autoplay; encrypted-media"
                                                 style="border:0"></iframe>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -221,7 +223,6 @@
 
             </div> <!-- modal end -->
         </div><!-- end  movie info-->
-
     </div>
 
 @endsection

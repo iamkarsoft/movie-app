@@ -32,4 +32,5 @@
     </div><!-- end of series-->
 </div>
 
-  @endsection
+@endsection
+
