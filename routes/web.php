@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WatchlistController;
-use App\Http\Livewire\MovieWatchList;
 use App\Http\Livewire\Watchlist;
 use Illuminate\Support\Facades\Route;
 

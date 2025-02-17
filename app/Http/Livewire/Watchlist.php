@@ -12,7 +12,9 @@ class Watchlist extends Component
     use WireToast;
 
     public $watchItem;
+
     public $movie_db;
+
     public $isInWatchlist = false;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -24,8 +26,9 @@ class Watchlist extends Component
 
     public function updateWatchlistStatus()
     {
-        if (!$this->watchItem) {
+        if (! $this->watchItem) {
             $this->isInWatchlist = false;
+
             return;
         }
 
@@ -42,17 +45,19 @@ class Watchlist extends Component
 
     public function toggleWatchlist()
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             toast()
                 ->info('Please login to use the watchlist feature.', 'Notification')
                 ->push();
+
             return;
         }
 
-        if (!$this->watchItem) {
+        if (! $this->watchItem) {
             toast()
                 ->error('Unable to add to watchlist. Please try again.', 'Error')
                 ->push();
+
             return;
         }
 
@@ -60,7 +65,7 @@ class Watchlist extends Component
 
         $movie = Movie::where('name', $item)->first();
 
-        if (!$movie) {
+        if (! $movie) {
             $movie = $this->createMovie();
         }
 
@@ -103,6 +108,7 @@ class Watchlist extends Component
         }
 
         $watchlist->save();
+
         return $watchlist;
     }
 
