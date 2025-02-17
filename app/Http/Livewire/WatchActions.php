@@ -27,7 +27,6 @@ class WatchActions extends Component
 
     public function watched($data)
     {
-
         $identifiable = $this->status['original_title'] ?? $this->status['title'] ??
                 $this->status['original_name'] ?? $this->status['name'] ?? null;
 
@@ -49,7 +48,6 @@ class WatchActions extends Component
         $watchStatus->save();
 
         $this->emit('refreshStoreMovie');
-
     }
 
     public function render()

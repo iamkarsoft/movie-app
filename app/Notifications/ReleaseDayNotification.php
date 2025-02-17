@@ -39,12 +39,12 @@ class ReleaseDayNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)->markdown(
-        'email.realease', ['releases' => $this->releases]);
+            'email.realease', ['releases' => $this->releases]);
     }
 
     /**

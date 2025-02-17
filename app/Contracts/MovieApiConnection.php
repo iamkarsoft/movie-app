@@ -1,8 +1,8 @@
 <?php
 
-	namespace App\Contracts;
+namespace App\Contracts;
 
-	interface MovieApiConnection
-	{
+    interface MovieApiConnection
+    {
         public static function connect(string $token, string $url, string $type);
-	}
+    }
