@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
-use App\Services\Movies\Apis\TmdbApi;
 use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
@@ -32,7 +31,6 @@ class MovieController extends Controller
             ->json()['results'];
 
         $tvShows = collect($tvShow)->sortBy('last_episode_to_air')->reverse()->toArray();
-
 
         $tvGenres = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/genre/tv/list')
