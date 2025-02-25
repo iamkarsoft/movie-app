@@ -4,39 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
+use App\Services\Movies\Apis\TmdbApi;
 use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
 {
     public function index()
     {
-        // movies
+        $token = 'services.tmdb.token';
 
-        $popularMovie = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
-            ->json()['results'];
+        $popularMovie = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/popular', 'results');
+
         $popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
-        $genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
-            ->json()['genres'];
 
-        // $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
-        //  ->get('https://api.themoviedb.org/3/movie/now_playing')
-        //  ->json()['results'];
-
-        $genres = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/genre/movie/list')
-            ->json()['genres'];
-
-        $tvShow = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/tv/on_the_air')
-            ->json()['results'];
+        $genres = TmdbApi::getGenres();
+        $tvShow = TmdbApi::connect($token, 'https://api.themoviedb.org/3/tv/on_the_air', 'results');
 
         $tvShows = collect($tvShow)->sortBy('last_episode_to_air')->reverse()->toArray();
+        $tvGenres = TmdbApi::connect($token, 'https://api.themoviedb.org/3/genre/tv/list', 'genres');
 
-        $tvGenres = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/genre/tv/list')
-            ->json()['genres'];
-
-        $upcomingMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/upcoming')->json()['results'];
+        $upcomingMovies = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
 
         return view('index', [
             'popularMovies' => $popularMovies,
