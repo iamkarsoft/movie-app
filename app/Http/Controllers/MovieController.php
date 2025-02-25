@@ -11,19 +11,34 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $token = 'services.tmdb.token';
+        // movies
 
-        $popularMovie = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/popular', 'results');
-
+        $popularMovie = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/popular')
+            ->json()['results'];
         $popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
+        $genresArray = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->json()['genres'];
 
-        $genres = TmdbApi::getGenres();
-        $tvShow = TmdbApi::connect($token, 'https://api.themoviedb.org/3/tv/on_the_air', 'results');
+        // $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+        //  ->get('https://api.themoviedb.org/3/movie/now_playing')
+        //  ->json()['results'];
+
+        $genres = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->json()['genres'];
+
+        $tvShow = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/tv/on_the_air')
+            ->json()['results'];
 
         $tvShows = collect($tvShow)->sortBy('last_episode_to_air')->reverse()->toArray();
-        $tvGenres = TmdbApi::connect($token, 'https://api.themoviedb.org/3/genre/tv/list', 'genres');
 
-        $upcomingMovies = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
+
+        $tvGenres = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/tv/list')
+            ->json()['genres'];
+
+        $upcomingMovies = Http::withToken(config('services.tmdb.token'))->get('https://api.themoviedb.org/3/movie/upcoming')->json()['results'];
 
         return view('index', [
             'popularMovies' => $popularMovies,
