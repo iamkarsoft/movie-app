@@ -7313,18 +7313,6 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-<<<<<<< HEAD
-            "version": "v3.15.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "0bc1e1361e7fffc2be156f46ad1fba6927c01729"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/0bc1e1361e7fffc2be156f46ad1fba6927c01729",
-                "reference": "0bc1e1361e7fffc2be156f46ad1fba6927c01729",
-=======
             "version": "v3.15.4",
             "source": {
                 "type": "git",
@@ -7335,7 +7323,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/c0667ea91f7185f1e074402c5788195e96bf8106",
                 "reference": "c0667ea91f7185f1e074402c5788195e96bf8106",
->>>>>>> develop
                 "shasum": ""
             },
             "require": {
@@ -7345,9 +7332,6 @@
                 "php": "^8.1",
                 "php-debugbar/php-debugbar": "~2.1.1",
                 "symfony/finder": "^6|^7"
-            },
-            "conflict": {
-                "maximebf/debugbar": "*"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
@@ -7398,11 +7382,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.15.2"
-=======
                 "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.15.4"
->>>>>>> develop
             },
             "funding": [
                 {
@@ -7414,11 +7394,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2025-02-25T15:25:22+00:00"
-=======
             "time": "2025-04-16T06:32:06+00:00"
->>>>>>> develop
         },
         {
             "name": "clue/ndjson-react",
@@ -7961,18 +7937,6 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-<<<<<<< HEAD
-            "version": "v3.70.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e",
-                "reference": "2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e",
-=======
             "version": "v3.75.0",
             "source": {
                 "type": "git",
@@ -7983,7 +7947,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/399a128ff2fdaf4281e4e79b755693286cdf325c",
                 "reference": "399a128ff2fdaf4281e4e79b755693286cdf325c",
->>>>>>> develop
                 "shasum": ""
             },
             "require": {
@@ -8066,11 +8029,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.70.0"
-=======
                 "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.75.0"
->>>>>>> develop
             },
             "funding": [
                 {
@@ -8078,11 +8037,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2025-02-22T23:30:51+00:00"
-=======
             "time": "2025-03-31T18:40:42+00:00"
->>>>>>> develop
         },
         {
             "name": "fzaninotto/faker",
@@ -8251,11 +8206,7 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-<<<<<<< HEAD
-            "time": "2023-02-18T20:55:43+00:00"
-=======
             "time": "2024-03-04T14:35:21+00:00"
->>>>>>> develop
         },
         {
             "name": "mockery/mockery",
