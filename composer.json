@@ -14,11 +14,12 @@
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^10.0",
         "laravel/tinker": "^3.0",
-        "livewire/livewire": "^3.0",
+        "livewire/livewire": "^2.0",
         "monolog/monolog": "^3.0",
         "s-ichikawa/laravel-sendgrid-driver": "^3.0",
         "spatie/laravel-ray": "^1.30",
         "spatie/ray": "^1.41",
+        "usernotnull/tall-toasts": "^1.0",
         "webpatser/laravel-uuid": "^4.0"
     },
     "require-dev": {
