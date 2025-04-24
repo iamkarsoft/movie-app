@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
@@ -47,7 +47,7 @@ class WatchActions extends Component
 
         $watchStatus->save();
 
-        $this->emit('refreshStoreMovie');
+        $this->dispatch('refreshStoreMovie');
     }
 
     public function render()

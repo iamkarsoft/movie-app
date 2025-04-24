@@ -15,7 +15,7 @@
         <ul x-show="filter" x-on:click.away="filter=false"
             class="border-t-2 bg-gray-100 z-50 border-slate-200 absolute w-40 lg:mt-2 lg:left-0">
             {{-- @if ($movie_db['watch_type'] == 0) --}}
-            <li wire:click="$emit('status',0)" class="inline-flex items-center w-full cursor-pointer">
+            <li wire:click="$dispatch('status',0)" class="inline-flex items-center w-full cursor-pointer">
                 @if ($movie_db['watch_type'] == 0)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -34,7 +34,7 @@
                 @endif
                 <span class="ml-2">Watching</span>
             </li>
-            <li wire:click="$emit('status',1)" class="inline-flex items-center w-full cursor-pointer">
+            <li wire:click="$dispatch('status',1)" class="inline-flex items-center w-full cursor-pointer">
                 @if ($movie_db['watch_type'] == 1)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -54,7 +54,7 @@
                 <span class="ml-2">Watched</span>
             </li>
             {{-- @else --}}
-            <li wire:click="$emit('status',2)" class="inline-flex items-center w-full cursor-pointer">
+            <li wire:click="$dispatch('status',2)" class="inline-flex items-center w-full cursor-pointer">
                 @if ($movie_db['watch_type'] == 2)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
                         fill="currentColor">
