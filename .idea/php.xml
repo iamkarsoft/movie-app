@@ -187,9 +187,15 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-ignition" />
       <path value="$PROJECT_DIR$/vendor/spatie/ignition" />
       <path value="$PROJECT_DIR$/vendor/spatie/flare-client-php" />
+      <path value="$PROJECT_DIR$/vendor/staabm/side-effects-detector" />
+      <path value="$PROJECT_DIR$/vendor/laravel/prompts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/vendor/spatie/error-solutions" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStanOptionsConfiguration">
