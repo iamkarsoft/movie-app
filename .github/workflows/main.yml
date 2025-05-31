@@ -1,26 +1,39 @@
+name: Continuous Integration Laravel
+on:
+  push:
+    branches:
+      - master
+
 jobs:
-  ci:
+  laravel-continuous-deployment:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: [8.1, 8.2]
+        php-versions: [8.1,8.2]
         node_version: [14, 16]
+    #name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist
 
-  deploy:
-    needs: ci
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to production
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: 'cd /var/www/movieapp.kofi.work/public_html && sudo chmod 777 deploy.sh && ./deploy.sh'
+    - uses: actions/checkout@v4
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: 'cd /var/www/movieapp.kofi.work/public_html &&  sudo chmod 777 deploy.sh && ./deploy.sh'
+
+
+
+
+
+
+
+
+
