@@ -1,6 +1,6 @@
 <div class="mt-8">
     @php
-        $searchTitle = urlencode(\Str::slug($tv['name'], '%20'));
+         $searchTitle = urlencode($tv['name']);
     @endphp
     <a href="{{route('tv.show',$tv['id'])}}">
 

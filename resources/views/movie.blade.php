@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
     @php
-        $searchTitle = urlencode(\Str::slug($movie['title'], '%20'));
+        $searchTitle = urlencode($movie['title']);
     @endphp
     <div class="border-b border-gray-800 movie-info">
         <div class="container flex flex-col px-4 py-16 mx-auto md:flex-row">
