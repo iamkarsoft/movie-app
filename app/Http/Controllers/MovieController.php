@@ -17,8 +17,6 @@ class MovieController extends Controller
 
         $popularMovies = collect($popularMovie['results'])->sortBy('release_date')->reverse()->toArray();
 
-        ray($popularMovies);
-
         $genres = TmdbApi::getGenres();
         $tvShow = TmdbApi::connect($token, 'https://api.themoviedb.org/3/tv/on_the_air');
 
@@ -26,7 +24,7 @@ class MovieController extends Controller
         $tvGenres = TmdbApi::connect($token, 'https://api.themoviedb.org/3/genre/tv/list', 'genres');
 
         $upcomingMovies = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
-        ray($upcomingMovies);
+
         return view('index', [
             'popularMovies' => $popularMovies,
             'upcomingMovies' => $upcomingMovies,

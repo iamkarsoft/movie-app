@@ -8,12 +8,11 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <livewire:styles />
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans bg-gray-900 text-white">
- @toastScripts
+<livewire:toasts />
 
 <livewire:toasts/>
 <section class="text-white font-extrabold">
@@ -78,7 +77,7 @@
         Powered by <a target="_blank" href="https://www.themoviedb.org/documentation/api"
                       class="underline hover:text-gray-300">TMDb API</a>
     </div>
-    <livewire:scripts />
+     @livewireScripts
 </footer>
 
 </body>
