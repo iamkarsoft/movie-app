@@ -27,6 +27,7 @@ class MovieController extends Controller
 
         $upcomingMovies = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
         ray($upcomingMovies);
+
         return view('index', [
             'popularMovies' => $popularMovies,
             'upcomingMovies' => $upcomingMovies,
