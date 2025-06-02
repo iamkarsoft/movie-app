@@ -23,8 +23,10 @@
 
             <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                 @foreach($upcomingMovies as $movie)
-                    @if($movie['release_date'] > \Carbon\Carbon::now())
-                        <x-movie-card :movie="$movie" :genres="$genres"/>
+                    @if(array_key_exists('release_date', $upcomingMovies))
+                        @if($movie['release_date'] > \Carbon\Carbon::now())
+                            <x-movie-card :movie="$movie" :genres="$genres"/>
+                        @endif
                     @endif
                 @endforeach
             </div>

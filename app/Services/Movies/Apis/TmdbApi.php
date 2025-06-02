@@ -7,10 +7,10 @@ use Http;
 
 class TmdbApi implements MovieApiConnection
 {
-    public static function connect(string $token, string $url, string $type)
+    public static function connect(string $token, string $url)
     {
         return Http::withToken(config($token))->get($url)
-        ->json()[$type];
+        ->json();
     }
 
     public static function getGenres()

@@ -13,18 +13,20 @@ class MovieController extends Controller
     {
         $token = 'services.tmdb.token';
 
-        $popularMovie = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/popular', 'results');
+        $popularMovie = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/popular');
 
-        $popularMovies = collect($popularMovie)->sortBy('release_date')->reverse()->toArray();
+        $popularMovies = collect($popularMovie['results'])->sortBy('release_date')->reverse()->toArray();
+
+        ray($popularMovies);
 
         $genres = TmdbApi::getGenres();
-        $tvShow = TmdbApi::connect($token, 'https://api.themoviedb.org/3/tv/on_the_air', 'results');
+        $tvShow = TmdbApi::connect($token, 'https://api.themoviedb.org/3/tv/on_the_air');
 
-        $tvShows = collect($tvShow)->sortBy('last_episode_to_air')->reverse()->toArray();
+        $tvShows = collect($tvShow['results'])->sortBy('last_episode_to_air')->reverse()->toArray();
         $tvGenres = TmdbApi::connect($token, 'https://api.themoviedb.org/3/genre/tv/list', 'genres');
 
         $upcomingMovies = TmdbApi::connect($token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
-
+        ray($upcomingMovies);
         return view('index', [
             'popularMovies' => $popularMovies,
             'upcomingMovies' => $upcomingMovies,

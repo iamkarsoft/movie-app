@@ -2,12 +2,12 @@
     <input wire:model.live.debounce.500ms="search" type="text" class="bg-gray-800 px-5 w-65 pl-8 py-1 w-full  rounded-full focus:outline-none focus:shadow-outline" placeholder="search"
 
     x-ref="search"
-    @keydown.window="
-        if(e.keycode === 191){
-        e.preventDefault();
-        $refs.search.focus();
-      }
-    "
+     x-on:keydown="(e) => {
+            if(e.keyCode === 191) {
+                e.preventDefault();
+                $refs.search.focus();
+            }
+        }"
     @focus="isOpen = true"
     @keydown.escape.window="isOpen = false"
     @keydown="isOpen=true"
