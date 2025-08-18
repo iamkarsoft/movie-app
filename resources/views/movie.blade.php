@@ -72,10 +72,11 @@
                         <livewire:update-movie-data :updatemovie="$movie"/>
 
                         @auth
-                            <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db"/>
-
-                            @if($movie_db)
-                                <livewire:watch-actions :status="$movie" :movie_db="$movie_db"/>
+                               @if(is_array($movie) && !empty($movie))
+                                <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db"/>
+                                @if($movie_db)
+                                   <livewire:watch-actions :movie="$movie" />
+                                @endif
                             @endif
                         @endauth
 
