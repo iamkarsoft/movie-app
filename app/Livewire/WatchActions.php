@@ -45,7 +45,7 @@ class WatchActions extends Component
 
         if ($watchStatus && $data !== null) {
             $watchStatus->watch_type = $data;
-        } else if (!$watchStatus) {
+        } elseif (! $watchStatus) {
             return;
         }
 
