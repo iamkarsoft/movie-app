@@ -12,14 +12,21 @@
 
             <div class="relative w-40 p-2 bg-white border-2 flex-column border-slate-200" x-data="{ filter: false }">
                 <button x-on:click="filter=true" class="relative flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
-                  </svg><span>Filter Movies</span></button>
-                <ul x-show="filter" x-on:click.away="filter=false" class="absolute z-50 w-40 bg-gray-100 border-t-2 border-slate-200 lg:mt-2 lg:left-0">
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a href="{{ route('watchlist') }}" class="block">All</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 1) }}" class="block ">Watched</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a href="{{ route('watchlist', 0) }}" class="block ">Watching</a></li>
-                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a href="{{ route('watchlist', 2) }}" class="block ">Abandonned</a></li>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+                    </svg><span>Filter Movies</span></button>
+                <ul x-show="filter" x-on:click.away="filter=false"
+                    class="absolute z-50 w-40 bg-gray-100 border-t-2 border-slate-200 lg:mt-2 lg:left-0" x-cloak>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a
+                            href="{{ route('watchlist') }}" class="block">All</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a
+                            href="{{ route('watchlist', 1) }}" class="block ">Watched</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"> <a
+                            href="{{ route('watchlist', 0) }}" class="block ">Watching</a></li>
+                    <li class="relative py-2 pl-3 text-gray-900 cursor-default select-none hover:bg-gray-200 pr-9"><a
+                            href="{{ route('watchlist', 2) }}" class="block ">Abandonned</a></li>
                 </ul>
 
             </div>
@@ -87,7 +94,7 @@
                                         {{ $item['next_air_date'] }}
                                     </td>
 
-                                      <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         @if ($item['watch_type'] == 0)
                                             <span class="">Watching</span>
                                         @elseif($item['watch_type'] == 1)

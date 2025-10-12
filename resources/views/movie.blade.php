@@ -55,7 +55,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div x-data="{ isOpen: false }">
+                <div x-data="{ isOpen: false, showWatchActions: {{ $movie_db ? 'true' : 'false' }} }" @watchlist-updated.window="showWatchActions = $event.detail">
                     <div class="flex gap-2 mt-12">
                         @if (count($movie['videos']['results']) > 0)
                             <button @click=" isOpen = true"
@@ -77,15 +77,15 @@
                         @auth
                             @if (is_array($movie) && !empty($movie))
                                 <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db" />
-                                @if ($movie_db)
+                                <div x-show="showWatchActions" x-cloak>
                                     <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
-                                @endif
+                                </div>
                             @endif
                         @endauth
 
                     </div>
 
-                    <div class="mt-4 text-gray-400 text-sm flex gap-2 my-2">
+                    <div class="flex gap-2 my-2 mt-4 text-sm text-gray-400">
                         <a href="https://lookmovie2.to/movies/search/?q={{ $searchTitle }}" target="_blank"
                             class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -109,8 +109,8 @@
 
                     <!-- modal -->
                     <div style="background-color: rgba(0,0,0,0.5);"
-                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg"
-                        x-show="isOpen">
+                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg" x-show="isOpen"
+                        x-cloak>
                         <div class="container mx-auto overflow-y-hidden rounded-lg lg:px-32">
                             <div class="bg-gray-900 rounded">
                                 <div class="flex justify-end pt-2 pr-4">
@@ -145,8 +145,8 @@
                         <div class="mt-8">
 
                             <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $cast['profile_path'] }}" alt="">
-                            <div class=" my-2">
-                                <div class="text-lg font-bold flex gap-2">
+                            <div class="my-2 ">
+                                <div class="flex gap-2 text-lg font-bold">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                         class="size-5">
                                         <path
@@ -182,7 +182,8 @@
                         <div class="mt-8">
 
                             <a @click.prevent="isOpen=true,  image='{{ 'https://image.tmdb.org/t/p/original/' . $images['file_path'] }}'"
-                                href="#"> <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $images['file_path'] }}"
+                                href="#"> <img
+                                    src="{{ 'https://image.tmdb.org/t/p/w500/' . $images['file_path'] }}"
                                     alt=""></a>
                         </div>
                     @endif
