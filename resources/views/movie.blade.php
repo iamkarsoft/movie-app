@@ -109,8 +109,8 @@
 
                     <!-- modal -->
                     <div style="background-color: rgba(0,0,0,0.5);"
-                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg"
-                        x-show="isOpen">
+                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg" x-show="isOpen"
+                        x-cloak>
                         <div class="container mx-auto overflow-y-hidden rounded-lg lg:px-32">
                             <div class="bg-gray-900 rounded">
                                 <div class="flex justify-end pt-2 pr-4">
@@ -182,7 +182,8 @@
                         <div class="mt-8">
 
                             <a @click.prevent="isOpen=true,  image='{{ 'https://image.tmdb.org/t/p/original/' . $images['file_path'] }}'"
-                                href="#"> <img src="{{ 'https://image.tmdb.org/t/p/w500/' . $images['file_path'] }}"
+                                href="#"> <img
+                                    src="{{ 'https://image.tmdb.org/t/p/w500/' . $images['file_path'] }}"
                                     alt=""></a>
                         </div>
                     @endif

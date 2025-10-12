@@ -11,7 +11,7 @@
                 <path
                     d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
             </svg><span>Watch Status</span></button>
-        <ul x-show="filter" x-on:click.away="filter=false"
+        <ul x-show="filter" x-on:click.away="filter=false" x-cloak
             class="border-t-2 bg-gray-100 z-50 border-slate-200 absolute w-40 lg:mt-2 lg:left-0">
             {{-- @if ($movie_db['watch_type'] == 0) --}}
             <li wire:click="$dispatch('status',[0])" class="inline-flex items-center w-full cursor-pointer">

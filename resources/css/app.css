@@ -7,3 +7,8 @@
 .spinner{
   position: absolute;
 }
+
+/* Hide elements with x-cloak until Alpine.js loads */
+[x-cloak] {
+    display: none !important;
+}
