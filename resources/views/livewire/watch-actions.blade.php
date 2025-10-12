@@ -15,7 +15,7 @@
             class="border-t-2 bg-gray-100 z-50 border-slate-200 absolute w-40 lg:mt-2 lg:left-0">
             {{-- @if ($movie_db['watch_type'] == 0) --}}
             <li wire:click="$dispatch('status',[0])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db['watch_type'] == 0)
+                @if ($movie_db && $movie_db['watch_type'] == 0)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -33,7 +33,7 @@
                 <span class="ml-2">Watching</span>
             </li>
             <li wire:click="$dispatch('status',[1])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db['watch_type'] == 1)
+                @if ($movie_db && $movie_db['watch_type'] == 1)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -52,7 +52,7 @@
             </li>
             {{-- @else --}}
             <li wire:click="$dispatch('status',[2])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db['watch_type'] == 2)
+                @if ($movie_db && $movie_db['watch_type'] == 2)
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

@@ -86,6 +86,13 @@ class Watchlist extends Component
         }
 
         $this->updateWatchlistStatus();
+
+        // Emit Alpine.js event to update UI
+        $this->js("
+            window.dispatchEvent(new CustomEvent('watchlist-updated', {
+                detail: " . ($this->isInWatchlist ? 'true' : 'false') . "
+            }));
+        ");
     }
 
     private function createMovie()
