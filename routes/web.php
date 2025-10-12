@@ -33,4 +33,4 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::get('/update/movies', 'UpdateMoviesController')->name('movies.update');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
