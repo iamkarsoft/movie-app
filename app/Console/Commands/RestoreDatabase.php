@@ -40,6 +40,7 @@ class RestoreDatabase extends Command
 
         if (empty($backups)) {
             $this->error("No {$environment} backups found.");
+
             return 1;
         }
 
@@ -61,6 +62,7 @@ class RestoreDatabase extends Command
 
             if ($choice === 'q' || $choice === null) {
                 $this->info('Restore cancelled.');
+
                 return 0;
             }
 
@@ -68,6 +70,7 @@ class RestoreDatabase extends Command
 
             if (! isset($backups[$index])) {
                 $this->error('Invalid selection.');
+
                 return 1;
             }
 
@@ -85,6 +88,7 @@ class RestoreDatabase extends Command
 
             if (! $found) {
                 $this->error("Backup file not found: {$backupFile}");
+
                 return 1;
             }
         }
@@ -92,8 +96,9 @@ class RestoreDatabase extends Command
         // Confirm restore
         if (! $this->option('force')) {
             $this->warn('WARNING: This will overwrite your current database!');
-            if (! $this->confirm('Are you sure you want to restore from: ' . basename($backupFile) . '?')) {
+            if (! $this->confirm('Are you sure you want to restore from: '.basename($backupFile).'?')) {
                 $this->info('Restore cancelled.');
+
                 return 0;
             }
         }
@@ -130,12 +135,13 @@ class RestoreDatabase extends Command
         // Filter for zip files with the correct environment prefix
         $backups = array_filter($files, function ($file) use ($environment) {
             $filename = basename($file);
+
             return pathinfo($file, PATHINFO_EXTENSION) === 'zip'
-                && str_starts_with($filename, $environment . '-');
+                && str_starts_with($filename, $environment.'-');
         });
 
         // Sort by last modified (newest first)
-        usort($backups, fn($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
+        usort($backups, fn ($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
 
         return array_values($backups);
     }
@@ -145,17 +151,17 @@ class RestoreDatabase extends Command
      */
     protected function restoreFromBackup($disk, string $backupFile): int
     {
-        $this->info('Starting restore from: ' . basename($backupFile));
+        $this->info('Starting restore from: '.basename($backupFile));
 
         // Create temp directory
-        $tempDir = storage_path('app/backup-temp/restore-' . time());
+        $tempDir = storage_path('app/backup-temp/restore-'.time());
         if (! is_dir($tempDir)) {
             mkdir($tempDir, 0755, true);
         }
 
         try {
             // Download/copy the backup file to temp
-            $localZipPath = $tempDir . '/backup.zip';
+            $localZipPath = $tempDir.'/backup.zip';
             file_put_contents($localZipPath, $disk->get($backupFile));
 
             // Extract the zip
@@ -174,7 +180,7 @@ class RestoreDatabase extends Command
                 throw new \Exception('No SQL dump file found in backup.');
             }
 
-            $this->info('Found SQL file: ' . basename($sqlFile));
+            $this->info('Found SQL file: '.basename($sqlFile));
 
             // Restore the database
             $this->restoreDatabase($sqlFile);
@@ -183,7 +189,8 @@ class RestoreDatabase extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error('Restore failed: ' . $e->getMessage());
+            $this->error('Restore failed: '.$e->getMessage());
+
             return 1;
         } finally {
             // Cleanup temp directory
@@ -314,10 +321,10 @@ class RestoreDatabase extends Command
             // Filter out password warnings
             $filteredErrors = array_filter(
                 explode("\n", $errors),
-                fn($line) => ! str_contains($line, 'Using a password')
+                fn ($line) => ! str_contains($line, 'Using a password')
             );
             $filteredErrors = implode("\n", $filteredErrors);
-            
+
             if (! empty(trim($filteredErrors))) {
                 throw new \Exception("Database restore failed: {$filteredErrors}");
             }
@@ -336,7 +343,7 @@ class RestoreDatabase extends Command
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
-            $path = $dir . '/' . $file;
+            $path = $dir.'/'.$file;
             is_dir($path) ? $this->deleteDirectory($path) : unlink($path);
         }
 
@@ -356,6 +363,6 @@ class RestoreDatabase extends Command
             $i++;
         }
 
-        return round($bytes, 2) . ' ' . $units[$i];
+        return round($bytes, 2).' '.$units[$i];
     }
 }
