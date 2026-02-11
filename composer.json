@@ -18,6 +18,7 @@
         "livewire/livewire": "^3.0",
         "monolog/monolog": "^3.0",
         "s-ichikawa/laravel-sendgrid-driver": "^4.0",
+        "spatie/laravel-backup": "^9.3",
         "spatie/ray": "^1.41",
         "usernotnull/tall-toasts": "^2.2",
         "webpatser/laravel-uuid": "^4.0"
