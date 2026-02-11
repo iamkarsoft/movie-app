@@ -45,6 +45,7 @@ class SyncDatabase extends Command
 
             if (! $this->confirm('Continue?')) {
                 $this->info('Sync cancelled.');
+
                 return 0;
             }
         }
@@ -55,12 +56,13 @@ class SyncDatabase extends Command
 
         if (empty($backups)) {
             $this->error("No {$environment} backups found.");
+
             return 1;
         }
 
         // Use the latest backup
         $backupFile = $backups[0];
-        $this->info('Using backup: ' . basename($backupFile));
+        $this->info('Using backup: '.basename($backupFile));
 
         return $this->syncFromBackup($disk, $backupFile);
     }
@@ -74,11 +76,12 @@ class SyncDatabase extends Command
 
         $backups = array_filter($files, function ($file) use ($environment) {
             $filename = basename($file);
+
             return pathinfo($file, PATHINFO_EXTENSION) === 'zip'
-                && str_starts_with($filename, $environment . '-');
+                && str_starts_with($filename, $environment.'-');
         });
 
-        usort($backups, fn($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
+        usort($backups, fn ($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
 
         return array_values($backups);
     }
@@ -88,14 +91,14 @@ class SyncDatabase extends Command
      */
     protected function syncFromBackup($disk, string $backupFile): int
     {
-        $tempDir = storage_path('app/backup-temp/sync-' . time());
+        $tempDir = storage_path('app/backup-temp/sync-'.time());
         if (! is_dir($tempDir)) {
             mkdir($tempDir, 0755, true);
         }
 
         try {
             // Extract backup
-            $localZipPath = $tempDir . '/backup.zip';
+            $localZipPath = $tempDir.'/backup.zip';
             file_put_contents($localZipPath, $disk->get($backupFile));
 
             $zip = new ZipArchive;
@@ -120,7 +123,8 @@ class SyncDatabase extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error('Sync failed: ' . $e->getMessage());
+            $this->error('Sync failed: '.$e->getMessage());
+
             return 1;
         } finally {
             $this->deleteDirectory($tempDir);
@@ -132,7 +136,7 @@ class SyncDatabase extends Command
      */
     protected function syncWithMerge(string $sqlFile): void
     {
-        $tempDatabase = config('database.connections.mysql.database') . '_temp_sync';
+        $tempDatabase = config('database.connections.mysql.database').'_temp_sync';
         $mainDatabase = config('database.connections.mysql.database');
 
         try {
@@ -148,10 +152,10 @@ class SyncDatabase extends Command
             // Build user ID mapping by email FIRST
             $this->line('Building user mapping by email...');
             $this->buildUserIdMapping($tempDatabase, $mainDatabase);
-            $this->line('Mapped ' . count($this->userIdMapping) . ' users by email.');
+            $this->line('Mapped '.count($this->userIdMapping).' users by email.');
 
             // Get tables from temp database
-            $tables = DB::select("SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ?", [$tempDatabase]);
+            $tables = DB::select('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ?', [$tempDatabase]);
 
             // Define table sync order (users first, then tables with user_id)
             $priorityTables = ['users', 'movies'];
@@ -200,7 +204,6 @@ class SyncDatabase extends Command
 
             $bar->finish();
             $this->newLine();
-
         } finally {
             // Cleanup temp database
             DB::statement("DROP DATABASE IF EXISTS `{$tempDatabase}`");
@@ -245,7 +248,7 @@ class SyncDatabase extends Command
             // Remap user_id if present and mapping exists
             if (isset($data['user_id']) && isset($this->userIdMapping[$data['user_id']])) {
                 $data['user_id'] = $this->userIdMapping[$data['user_id']];
-            } else if (isset($data['user_id'])) {
+            } elseif (isset($data['user_id'])) {
                 // Skip records for users that don't exist locally
                 continue;
             }
@@ -285,18 +288,18 @@ class SyncDatabase extends Command
 
         // Get columns
         $columns = DB::select(
-            "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?",
+            'SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',
             [$mainDb, $table]
         );
-        $columnNames = array_map(fn($col) => $col->COLUMN_NAME, $columns);
+        $columnNames = array_map(fn ($col) => $col->COLUMN_NAME, $columns);
 
         if (empty($columnNames)) {
             return;
         }
 
-        $columnList = implode(', ', array_map(fn($c) => "`{$c}`", $columnNames));
-        $updateList = implode(', ', array_map(fn($c) => "`{$c}` = VALUES(`{$c}`)", 
-            array_filter($columnNames, fn($c) => $c !== $primaryKey)
+        $columnList = implode(', ', array_map(fn ($c) => "`{$c}`", $columnNames));
+        $updateList = implode(', ', array_map(fn ($c) => "`{$c}` = VALUES(`{$c}`)",
+            array_filter($columnNames, fn ($c) => $c !== $primaryKey)
         ));
 
         // Use INSERT ... ON DUPLICATE KEY UPDATE
@@ -330,16 +333,16 @@ class SyncDatabase extends Command
 
         // Read SQL and clean it up for import to temp database
         $sql = file_get_contents($sqlFile);
-        
+
         // Remove mysqldump warnings
         $sql = preg_replace('/^mysqldump:.*$/mi', '', $sql);
         // Remove USE statements
         $sql = preg_replace('/^USE\s+`?[^`;]+`?;?\s*$/mi', '', $sql);
-        // Remove CREATE DATABASE statements  
+        // Remove CREATE DATABASE statements
         $sql = preg_replace('/^CREATE DATABASE.*$/mi', '', $sql);
-        
+
         // Write modified SQL to temp file
-        $modifiedSqlFile = $sqlFile . '.modified';
+        $modifiedSqlFile = $sqlFile.'.modified';
         file_put_contents($modifiedSqlFile, $sql);
 
         // Use MYSQL_PWD env var to avoid password warning
@@ -360,9 +363,9 @@ class SyncDatabase extends Command
 
         if ($exitCode !== 0) {
             // Filter out password warnings from error output
-            $errors = array_filter($output, fn($line) => ! str_contains($line, 'Using a password'));
+            $errors = array_filter($output, fn ($line) => ! str_contains($line, 'Using a password'));
             if (! empty($errors)) {
-                throw new \Exception('Failed to import SQL: ' . implode("\n", $errors));
+                throw new \Exception('Failed to import SQL: '.implode("\n", $errors));
             }
         }
     }
@@ -396,7 +399,7 @@ class SyncDatabase extends Command
 
         $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
-            $path = $dir . '/' . $file;
+            $path = $dir.'/'.$file;
             is_dir($path) ? $this->deleteDirectory($path) : unlink($path);
         }
         rmdir($dir);
@@ -416,6 +419,7 @@ class SyncDatabase extends Command
         }
 
         $appEnv = config('app.env');
+
         return $appEnv === 'production' ? 'production' : 'local';
     }
 }

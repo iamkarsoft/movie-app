@@ -18,6 +18,9 @@ jobs:
               with:
                   ref: ${{ github.head_ref }}
 
+            - name: Setup environment
+              run: cp .env.example .env
+
             - name: Install
               run: composer install --no-scripts
 

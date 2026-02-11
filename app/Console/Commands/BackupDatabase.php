@@ -49,6 +49,7 @@ class BackupDatabase extends Command
 
         if ($exitCode !== 0) {
             $this->error('Backup failed.');
+
             return 1;
         }
 
@@ -99,7 +100,8 @@ class BackupDatabase extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error('Production backup failed: ' . $e->getMessage());
+            $this->error('Production backup failed: '.$e->getMessage());
+
             return 1;
         } finally {
             $this->closeSSHTunnel();
@@ -133,17 +135,17 @@ class BackupDatabase extends Command
             escapeshellarg($sshHost)
         );
 
-        exec($command . ' 2>&1', $output, $exitCode);
+        exec($command.' 2>&1', $output, $exitCode);
 
         if ($exitCode !== 0) {
-            throw new \Exception('Failed to create SSH tunnel: ' . implode("\n", $output));
+            throw new \Exception('Failed to create SSH tunnel: '.implode("\n", $output));
         }
 
         // Find the SSH tunnel PID
         exec("pgrep -f 'ssh.*{$localPort}.*{$sshHost}'", $pidOutput);
         $this->sshTunnelPid = ! empty($pidOutput) ? (int) $pidOutput[0] : null;
 
-        $this->line('SSH tunnel established on port ' . $localPort);
+        $this->line('SSH tunnel established on port '.$localPort);
     }
 
     /**
@@ -152,16 +154,17 @@ class BackupDatabase extends Command
     protected function resolveSSHKeyPath(): ?string
     {
         $home = $_SERVER['HOME'] ?? getenv('HOME');
-        $sshDir = $home . '/.ssh';
+        $sshDir = $home.'/.ssh';
 
         // Get key names from env (comma-separated)
         $keyNames = env('PRODUCTION_SSH_KEYS', 'id_rsa');
         $keys = array_map('trim', explode(',', $keyNames));
 
         foreach ($keys as $keyName) {
-            $keyPath = $sshDir . '/' . $keyName;
+            $keyPath = $sshDir.'/'.$keyName;
             if (file_exists($keyPath)) {
                 $this->line("Using SSH key: {$keyName}");
+
                 return $keyPath;
             }
         }
@@ -197,7 +200,7 @@ class BackupDatabase extends Command
             mkdir($tempDir, 0755, true);
         }
 
-        $sqlFile = $tempDir . '/' . $database . '.sql';
+        $sqlFile = $tempDir.'/'.$database.'.sql';
 
         // Use MYSQL_PWD env var to avoid password warning
         $envPrefix = sprintf('MYSQL_PWD=%s ', escapeshellarg($password));
@@ -219,7 +222,7 @@ class BackupDatabase extends Command
 
         file_put_contents($sqlFile, $sqlContent);
 
-        $this->line('Database dumped: ' . $this->formatBytes(filesize($sqlFile)));
+        $this->line('Database dumped: '.$this->formatBytes(filesize($sqlFile)));
 
         return $sqlFile;
     }
@@ -246,7 +249,7 @@ class BackupDatabase extends Command
             throw new \Exception('Could not create zip archive.');
         }
 
-        $zip->addFile($sqlFile, 'db-dumps/' . basename($sqlFile));
+        $zip->addFile($sqlFile, 'db-dumps/'.basename($sqlFile));
         $zip->close();
 
         $this->line("Created: {$filename}");
@@ -280,14 +283,14 @@ class BackupDatabase extends Command
         $appName = config('app.name');
 
         $files = $disk->allFiles($appName);
-        $backups = array_filter($files, fn($file) => pathinfo($file, PATHINFO_EXTENSION) === 'zip');
+        $backups = array_filter($files, fn ($file) => pathinfo($file, PATHINFO_EXTENSION) === 'zip');
 
         if (empty($backups)) {
             return;
         }
 
         // Get the most recent backup (by modification time)
-        usort($backups, fn($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
+        usort($backups, fn ($a, $b) => $disk->lastModified($b) - $disk->lastModified($a));
         $latestBackup = $backups[0];
 
         $filename = basename($latestBackup);
@@ -297,8 +300,8 @@ class BackupDatabase extends Command
             return;
         }
 
-        $newFilename = $environment . '-' . $filename;
-        $newPath = dirname($latestBackup) . '/' . $newFilename;
+        $newFilename = $environment.'-'.$filename;
+        $newPath = dirname($latestBackup).'/'.$newFilename;
 
         // Rename the file
         $disk->move($latestBackup, $newPath);
@@ -319,6 +322,6 @@ class BackupDatabase extends Command
             $i++;
         }
 
-        return round($bytes, 2) . ' ' . $units[$i];
+        return round($bytes, 2).' '.$units[$i];
     }
 }
