@@ -5,11 +5,8 @@ namespace App\Livewire;
 use App\Models\Movie;
 use App\Models\MovieUser;
 use Livewire\Component;
-use Usernotnull\Toast\Concerns\WireToast;
-
 class Watchlist extends Component
 {
-    use WireToast;
 
     public $watchItem;
 
@@ -46,17 +43,13 @@ class Watchlist extends Component
     public function toggleWatchlist()
     {
         if (! auth()->check()) {
-            toast()
-                ->info('Please login to use the watchlist feature.', 'Notification')
-                ->push();
+            session()->flash('message', 'Please login to use the watchlist feature.');
 
             return;
         }
 
         if (! $this->watchItem) {
-            toast()
-                ->error('Unable to add to watchlist. Please try again.', 'Error')
-                ->push();
+            session()->flash('message', 'Unable to add to watchlist. Please try again.');
 
             return;
         }
@@ -75,14 +68,10 @@ class Watchlist extends Component
 
         if ($existingEntry) {
             $existingEntry->delete();
-            toast()
-                ->success('Removed from watch list', 'Notification')
-                ->push();
+            session()->flash('message', 'Removed from watch list');
         } else {
             auth()->user()->movies()->attach($movie->id);
-            toast()
-                ->success('Added to watch list', 'Notification')
-                ->push();
+            session()->flash('message', 'Added to watch list');
         }
 
         $this->updateWatchlistStatus();

@@ -6,9 +6,10 @@ use App\Http\Controllers\TvShowController;
 use App\Http\Controllers\UpdateMoviesController;
 use App\Http\Controllers\WatchlistController;
 use App\Livewire\Watchlist;
+use App\Livewire\Index;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [MovieController::class, 'index'])->name('movies');
+Route::get('/', Index::class)->name('movies');
 Route::get('movie/{movie}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('movies', [MovieController::class, 'movies'])->name('movie.list');
 Route::get('tvshow/{tv}', [TvShowController::class, 'show'])->name('tv.show');

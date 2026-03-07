@@ -1,5 +1,4 @@
-@extends('layout.app')
-@section('content')
+<div>
     <div class="container  mx-auto px-4 pt-16 pb-16">
         <div class="popular-movies mt-8 w-full lg:mx-auto">
             <h2 class=" text-4xl tracking-wider text-orange-500 font-semibold uppercase text-lg">
@@ -51,4 +50,5 @@
 
         {{--  --}}
     </div>
-@endsection
+
+</div>

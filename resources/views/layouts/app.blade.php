@@ -18,7 +18,6 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <livewire:toasts />
         <div class="min-h-screen bg-gray-100">
 
             @include('layouts.navigation')

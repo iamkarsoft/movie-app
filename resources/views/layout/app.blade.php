@@ -13,10 +13,7 @@
 </head>
 
 <body class="font-sans bg-gray-900 text-white">
-    <livewire:toasts />
-
-    <livewire:toasts />
-    <section class="text-white font-extrabold">
+    <section
         @if (session()->has('message'))
             <span>{{ session('message') }}</span>
         @endif
