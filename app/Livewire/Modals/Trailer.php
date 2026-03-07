@@ -3,7 +3,6 @@
 namespace App\Livewire\Modals;
 
 use Livewire\Component;
-use Livewire\Attributes\On;
 
 class Trailer extends Component
 {
@@ -11,12 +10,11 @@ class Trailer extends Component
 
     public $visible = false;
 
-    #[On('show')]
-    public function show(){
+    public function show()
+    {
         $this->visible = true;
     }
 
-    #[On('hide')]
     public function hide()
     {
         $this->visible = false;
