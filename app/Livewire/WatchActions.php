@@ -6,12 +6,9 @@ use App\Models\Movie;
 use App\Models\MovieUser;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Usernotnull\Toast\Concerns\WireToast;
 
 class WatchActions extends Component
 {
-    use WireToast;
-
     public Movie $movie;
 
     public $status;
@@ -49,11 +46,9 @@ class WatchActions extends Component
             return;
         }
 
-        toast()
-            ->success('Status Updated', 'Notification')
-            ->push();
-
         $watchStatus->save();
+
+        session()->flash('message', 'Status Updated');
 
         $this->dispatch('refreshStoreMovie');
     }

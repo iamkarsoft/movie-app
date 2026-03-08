@@ -6,6 +6,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.4.0",
+        "@tailwindcss/vite": "^4.2.1",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
         "axios": "^1.8",
@@ -24,7 +25,6 @@
         "vue-template-compiler": "^0.1.0"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.1.8",
         "laravel-vite-plugin": "^1.2.0",
         "vite": "^6.4.1"
     }

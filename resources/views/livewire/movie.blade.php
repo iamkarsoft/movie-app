@@ -1,5 +1,3 @@
-@extends('layout.app')
-@section('content')
     @php
         $searchTitle = urlencode($movie['title']);
     @endphp
@@ -58,7 +56,7 @@
                 <div x-data="{ isOpen: false, showWatchActions: {{ $movie_db ? 'true' : 'false' }} }" @watchlist-updated.window="showWatchActions = $event.detail">
                     <div class="flex gap-2 mt-12">
                         @if (count($movie['videos']['results']) > 0)
-                            <button x-data x-on:click="Livewire.dispatchTo('modals.trailer', 'show');"
+                            <button x-data  x-on:click="Livewire.dispatchTo(null,'modals.trailer','show')"
                                 class="inline-flex items-center px-4 py-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
@@ -71,15 +69,19 @@
                             </button>
                         @endif
 
+
                         <livewire:update-movie-data :updatemovie="$movie" />
 
                         @auth
+                        <div>
+
                             @if (is_array($movie) && !empty($movie))
                                 <livewire:watchlist :watchItem="$movie" :movie_db="$movie_db" />
                                 <div x-show="showWatchActions" x-cloak>
                                     <livewire:watch-actions :status="$movie" :movie_db="$movie_db" />
                                 </div>
                             @endif
+                        </div>
                         @endauth
 
                     </div>
@@ -106,6 +108,9 @@
                         </a>
                     </div>
 
+                    <!-- modal -->
+                        <livewire:modals.trailer :movie="$movie" />
+                    <!-- modal end -->
                 </div>
             </div>
         </div>
@@ -166,8 +171,4 @@
 
             </div><!-- /images -->
         </div><!-- end  movie info-->
-
     </div>
-
-    <livewire:modals.trailer :movie="$movie" />
-@endsection
