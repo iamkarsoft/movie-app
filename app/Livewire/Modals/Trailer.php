@@ -2,23 +2,14 @@
 
 namespace App\Livewire\Modals;
 
+use App\Livewire\Traits\IsModal;
 use Livewire\Component;
 
 class Trailer extends Component
 {
+    use IsModal;
+
     public $movie;
-
-    public $visible = false;
-
-    public function show()
-    {
-        $this->visible = true;
-    }
-
-    public function hide()
-    {
-        $this->visible = false;
-    }
 
     public function mount($movie)
     {
