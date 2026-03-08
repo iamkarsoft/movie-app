@@ -5,9 +5,9 @@ namespace App\Livewire;
 use App\Models\Movie;
 use App\Models\MovieUser;
 use Livewire\Component;
+
 class Watchlist extends Component
 {
-
     public $watchItem;
 
     public $movie_db;

@@ -2,21 +2,24 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-use App\Models\MovieUser;
 use App\Services\Movies\Apis\TmdbApi;
+use Livewire\Component;
 
-class Index extends Component
+class Movie extends Component
 {
-
     public $token = 'services.tmdb.token';
-    public $popularMovies;
-    public $upcomingMovies;
-    public $genres;
-    public $tvShows;
-    public $tvShow;
-    public $tvGenres;
 
+    public $popularMovies;
+
+    public $upcomingMovies;
+
+    public $genres;
+
+    public $tvShows;
+
+    public $tvShow;
+
+    public $tvGenres;
 
     public function mount()
     {
@@ -25,7 +28,6 @@ class Index extends Component
 
     public function getMovieDetails()
     {
-
         $this->popularMovie = TmdbApi::connect($this->token, 'https://api.themoviedb.org/3/movie/popular');
 
         $this->popularMovies = collect($this->popularMovie['results'])->sortBy('release_date')->reverse()->toArray();
@@ -37,9 +39,7 @@ class Index extends Component
         $this->tvGenres = TmdbApi::connect($this->token, 'https://api.themoviedb.org/3/genre/tv/list', 'genres');
 
         $this->upcomingMovies = TmdbApi::connect($this->token, 'https://api.themoviedb.org/3/movie/upcoming', 'results');
-
     }
-
 
     public function render()
     {

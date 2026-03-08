@@ -6,9 +6,9 @@ use App\Models\Movie;
 use App\Models\MovieUser;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+
 class WatchActions extends Component
 {
-
     public Movie $movie;
 
     public $status;
