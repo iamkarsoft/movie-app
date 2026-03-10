@@ -30,7 +30,8 @@ class MovieDataTable extends Component
         return MovieUser::query()->join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
             ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type', 'movies.movie_id as movie_id')
-            ->where('movie_user.user_id', auth()->user()->id);
+            ->where('movie_user.user_id', auth()->user()->id)
+            ->latest('movie_user.updated_at');
     }
 
     public function records()
@@ -38,7 +39,7 @@ class MovieDataTable extends Component
         $builder = $this->builder();
 
         if ($this->query) {
-            $builder = $builder->search($this->query);
+            $builder = $builder->where('movies.name', 'like', '%' . $this->query . '%');
         }
         return $builder->paginate($this->paginated);
     }

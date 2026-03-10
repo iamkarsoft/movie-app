@@ -1,7 +1,7 @@
 <div>
     <div class="w-full my-2 flex mx-4">
         <div class="">
-            <input class="w-full mx-4 p-2" type="search" wire:model="query" placehoder="Search" />
+            <input class="w-full mx-4 p-2" type="search" wire:model.live="query" placeholder="Search" />
         </div>
     </div>
 
@@ -79,8 +79,10 @@
 
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         @if ($item['watch_type'] == 0)
-                                            <span class="">Watching</span>
+                                            <span class="">Added to watch list</span>
                                         @elseif($item['watch_type'] == 1)
+                                             <span class="">Watching</span>
+                                        @elseif($item['watch_type'] == 2)
                                             <span>Watched</span>
                                         @else
                                             <span>Abandoned</span>
