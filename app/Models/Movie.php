@@ -24,11 +24,13 @@ class Movie extends Model
 
     const Talent_show = 6;
 
-    const Watching = 0;
+    const onWatchlist = 0;
 
-    const Watched = 1;
+    const Watching = 1;
 
-    const Abandoned = 2;
+    const Watched = 2;
+
+    const Abandoned = 3;
 
     public $guarded = [];
 
