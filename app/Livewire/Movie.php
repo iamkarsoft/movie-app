@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Services\Movies\Apis\TmdbApi;
+use Livewire\Component;
 
 class Movie extends Component
 {

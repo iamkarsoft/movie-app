@@ -2,18 +2,21 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\MovieUser;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class MovieDataTable extends Component
 {
     use WithPagination;
+
     public $model;
+
     public $paginated;
+
     public $query;
 
-    public function mount($model, $paginate=10)
+    public function mount($model, $paginate = 10)
     {
         $this->model = $model;
         $this->paginated = $paginate;
@@ -39,12 +42,11 @@ class MovieDataTable extends Component
         $builder = $this->builder();
 
         if ($this->query) {
-            $builder = $builder->where('movies.name', 'like', '%' . $this->query . '%');
+            $builder = $builder->where('movies.name', 'like', '%'.$this->query.'%');
         }
+
         return $builder->paginate($this->paginated);
     }
-
-
 
     public function render()
     {
