@@ -45,11 +45,21 @@
                 <div class="mt-6">
                     @auth
                         @if (!is_null($movie_db) && $movie_db['type'] == 1)
-                            <h2 class="text-xl">Last Episode</h2>
+
+                            <div class="flex flex-col">
+
+                                <div>
+                                    <span class="bold text-xl mr-4">Season: </span>  {{ is_null($movie_db['season']) ? 'Not Started' : $movie_db['season']  }}
+                                </div>
+
+                                <div>
+                                    <span class="bold text-xl mr-4">Episode: </span>  {{ is_null($movie_db['episode']) ? 'Not Started' : $movie_db['episode']  }}
+                                </div>
+                            </div>
+                            <button x-data x-on:click="Livewire.dispatchTo('modals.update-episodes','show')">Episodes</button>
 
                             <livewire:modals.update-episodes :movie_db="$movie_db" />
                         @endif
-
                     @endauth
                 </div>
 

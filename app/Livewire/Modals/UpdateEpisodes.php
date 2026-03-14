@@ -4,12 +4,14 @@ namespace App\Livewire\Modals;
 
 use App\Models\Movie;
 use Livewire\Component;
+use App\Livewire\Traits\IsModal;
 
 class UpdateEpisodes extends Component
 {
+    use IsModal;
+
     public Movie $movie;
 
-    public $isOpen = false;
 
     public $movie_db;
 
@@ -29,9 +31,10 @@ class UpdateEpisodes extends Component
         $this->isOpen = true;
     }
 
+
     public function closeModal()
     {
-        $this->isOpen = false;
+        $this->visible = false;
     }
 
     public function saveData()
