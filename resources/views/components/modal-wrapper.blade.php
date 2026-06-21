@@ -10,8 +10,8 @@
         x-on:click="Livewire.dispatchTo('{{ $this->getName() }}', 'hide'); stopVideos()"
     ></div>
 
-    <div class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg">
-        <div class="container mx-auto overflow-y-hidden rounded-lg lg:px-32">
+    <div class="fixed top-0 left-0 flex items-center justify-center w-full h-full overflow-y-auto shadow-lg">
+        <div class="w-fit min-w-[24rem] max-w-5xl mx-auto overflow-y-hidden rounded-lg">
             <div class="bg-gray-900 rounded">
                 <div class="flex justify-end pt-2 pr-4">
                     <button class="text-3xl leading-none hover:text-gray-300"

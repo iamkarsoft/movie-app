@@ -111,7 +111,7 @@ class Watchlist extends Component
     private function getItemName()
     {
         return isset($this->watchItem['first_air_date'])
-            ? ($this->watchItem['original_name'] ?? $this->watchItem['name'])
+            ? ($this->watchItem['name'] ?? $this->watchItem['original_name'])
             : ($this->watchItem['title'] ?? '');
     }
 

@@ -2,16 +2,15 @@
 
 namespace App\Livewire\Modals;
 
-use App\Models\Movie;
+use App\Models\MovieUser;
 use Livewire\Component;
+use App\Livewire\Traits\IsModal;
 
 class UpdateEpisodes extends Component
 {
-    public Movie $movie;
+    use IsModal;
 
-    public $isOpen = false;
-
-    public $movie_db;
+    public string $movieId;
 
     public $season;
 
@@ -19,27 +18,22 @@ class UpdateEpisodes extends Component
 
     public function mount($movie_db)
     {
-        $this->movie_db = $movie_db;
-        $this->episode = $this->movie_db['episode'];
-        $this->season = $this->movie_db['season'];
-    }
-
-    public function openModal()
-    {
-        $this->isOpen = true;
-    }
-
-    public function closeModal()
-    {
-        $this->isOpen = false;
+        // movie_user.movie_id (UUID) is the last 'movie_id' in SELECT users.*, movies.*, movie_user.*
+        $this->movieId = $movie_db->movie_id;
+        $this->season = $movie_db->season;
+        $this->episode = $movie_db->episode;
     }
 
     public function saveData()
     {
-        $this->movie_db['episode'] = $this->episode;
-        $this->movie_db['season'] = $this->season;
-        $this->movie_db->save();
-        $this->closeModal();
+        MovieUser::where('movie_id', $this->movieId)
+            ->where('user_id', auth()->id())
+            ->update([
+                'season' => $this->season,
+                'episode' => $this->episode,
+            ]);
+
+        $this->hide();
     }
 
     public function render()
