@@ -45,19 +45,6 @@
                 <div class="mt-6">
                     @auth
                         @if (!is_null($movie_db) && $movie_db['type'] == 1)
-
-                            <div class="flex flex-col">
-
-                                <div>
-                                    <span class="bold text-xl mr-4">Season: </span>  {{ is_null($movie_db['season']) ? 'Not Started' : $movie_db['season']  }}
-                                </div>
-
-                                <div>
-                                    <span class="bold text-xl mr-4">Episode: </span>  {{ is_null($movie_db['episode']) ? 'Not Started' : $movie_db['episode']  }}
-                                </div>
-                            </div>
-                            <button x-data x-on:click="Livewire.dispatchTo('modals.update-episodes','show')">Episodes</button>
-
                             <livewire:modals.update-episodes :movie_db="$movie_db" />
                         @endif
                     @endauth
@@ -103,11 +90,11 @@
                         @endforeach
                     </div>
                 </div>
-                <div x-data="{ isOpen: false, showWatchActions: {{ $movie_db ? 'true' : 'false' }} }" @watchlist-updated.window="showWatchActions = $event.detail">
-                    <div class="flex mt-12">
+                <div x-data="{ showWatchActions: {{ $movie_db ? 'true' : 'false' }} }" @watchlist-updated.window="showWatchActions = $event.detail">
+                    <div class="flex mt-12 gap-2">
                         @if (count($tv['videos']['results']) > 0)
-                            <button @click=" isOpen = true"
-                                class="inline-flex items-center px-4 py-4 mx-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
+                            <button x-data x-on:click="Livewire.dispatchTo('modals.trailer', 'show')"
+                                class="inline-flex items-center px-4 py-4 font-semibold text-gray-900 transition ease-in-out bg-purple-500 rounded hover:bg-purple-600">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
                                     <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -121,7 +108,7 @@
 
                         @auth
                             <livewire:watchlist :watchItem="$tv" :movie_db="$movie_db" />
-                            <livewire:update-movie-data :updatemovie="$tv" />
+                            <livewire:update-movie-data :updatemovie="$tv" :movie_db="$movie_db" />
                             <div x-show="showWatchActions" x-cloak>
                                 <livewire:watch-actions :status="$tv" :movie_db="$movie_db" />
                             </div>
@@ -129,39 +116,11 @@
                     </div>
 
 
-
-
-
-                    <!-- modal -->
-                    <div style="background-color: rgba(0,0,0,0.5);"
-                        class="fixed top-0 left-0 flex items-center w-full h-full overflow-y-auto shadow-lg" x-show="isOpen"
-                        x-cloak>
-                        <div class="container mx-auto overflow-y-hidden rounded-lg lg:px-32">
-                            <div class="bg-gray-900 rounded">
-                                <div class="flex justify-end pt-2 pr-4">
-                                    <button class="text-3xl leading-none hover:text-gray-300" @click="isOpen=false">&times;
-                                    </button>
-                                </div>
-                                <div class="px-8 py-8 modal-body">
-                                    @if (isset($tv['videos']['results'][0]) || array_key_exists(0, $tv['videos']['results']))
-                                        <div class="relative overflow-hidden responsive-container"
-                                            style="padding-top: 56.25%">
-                                            <iframe
-                                                src="https://youtube.com/embed/{{ $tv['videos']['results'][0]['key'] }}"
-                                                width="560" height="315"
-                                                class="absolute top-0 left-0 w-full h-full responsive-iframe"
-                                                frameborder="0" allow="autoplay; encrypted-media" style="border:0"></iframe>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div> <!-- modal end -->
                 </div>
             </div>
         </div>
+
+        <livewire:modals.trailer :movie="$tv" />
 
         <div class="border-b border-gray-800 movie-cast">
             <div class="container px-4 py-16 mx-auto">
