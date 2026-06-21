@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Traits\IsModal;
 use App\Models\Movie;
 use Livewire\Component;
-use App\Livewire\Traits\IsModal;
 
 class UpdateMovieData extends Component
 {
@@ -32,6 +32,7 @@ class UpdateMovieData extends Component
 
         if (! $movie) {
             $this->dispatch('hide')->self();
+
             return;
         }
 

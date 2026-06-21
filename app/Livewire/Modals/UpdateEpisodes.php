@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Modals;
 
+use App\Livewire\Traits\IsModal;
 use App\Models\MovieUser;
 use Livewire\Component;
-use App\Livewire\Traits\IsModal;
 
 class UpdateEpisodes extends Component
 {
