@@ -52,6 +52,16 @@
             </flux:navlist.item>
         </flux:navlist>
 
+        <flux:separator class="my-1" />
+
+        <flux:navlist variant="outline">
+            <flux:navlist.group heading="Settings">
+                <flux:navlist.item icon="wrench-screwdriver" href="{{ route('settings.developer-tools') }}" :current="request()->routeIs('settings.developer-tools')">
+                    Developer Tools
+                </flux:navlist.item>
+            </flux:navlist.group>
+        </flux:navlist>
+
         <flux:spacer />
 
         @auth
