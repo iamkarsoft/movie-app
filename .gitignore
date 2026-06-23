@@ -16,3 +16,5 @@ yarn-error.log
 /.idea/**
 /.php-cs-fixer.cache
 .idea/
+.claude
+.claude/

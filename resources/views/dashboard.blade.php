@@ -1,188 +1,124 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <flux:heading size="xl" level="1">Dashboard</flux:heading>
+        <flux:subheading class="text-zinc-400 mt-1">Upcoming releases and new episodes on your watchlist</flux:subheading>
     </x-slot>
 
-    <div class="py-12">
-        <div class="mt-5 w-full mx-auto px-4 lg:w-4/5 mb-14 my-6">
-            <h3 class="my-8 px-4 text-4xl font-extrabold text-red-700">Upcoming Releases </h3>
-            <div class="flex flex-col mt-6 w-full px-4">
-                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-800 text-white font-bold p-4">
-                                    <tr>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Name
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Release Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Last Air Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Next Air Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Status
-                                        </th>
+    <div class="space-y-8">
 
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Updated On
-                                        </th>
-                                        <th class="relative px-6 py-3" scope="col">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($upcomings as $upcoming)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="font-bold">
-                                                    @if ($upcoming['type'] == 0)
-                                                        <a href="{{ URL::to('/movie/' . $upcoming['movie_id']) }}"
-                                                            target="_blank">{{ $upcoming['name'] }}</a>
-                                                    @elseif($upcoming['type'] == 1)
-                                                        <a href="{{ URL::to('/tvshow/' . $upcoming['movie_id']) }}"
-                                                            target="_blank">{{ $upcoming['name'] }}</a>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ $upcoming['release_date'] }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ $upcoming['last_air_date'] }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $upcoming['next_air_date'] }}
-                                            </td>
-
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                @if ($upcoming['watch_type'] == 0)
-                                                    <span class="">Watching</span>
-                                                @elseif($upcoming['watch_type'] == 1)
-                                                    <span>Watched</span>
-                                                @else
-                                                    <span>Abandoned</span>
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $upcoming['updated_at']->diffForHumans() }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a class="text-indigo-600 hover:text-indigo-900" href="#">Edit</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <!-- More people... -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+        {{-- Upcoming Releases --}}
+        <flux:card class="!bg-zinc-900 !border-zinc-800">
+            <div class="flex items-center justify-between mb-5">
+                <flux:heading size="lg" level="2">Upcoming Releases</flux:heading>
+                <flux:badge color="rose" rounded>{{ count($upcomings) }}</flux:badge>
             </div>
 
-        </div>
+            @if (count($upcomings) > 0)
+                <flux:table>
+                    <flux:table.columns>
+                        <flux:table.column>Name</flux:table.column>
+                        <flux:table.column>Release Date</flux:table.column>
+                        <flux:table.column>Last Air Date</flux:table.column>
+                        <flux:table.column>Next Air Date</flux:table.column>
+                        <flux:table.column>Status</flux:table.column>
+                        <flux:table.column>Updated</flux:table.column>
+                    </flux:table.columns>
+                    <flux:table.rows>
+                        @foreach ($upcomings as $upcoming)
+                            <flux:table.row>
+                                <flux:table.cell variant="strong">
+                                    @if ($upcoming['type'] == 0 && !empty($upcoming['movie_id']))
+                                        <a href="{{ URL::to('/movie/' . $upcoming['movie_id']) }}" target="_blank"
+                                            class="hover:text-rose-400 transition-colors">
+                                            {{ $upcoming['name'] }}
+                                        </a>
+                                    @elseif($upcoming['type'] == 1 && !empty($upcoming['movie_id']))
+                                        <a href="{{ URL::to('/tvshow/' . $upcoming['movie_id']) }}" target="_blank"
+                                            class="hover:text-violet-400 transition-colors">
+                                            {{ $upcoming['name'] }}
+                                        </a>
+                                    @else
+                                        {{ $upcoming['name'] }}
+                                    @endif
+                                </flux:table.cell>
+                                <flux:table.cell>{{ $upcoming['release_date'] }}</flux:table.cell>
+                                <flux:table.cell>{{ $upcoming['last_air_date'] }}</flux:table.cell>
+                                <flux:table.cell>{{ $upcoming['next_air_date'] }}</flux:table.cell>
+                                <flux:table.cell>
+                                    @if ($upcoming['watch_type'] == 0)
+                                        <flux:badge color="blue" size="sm">Watching</flux:badge>
+                                    @elseif($upcoming['watch_type'] == 1)
+                                        <flux:badge color="green" size="sm">Watched</flux:badge>
+                                    @else
+                                        <flux:badge color="zinc" size="sm">Abandoned</flux:badge>
+                                    @endif
+                                </flux:table.cell>
+                                <flux:table.cell>{{ $upcoming['updated_at']->diffForHumans() }}</flux:table.cell>
+                            </flux:table.row>
+                        @endforeach
+                    </flux:table.rows>
+                </flux:table>
+            @else
+                <flux:text class="text-zinc-500 py-4">No upcoming releases found.</flux:text>
+            @endif
+        </flux:card>
 
-        <div class="mt-5 w-full mx-auto px-4 lg:w-4/5 my-2 ">
-            <h3 class="my-8 px-4 text-4xl text-red-700 font-extrabold mt-2">Upcoming Series</h3>
-            <div class="flex flex-col mt-6 w-full px-4">
-                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-800 text-white font-bold p-4">
-                                    <tr>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Name
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Release Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Last Air Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Next Air Date
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Status
-                                        </th>
-                                        <th class="px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                                            scope="col">
-                                            Updated on
-                                        </th>
-                                        <th class="relative px-6 py-3" scope="col">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($episodes as $episode)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="font-bold">
-                                                    @if ($episode['type'] == 0)
-                                                        <a href="{{ URL::to('/movie/' . $episode['movie_id']) }}"
-                                                            target="_blank">{{ $episode['name'] }}</a>
-                                                    @elseif($episode['type'] == 1)
-                                                        <a href="{{ URL::to('/tvshow/' . $episode['movie_id']) }}"
-                                                            target="_blank">{{ $episode['name'] }}</a>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ $episode['release_date'] }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ $episode['last_air_date'] }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $episode['next_air_date'] }}
-                                            </td>
-
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                @if ($episode['watch_type'] == 0)
-                                                    <span class="">Watching</span>
-                                                @elseif($episode['watch_type'] == 1)
-                                                    <span>Watched</span>
-                                                @else
-                                                    <span>Abandoned</span>
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $episode->updated_at->diffForHumans() }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a class="text-indigo-600 hover:text-indigo-900" href="#">Edit</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <!-- More people... -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+        {{-- Upcoming Series --}}
+        <flux:card class="!bg-zinc-900 !border-zinc-800">
+            <div class="flex items-center justify-between mb-5">
+                <flux:heading size="lg" level="2">Upcoming Series</flux:heading>
+                <flux:badge color="violet" rounded>{{ count($episodes) }}</flux:badge>
             </div>
 
-        </div>
+            @if (count($episodes) > 0)
+                <flux:table>
+                    <flux:table.columns>
+                        <flux:table.column>Name</flux:table.column>
+                        <flux:table.column>Release Date</flux:table.column>
+                        <flux:table.column>Last Air Date</flux:table.column>
+                        <flux:table.column>Next Air Date</flux:table.column>
+                        <flux:table.column>Status</flux:table.column>
+                        <flux:table.column>Updated</flux:table.column>
+                    </flux:table.columns>
+                    <flux:table.rows>
+                        @foreach ($episodes as $episode)
+                            <flux:table.row>
+                                <flux:table.cell variant="strong">
+                                    @if ($episode['type'] == 0 && !empty($episode['movie_id']))
+                                        <a href="{{ URL::to('/movie/' . $episode['movie_id']) }}" target="_blank"
+                                            class="hover:text-rose-400 transition-colors">
+                                            {{ $episode['name'] }}
+                                        </a>
+                                    @elseif($episode['type'] == 1 && !empty($episode['movie_id']))
+                                        <a href="{{ URL::to('/tvshow/' . $episode['movie_id']) }}" target="_blank"
+                                            class="hover:text-violet-400 transition-colors">
+                                            {{ $episode['name'] }}
+                                        </a>
+                                    @else
+                                        {{ $episode['name'] }}
+                                    @endif
+                                </flux:table.cell>
+                                <flux:table.cell>{{ $episode['release_date'] }}</flux:table.cell>
+                                <flux:table.cell>{{ $episode['last_air_date'] }}</flux:table.cell>
+                                <flux:table.cell>{{ $episode['next_air_date'] }}</flux:table.cell>
+                                <flux:table.cell>
+                                    @if ($episode['watch_type'] == 0)
+                                        <flux:badge color="blue" size="sm">Watching</flux:badge>
+                                    @elseif($episode['watch_type'] == 1)
+                                        <flux:badge color="green" size="sm">Watched</flux:badge>
+                                    @else
+                                        <flux:badge color="zinc" size="sm">Abandoned</flux:badge>
+                                    @endif
+                                </flux:table.cell>
+                                <flux:table.cell>{{ $episode->updated_at->diffForHumans() }}</flux:table.cell>
+                            </flux:table.row>
+                        @endforeach
+                    </flux:table.rows>
+                </flux:table>
+            @else
+                <flux:text class="text-zinc-500 py-4">No upcoming episodes found.</flux:text>
+            @endif
+        </flux:card>
+
     </div>
 </x-app-layout>

@@ -1,110 +1,78 @@
 <div>
-    <div class="w-full my-2 flex mx-4">
-        <div class="">
-            <input class="w-full mx-4 p-2" type="search" wire:model.live="query" placeholder="Search" />
+    <div class="mb-4 flex items-center gap-3">
+        <div class="flex-1 min-w-0">
+            <flux:input
+                wire:model.live.debounce.400ms="query"
+                :loading="false"
+                type="text"
+                placeholder="Search your list…"
+                icon="magnifying-glass"
+                clearable
+            />
         </div>
+        <flux:select wire:model.live="statusFilter" class="w-44 shrink-0">
+            <flux:select.option value="">All statuses</flux:select.option>
+            <flux:select.option value="0">Listed</flux:select.option>
+            <flux:select.option value="1">Watching</flux:select.option>
+            <flux:select.option value="2">Watched</flux:select.option>
+            <flux:select.option value="3">Abandoned</flux:select.option>
+        </flux:select>
     </div>
 
+    <flux:table>
+        <flux:table.columns>
+            <flux:table.column>Name</flux:table.column>
+            <flux:table.column>Release Date</flux:table.column>
+            <flux:table.column>Last Air Date</flux:table.column>
+            <flux:table.column>Next Air Date</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column>Updated</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
+            @foreach ($this->records() as $item)
+                <flux:table.row wire:key="record-{{ $item['id'] ?? $loop->index }}">
+                    <flux:table.cell variant="strong">
+                        @if ($item['type'] == 0 && !is_null($item['movie_id']))
+                            <a href="{{ URL::to('/movie/' . $item['movie_id']) }}" target="_blank"
+                                class="inline-flex items-center gap-1 hover:text-rose-400 transition-colors">
+                                {{ $item['name'] }}
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="size-3 text-zinc-500 shrink-0">
+                                    <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @elseif($item['type'] == 1 && !is_null($item['movie_id']))
+                            <a href="{{ URL::to('/tvshow/' . $item['movie_id']) }}" target="_blank"
+                                class="inline-flex items-center gap-1 hover:text-violet-400 transition-colors">
+                                {{ $item['name'] }}
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="size-3 text-zinc-500 shrink-0">
+                                    <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        @else
+                            {{ $item['name'] }}
+                        @endif
+                    </flux:table.cell>
+                    <flux:table.cell>{{ $item['release_date'] }}</flux:table.cell>
+                    <flux:table.cell>{{ $item['last_air_date'] }}</flux:table.cell>
+                    <flux:table.cell>{{ $item['next_air_date'] }}</flux:table.cell>
+                    <flux:table.cell>
+                        @if ($item['watch_type'] == 0)
+                            <flux:badge color="zinc" size="sm">Listed</flux:badge>
+                        @elseif($item['watch_type'] == 1)
+                            <flux:badge color="blue" size="sm">Watching</flux:badge>
+                        @elseif($item['watch_type'] == 2)
+                            <flux:badge color="green" size="sm">Watched</flux:badge>
+                        @else
+                            <flux:badge color="red" size="sm">Abandoned</flux:badge>
+                        @endif
+                    </flux:table.cell>
+                    <flux:table.cell>{{ $item['updated_at'] }}</flux:table.cell>
+                </flux:table.row>
+            @endforeach
+        </flux:table.rows>
+    </flux:table>
 
-    <div class="flex flex-col w-full px-8 mt-6">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="p-4 font-bold text-white bg-gray-800">
-                            <tr>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Name
-                                </th>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Release Date
-                                </th>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Last Air Date
-                                </th>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Next Air Date
-                                </th>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Status
-                                </th>
-                                <th class="px-6 py-6 text-xs font-medium tracking-wider text-left uppercase"
-                                    scope="col">
-                                    Update on
-                                </th>
-                                <th class="relative px-6 py-3" scope="col">
-                                    <span class="sr-only">Edit</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-
-                            @foreach ($this->records() as $item)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="font-bold flex gap-2 cursor-pointer">
-                                            @if ($item['type'] == 0 && !is_null($item['movie_id'])  )
-                                                <a href="{{ URL::to('/movie/' . $item['movie_id']) }}"
-                                                    target="_blank">{{ $item['name'] }}</a>
-                                            @elseif($item['type'] == 1 && !is_null($item['movie_id']) )
-                                                <a href="{{ URL::to('/tvshow/' . $item['movie_id']) }}"
-                                                    target="_blank">{{ $item['name'] }}</a>
-                                            @else
-                                                {{ $item['name'] }}
-                                            @endif
-
-                                            @if(!is_null($item['movie_id']))
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                                                <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd" />
-                                                </svg>
-                                            @endif
-
-
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $item['release_date'] }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $item['last_air_date'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $item['next_air_date'] }}
-                                    </td>
-
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        @if ($item['watch_type'] == 0)
-                                            <span class="">Added to watch list</span>
-                                        @elseif($item['watch_type'] == 1)
-                                             <span class="">Watching</span>
-                                        @elseif($item['watch_type'] == 2)
-                                            <span>Watched</span>
-                                        @else
-                                            <span>Abandoned</span>
-                                        @endif
-                                    </td>
-
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $item['updated_at'] }}
-                                    </td>
-
-                                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                        <a class="text-indigo-600 hover:text-indigo-900" href="#">Edit</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="p-4 livewire-pagination">
-            {{ $this->records()->links() }}
-        </div>
-    </div>
+    <flux:pagination :paginator="$this->records()" class="mt-4" />
 </div>

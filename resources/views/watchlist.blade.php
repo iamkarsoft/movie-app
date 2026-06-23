@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Watch List') }}
-        </h2>
+        <flux:heading size="xl" level="1">Watch List</flux:heading>
+        <flux:subheading class="text-zinc-400 mt-1">Everything you're tracking, watching, or have watched</flux:subheading>
     </x-slot>
 
-    <livewire:movie-data-table model="App\Models\MovieUser" paginate="10" />
-
+    <flux:card class="!bg-zinc-900 !border-zinc-800">
+        <livewire:movie-data-table model="App\Models\MovieUser" paginate="15" />
+    </flux:card>
 </x-app-layout>
