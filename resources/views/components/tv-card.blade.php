@@ -1,69 +1,47 @@
-<div class="mt-8">
-    @php
-         $searchTitle = urlencode($tv['name']);
-    @endphp
-    <a href="{{route('tv.show',$tv['id'])}}">
-
-        <div class="mt-2 rounded-lg overflow-hidden bg-white text-black p-2">
-
-            <img class="h-80" src="{{'https://image.tmdb.org/t/p/w500'.$tv['poster_path']}}" alt="">
-
-            <div class="h-14 my-2">
-                <a href="{{route('tv.show',$tv['id'])}}"
-                   class=" text-base mt-2  hover:opacity-75 transition ease-in-out  hover:text-gray-300">{{$tv['name']}}</a>
-            </div>
-            <div class="flex gap-2 my-2">
-                <div class="flex items-center text-gray-400 mt-1">
-               <span>   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" class="w-6 h-6 text-red-600">
-             <path
-                 d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-            </svg></span>
-                    <span class="ml-1">{{ $tv['vote_average'] * 10 . '%'}}</span>
-
-                </div>
-
-                <div class="flex items-center mx-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+@php
+    if (empty($tv['id'])) return;
+    $tvName = $tv['name'] ?? $tv['title'] ?? 'Unknown';
+    $searchTitle = urlencode($tvName);
+@endphp
+<div class="group">
+    <a href="{{ route('tv.show', $tv['id']) }}" class="block">
+        <div class="relative rounded-lg overflow-hidden bg-zinc-800 aspect-[2/3]">
+            @if($tv['poster_path'])
+                <img
+                    src="https://image.tmdb.org/t/p/w500{{ $tv['poster_path'] }}"
+                    alt="{{ $tvName }}"
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+            @else
+                <div class="w-full h-full flex items-center justify-center text-zinc-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-12">
+                        <path fill-rule="evenodd" d="M1 4.75C1 3.784 1.784 3 2.75 3h14.5c.966 0 1.75.784 1.75 1.75v10.515a1.75 1.75 0 0 1-1.75 1.75h-1.5c-.078 0-.155-.005-.23-.015H4.48c-.075.01-.152.015-.23.015h-1.5A1.75 1.75 0 0 1 1 15.265V4.75Zm16.5 7.385V11.01a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25Zm0 2.005a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .108.069.2.165.235h1.585a.25.25 0 0 0 .25-.25v-1.11Zm-15 1.11v-1.11a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.164.235H2.75a.25.25 0 0 1-.25-.25Zm2-4.24v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V11.01a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25Zm13-2.005V7.88a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25ZM4.25 7.63a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V7.88a.25.25 0 0 1 .25-.25h1.5Zm0-3.13a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V4.75a.25.25 0 0 1 .25-.25h1.5Zm11.5 1.625a.25.25 0 0 1-.25-.25V4.75a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5Zm-9 3.125a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z" clip-rule="evenodd" />
                     </svg>
-
-                    <span class="">{{ ceil($tv['popularity'] )}}</span>
+                </div>
+            @endif
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <div class="flex gap-2">
+                    <a href="https://lookmovie2.to/shows/search/?q={{ $searchTitle }}" target="_blank"
+                        class="flex-1 text-center text-xs bg-white/20 backdrop-blur-sm text-white py-1 rounded hover:bg-white/30 transition-colors"
+                        onclick="event.stopPropagation()">Watch 1</a>
+                    <a href="https://sflix.to/search/{{ \Str::kebab($tvName) }}" target="_blank"
+                        class="flex-1 text-center text-xs bg-white/20 backdrop-blur-sm text-white py-1 rounded hover:bg-white/30 transition-colors"
+                        onclick="event.stopPropagation()">Watch 2</a>
                 </div>
             </div>
-
-
-            <div class="flex items-center my-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-                </svg>
-                <span>{{ \Carbon\Carbon::parse($tv['first_air_date'])->format('M d, Y')}}</span>
-
+            <div class="absolute top-2 right-2">
+                <span class="text-xs bg-black/60 backdrop-blur-sm text-yellow-400 px-2 py-0.5 rounded-full font-medium">
+                    ★ {{ number_format($tv['vote_average'] ?? 0, 1) }}
+                </span>
             </div>
-
-            <div class="text-gray-400 text-sm  gap-2 my-2 flex">
-                <a href="https://lookmovie2.to/shows/search/?q={{$searchTitle}}" target="_blank"
-                   class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-                    </svg>
-
-                    <span>1</span>
-                </a>
-
-                <a href="https://sflix.to/search/{{\Str::kebab($tv['name'])}}" target="_blank"
-                   class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 text-blue-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-                    </svg>
-
-                    <span>2</span>
-                </a>
-            </div>
+        </div>
+        <div class="mt-2 px-0.5">
+            <h3 class="text-white text-sm font-medium leading-tight line-clamp-2 group-hover:text-orange-400 transition-colors">
+                {{ $tvName }}
+            </h3>
+            <p class="text-zinc-500 text-xs mt-0.5">
+                {{ !empty($tv['first_air_date']) ? \Carbon\Carbon::parse($tv['first_air_date'])->format('Y') : '—' }}
+            </p>
         </div>
     </a>
 </div>

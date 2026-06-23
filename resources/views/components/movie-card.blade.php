@@ -1,64 +1,47 @@
-<div class="mt-8 w-full">
-    @php
-         $searchTitle = urlencode($movie['title']);
-    @endphp
-    <a href="{{route('movie.show',$movie['id'])}}">
-
-        <div class="mt-2 rounded-lg overflow-hidden bg-white text-black p-2">
-            <img class="h-80" src="{{'https://image.tmdb.org/t/p/w500/'.$movie['poster_path']}}" alt="">
-
-            <div class="h-14 my-2">
-                <a href="{{route('movie.show',$movie['id'])}}"
-                   class=" text-base my-4 mt-2 hover:opacity-75 transition ease-in-out  hover:text-gray-300">{{$movie['title']}}</a>
-            </div>
-            <div class="flex gap-2 my-2">
-                <div class="flex items-center text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                         class="w-6 h-6 text-red-600">
-                        <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+@php
+    if (empty($movie['id'])) return;
+    $movieTitle = $movie['title'] ?? $movie['name'] ?? 'Unknown';
+    $searchTitle = urlencode($movieTitle);
+@endphp
+<div class="group">
+    <a href="{{ route('movie.show', $movie['id']) }}" class="block">
+        <div class="relative rounded-lg overflow-hidden bg-zinc-800 aspect-[2/3]">
+            @if($movie['poster_path'])
+                <img
+                    src="https://image.tmdb.org/t/p/w500/{{ $movie['poster_path'] }}"
+                    alt="{{ $movieTitle }}"
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+            @else
+                <div class="w-full h-full flex items-center justify-center text-zinc-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-12">
+                        <path d="M3.25 4A2.25 2.25 0 0 0 1 6.25v7.5A2.25 2.25 0 0 0 3.25 16h7.5A2.25 2.25 0 0 0 13 13.75v-7.5A2.25 2.25 0 0 0 10.75 4h-7.5ZM19 4.75a.75.75 0 0 0-1.28-.53l-3 3a.75.75 0 0 0-.22.53v4.5c0 .199.079.39.22.53l3 3a.75.75 0 0 0 1.28-.53V4.75Z" />
                     </svg>
-                    <span class="">{{ $movie['vote_average'] * 10 . '%'}}</span>
-
                 </div>
-
-                <div class="flex items-center mx-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-
-                    <span class="">{{ ceil($movie['popularity'] )}}</span>
+            @endif
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <div class="flex gap-2">
+                    <a href="https://lookmovie2.to/movies/search/?q={{ $searchTitle }}" target="_blank"
+                        class="flex-1 text-center text-xs bg-white/20 backdrop-blur-sm text-white py-1 rounded hover:bg-white/30 transition-colors"
+                        onclick="event.stopPropagation()">Watch 1</a>
+                    <a href="https://sflix.to/search/{{ \Str::kebab($movieTitle) }}" target="_blank"
+                        class="flex-1 text-center text-xs bg-white/20 backdrop-blur-sm text-white py-1 rounded hover:bg-white/30 transition-colors"
+                        onclick="event.stopPropagation()">Watch 2</a>
                 </div>
             </div>
-
-            <div class="flex items-center my-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-                </svg>
-                <span>{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y')}}</span>
+            <div class="absolute top-2 right-2">
+                <span class="text-xs bg-black/60 backdrop-blur-sm text-yellow-400 px-2 py-0.5 rounded-full font-medium">
+                    ★ {{ number_format($movie['vote_average'] ?? 0, 1) }}
+                </span>
             </div>
-            <div class="text-gray-400 text-sm gap-2 my-2 flex gap-2">
-                <a href="https://lookmovie2.to/movies/search/?q={{$searchTitle}}" target="_blank"
-                   class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 text-red-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-                    </svg>
-                    <span>1</span>
-                </a>
-
-                <a href="https://sflix.to/search/{{\Str::kebab($movie['title'])}}" target="_blank"
-                   class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 text-blue-600">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-                    </svg>
-
-                    <span>2</span>
-                </a>
-            </div>
+        </div>
+        <div class="mt-2 px-0.5">
+            <h3 class="text-white text-sm font-medium leading-tight line-clamp-2 group-hover:text-orange-400 transition-colors">
+                {{ $movieTitle }}
+            </h3>
+            <p class="text-zinc-500 text-xs mt-0.5">
+                {{ !empty($movie['release_date']) ? \Carbon\Carbon::parse($movie['release_date'])->format('Y') : '—' }}
+            </p>
         </div>
     </a>
 </div>

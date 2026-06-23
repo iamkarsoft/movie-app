@@ -1,76 +1,59 @@
-<div class="mx-4">
-    <section class="text-white font-extrabold">
-        @if (session()->has('message'))
-            <span>{{ session('message') }}</span>
-        @endif
-    </section>
-    <div class="w-40 flex-column border-slate-200 relative bg-purple-500 text-gray-900 rounded font-semibold px-4 py-4 transition ease-in-out hover:bg-purple-600"
-        x-data="{ filter: false }">
-        <button x-on:click="filter=true" class="relative flex ">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                    d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
-            </svg><span>Watch Status</span></button>
-        <ul x-show="filter" x-on:click.away="filter=false" x-cloak
-            class="border-t-2 bg-gray-100 z-50 border-slate-200 absolute w-40 lg:mt-2 lg:left-0">
-            {{-- @if ($movie_db['watch_type'] == 0) --}}
-            <li wire:click="$dispatch('status',[1])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db && $movie_db['watch_type'] == 1)
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                @else
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                        </path>
-                    </svg>
-                @endif
-                <span class="ml-2">Watching</span>
-            </li>
-            <li wire:click="$dispatch('status',[2])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db && $movie_db['watch_type'] == 2)
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                @else
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                        </path>
-                    </svg>
-                @endif
-                <span class="ml-2">Watched</span>
-            </li>
-            <li wire:click="$dispatch('status',[3])" class="inline-flex items-center w-full cursor-pointer">
-                @if ($movie_db && $movie_db['watch_type'] == 3)
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd" />
-                    </svg>
-                @else
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                        </path>
-                    </svg>
-                @endif
-                <span class="ml-2">Abandoned</span>
-            </li>
-            {{-- @endif --}}
-        </ul>
-
-    </div>
-
+@php
+    $statusLabels = [1 => 'Watching', 2 => 'Watched', 3 => 'Abandoned'];
+    $currentStatus = $movie_db['watch_type'] ?? 0;
+@endphp
+<div x-data="{ open: false }" class="relative">
+    <button
+        @click="open = !open"
+        class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors bg-zinc-700 hover:bg-zinc-600 text-white"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+            <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+            <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
+        </svg>
+        {{ $statusLabels[$currentStatus] ?? 'Watch Status' }}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-3 opacity-60">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+    </button>
+    <ul
+        x-show="open"
+        @click.away="open = false"
+        x-cloak
+        class="absolute z-50 mt-1 left-0 w-44 bg-zinc-800 rounded-lg shadow-xl ring-1 ring-white/10 overflow-hidden"
+    >
+        <li wire:click="$dispatch('status',[1])" @click="open = false"
+            class="flex items-center gap-2 px-4 py-2.5 text-sm cursor-pointer hover:bg-zinc-700 {{ $currentStatus == 1 ? 'text-white font-semibold' : 'text-zinc-300' }}">
+            @if($currentStatus == 1)
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4 text-rose-400 shrink-0">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                </svg>
+            @else
+                <div class="size-4 shrink-0"></div>
+            @endif
+            Watching
+        </li>
+        <li wire:click="$dispatch('status',[2])" @click="open = false"
+            class="flex items-center gap-2 px-4 py-2.5 text-sm cursor-pointer hover:bg-zinc-700 {{ $currentStatus == 2 ? 'text-white font-semibold' : 'text-zinc-300' }}">
+            @if($currentStatus == 2)
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4 text-rose-400 shrink-0">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                </svg>
+            @else
+                <div class="size-4 shrink-0"></div>
+            @endif
+            Watched
+        </li>
+        <li wire:click="$dispatch('status',[3])" @click="open = false"
+            class="flex items-center gap-2 px-4 py-2.5 text-sm cursor-pointer hover:bg-zinc-700 {{ $currentStatus == 3 ? 'text-white font-semibold' : 'text-zinc-300' }}">
+            @if($currentStatus == 3)
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4 text-rose-400 shrink-0">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                </svg>
+            @else
+                <div class="size-4 shrink-0"></div>
+            @endif
+            Abandoned
+        </li>
+    </ul>
 </div>

@@ -1,54 +1,46 @@
 <div>
-    <div class="container  mx-auto px-4 pt-16 pb-16">
-        <div class="popular-movies mt-8 w-full lg:mx-auto">
-            <h2 class=" text-4xl tracking-wider text-orange-500 font-semibold uppercase text-lg">
-                Popular Movies
-            </h2>
+    <div class="container mx-auto px-4 pt-12 pb-16">
 
-            <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                @foreach($popularMovies as $movie)
-                    <x-movie-card :movie="$movie" :genres="$genres"/>
-                @endforeach
-            </div>
-
-        </div><!-- end of popular movie -->
-
-        <hr class="w-full h-2 bg-white my-10">
-        {{-- Upcoming Movies --}}
-        <div class="popular-movies mt-8 w-full lg:mx-auto">
-            <h2 class="text-4xl tracking-wider text-orange-500 font-semibold uppercase text-lg">
-                Upcoming Movies
-            </h2>
-
-            <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                @foreach($upcomingMovies as $movie)
-                    @if(array_key_exists('release_date', $upcomingMovies))
-                        @if($movie['release_date'] > \Carbon\Carbon::now())
-                            <x-movie-card :movie="$movie" :genres="$genres"/>
-                        @endif
-                    @endif
-                @endforeach
-            </div>
-
+        <div class="mb-10">
+            <h1 class="text-3xl font-bold text-white">Browse</h1>
+            <p class="text-zinc-400 mt-1">Popular movies, upcoming releases, and on-air series</p>
         </div>
-        {{-- end of upcomin movies --}}
 
-
-        <hr class="w-full h-2 bg-white my-10">
-        <div class="now-playing mt-8 w-full lg:mx-auto">
-            <h2 class="text-4xl tracking-wider text-orange-500 font-semibold uppercase text-lg">
-                Series
-            </h2>
-
-
-            <div class="md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                @foreach($tvShows as $tv)
-                    <x-tv-card :tv="$tv" :tvGenres="$tvGenres"/>
+        <section class="mb-14">
+            <div class="flex items-center mb-6">
+                <h2 class="text-lg font-semibold text-white uppercase tracking-widest shrink-0">Popular Movies</h2>
+                <div class="h-px flex-1 bg-zinc-800 ml-4"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                @foreach($popularMovies as $movie)
+                    <x-movie-card :movie="$movie" :genres="$genres" />
                 @endforeach
             </div>
-        </div><!-- end of now playing movie -->
+        </section>
 
-        {{--  --}}
+        <section class="mb-14">
+            <div class="flex items-center mb-6">
+                <h2 class="text-lg font-semibold text-white uppercase tracking-widest shrink-0">Upcoming Movies</h2>
+                <div class="h-px flex-1 bg-zinc-800 ml-4"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                @foreach($upcomingMovies as $movie)
+                    <x-movie-card :movie="$movie" :genres="$genres" />
+                @endforeach
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center mb-6">
+                <h2 class="text-lg font-semibold text-white uppercase tracking-widest shrink-0">Series</h2>
+                <div class="h-px flex-1 bg-zinc-800 ml-4"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                @foreach($tvShows as $tv)
+                    <x-tv-card :tv="$tv" :tvGenres="$tvGenres" />
+                @endforeach
+            </div>
+        </section>
+
     </div>
-
 </div>

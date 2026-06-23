@@ -1,24 +1,22 @@
 <div>
-    <section class="text-white font-extrabold">
-        @if (session()->has('message'))
-            <span>{{ session('message') }}</span>
-        @endif
-    </section>
-
     <button
         wire:click="toggleWatchlist"
-        class="inline-flex items-center bg-purple-500 text-gray-900 rounded font-semibold px-4 py-4 transition ease-in-out hover:bg-purple-600"
+        @class([
+            'inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors',
+            'bg-indigo-600 hover:bg-indigo-700 text-white' => ($isInWatchlist ?? false),
+            'bg-zinc-700 hover:bg-zinc-600 text-white' => !($isInWatchlist ?? false),
+        ])
     >
-        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-        </svg>
-        <span class="ml-2">
-            @if($isInWatchlist ?? false)
-                Remove from Watch List
-            @else
-                Add to Watch List
-            @endif
-        </span>
+        @if($isInWatchlist ?? false)
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+            </svg>
+            In Watchlist
+        @else
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+            </svg>
+            Add to Watchlist
+        @endif
     </button>
 </div>
