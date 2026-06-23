@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class TvShowController extends Controller
@@ -34,6 +35,25 @@ class TvShowController extends Controller
             'tvShows' => $tvShows,
             'tvGenres' => $tvGenres,
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q', '');
+        $results = [];
+
+        if (strlen($query) > 2) {
+            $response = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/search/tv', ['query' => $query])
+                ->json();
+            $results = $response['results'] ?? [];
+        }
+
+        $tvGenres = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/tv/list')
+            ->json()['genres'] ?? [];
+
+        return view('search.tv', compact('results', 'query', 'tvGenres'));
     }
 
     public function show($id)

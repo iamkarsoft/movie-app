@@ -14,6 +14,8 @@ Route::get('movie/{movie}', [MovieController::class, 'show'])->name('movie.show'
 Route::get('movies', [MovieController::class, 'movies'])->name('movie.list');
 Route::get('tvshow/{tv}', [TvShowController::class, 'show'])->name('tv.show');
 Route::get('tvshow', [TvShowController::class, 'index'])->name('tv.list');
+Route::get('search/movies', [MovieController::class, 'search'])->name('search.movies');
+Route::get('search/tv', [TvShowController::class, 'search'])->name('search.tv');
 
 // WatchListing routes
 Route::get('/watchlist/{filter?}', [WatchlistController::class, 'index'])->name('watchlist');
