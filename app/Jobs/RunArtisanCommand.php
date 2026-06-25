@@ -11,7 +11,8 @@ class RunArtisanCommand implements ShouldQueue
     use Queueable;
 
     public int $timeout = 600;
-    public int $tries   = 1;
+
+    public int $tries = 1;
 
     private static array $allowed = [
         'movies:update',
@@ -21,7 +22,8 @@ class RunArtisanCommand implements ShouldQueue
     public function __construct(
         public readonly string $command,
         public readonly string $label = '',
-    ) {}
+    ) {
+    }
 
     public function displayName(): string
     {
@@ -30,7 +32,7 @@ class RunArtisanCommand implements ShouldQueue
 
     public function handle(): void
     {
-        if (!in_array($this->command, self::$allowed, true)) {
+        if (! in_array($this->command, self::$allowed, true)) {
             throw new \RuntimeException("Command [{$this->command}] is not allowed.");
         }
 

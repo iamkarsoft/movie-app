@@ -22,12 +22,15 @@ class DevToolsController extends Controller
         $bin = PHP_BINARY;
         if (str_ends_with($bin, '-fpm')) {
             $cli = substr($bin, 0, -4);
-            if (is_executable($cli)) return $cli;
+            if (is_executable($cli)) {
+                return $cli;
+            }
         }
         exec('which php 2>/dev/null', $out, $code);
-        if ($code === 0 && !empty($out[0]) && is_executable(trim($out[0]))) {
+        if ($code === 0 && ! empty($out[0]) && is_executable(trim($out[0]))) {
             return trim($out[0]);
         }
+
         return 'php';
     }
 
@@ -43,22 +46,28 @@ class DevToolsController extends Controller
                     exec("ps -p {$pid}", $out, $code);
                     $alive = $code === 0;
                 }
-                if ($alive) return true;
+                if ($alive) {
+                    return true;
+                }
                 @unlink($pidFile);
             }
         }
-        exec("pgrep -f " . escapeshellarg('queue:work.*default'), $pids);
-        if (!empty($pids)) {
+        exec('pgrep -f '.escapeshellarg('queue:work.*default'), $pids);
+        if (! empty($pids)) {
             file_put_contents($pidFile, (int) trim($pids[0]));
+
             return true;
         }
+
         return false;
     }
 
     private function recentActivity(): array
     {
         $logFile = $this->logFile();
-        if (!file_exists($logFile) || filesize($logFile) === 0) return [];
+        if (! file_exists($logFile) || filesize($logFile) === 0) {
+            return [];
+        }
 
         $lines = array_reverse(array_slice(
             file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES), -100
@@ -70,15 +79,20 @@ class DevToolsController extends Controller
 
         $activity = [];
         foreach ($lines as $line) {
-            if (!preg_match('/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s+\S+\\\\(\w+)\s+.*?\s+(RUNNING|DONE|FAIL(?:ED)?)/i', $line, $m)) continue;
+            if (! preg_match('/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s+\S+\\\\(\w+)\s+.*?\s+(RUNNING|DONE|FAIL(?:ED)?)/i', $line, $m)) {
+                continue;
+            }
             $activity[] = [
                 'time'   => $m[1],
                 'job'    => $jobLabels[$m[2]] ?? $m[2],
                 'status' => strtolower($m[3]) === 'running' ? 'running'
                           : (str_starts_with(strtolower($m[3]), 'fail') ? 'failed' : 'done'),
             ];
-            if (count($activity) >= 10) break;
+            if (count($activity) >= 10) {
+                break;
+            }
         }
+
         return $activity;
     }
 
@@ -92,7 +106,7 @@ class DevToolsController extends Controller
                 ->orderBy('created_at')
                 ->get(['id', 'payload', 'reserved_at', 'created_at']);
 
-            $pending    = $jobRows->count();
+            $pending = $jobRows->count();
             $processing = $jobRows->whereNotNull('reserved_at')->count();
 
             $pendingJobs = $jobRows->map(fn ($job) => [
@@ -133,9 +147,9 @@ class DevToolsController extends Controller
             return response()->json(['message' => 'Worker already running.']);
         }
 
-        $php     = $this->phpBinary();
+        $php = $this->phpBinary();
         $artisan = base_path('artisan');
-        $log     = $this->logFile();
+        $log = $this->logFile();
         $pidFile = $this->pidFile();
 
         $cmd = sprintf(
@@ -148,9 +162,11 @@ class DevToolsController extends Controller
         exec($cmd);
         usleep(500_000);
 
-        exec("pgrep -f " . escapeshellarg('queue:work.*default'), $pids);
+        exec('pgrep -f '.escapeshellarg('queue:work.*default'), $pids);
         $pid = isset($pids[0]) ? (int) trim($pids[0]) : 0;
-        if ($pid > 0) file_put_contents($pidFile, $pid);
+        if ($pid > 0) {
+            file_put_contents($pidFile, $pid);
+        }
 
         return response()->json(['message' => 'Worker started.']);
     }
@@ -159,7 +175,7 @@ class DevToolsController extends Controller
     {
         $pidFile = $this->pidFile();
 
-        if (!file_exists($pidFile)) {
+        if (! file_exists($pidFile)) {
             return response()->json(['message' => 'No worker running.']);
         }
 
@@ -173,25 +189,31 @@ class DevToolsController extends Controller
         }
 
         @unlink($pidFile);
+
         return response()->json(['message' => 'Worker stopped.']);
     }
 
     public function clearLog(): JsonResponse
     {
         $log = $this->logFile();
-        if (file_exists($log)) file_put_contents($log, '');
+        if (file_exists($log)) {
+            file_put_contents($log, '');
+        }
+
         return response()->json(['message' => 'Log cleared.']);
     }
 
     public function clearQueue(): JsonResponse
     {
         \Illuminate\Support\Facades\Artisan::call('queue:clear', ['--queue' => 'default', '--force' => true]);
+
         return response()->json(['message' => 'Queue cleared.']);
     }
 
     public function cancelJob(int $id): JsonResponse
     {
         DB::table('jobs')->where('id', $id)->where('queue', 'default')->whereNull('reserved_at')->delete();
+
         return response()->json(['message' => 'Job cancelled.']);
     }
 }

@@ -27,12 +27,12 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::get('/settings/developer-tools', fn () => view('settings.developer-tools'))->middleware(['auth'])->name('settings.developer-tools');
 
 Route::middleware(['auth'])->prefix('settings/dev-tools')->name('dev-tools.')->group(function () {
-    Route::get('queue/status',    [DevToolsController::class, 'status'])->name('queue.status');
-    Route::post('queue/start',    [DevToolsController::class, 'start'])->name('queue.start');
-    Route::post('queue/stop',     [DevToolsController::class, 'stop'])->name('queue.stop');
-    Route::post('queue/clear-log',  [DevToolsController::class, 'clearLog'])->name('queue.clear-log');
-    Route::post('queue/clear',         [DevToolsController::class, 'clearQueue'])->name('queue.clear');
-    Route::delete('queue/job/{id}',    [DevToolsController::class, 'cancelJob'])->name('queue.cancel-job');
+    Route::get('queue/status', [DevToolsController::class, 'status'])->name('queue.status');
+    Route::post('queue/start', [DevToolsController::class, 'start'])->name('queue.start');
+    Route::post('queue/stop', [DevToolsController::class, 'stop'])->name('queue.stop');
+    Route::post('queue/clear-log', [DevToolsController::class, 'clearLog'])->name('queue.clear-log');
+    Route::post('queue/clear', [DevToolsController::class, 'clearQueue'])->name('queue.clear');
+    Route::delete('queue/job/{id}', [DevToolsController::class, 'cancelJob'])->name('queue.cancel-job');
 });
 
 // Update database

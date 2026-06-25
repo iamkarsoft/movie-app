@@ -46,7 +46,7 @@ return [
     |--------------------------------------------------------------------------
     | Sync Direction
     |--------------------------------------------------------------------------
-    | Options: 'down' (source -> target), 'up' (target -> source), 
+    | Options: 'down' (source -> target), 'up' (target -> source),
     |          'bidirectional' (both ways)
     */
     'direction' => env('DB_SYNC_DIRECTION', 'down'),
@@ -55,7 +55,7 @@ return [
     |--------------------------------------------------------------------------
     | Conflict Resolution Strategy
     |--------------------------------------------------------------------------
-    | Options: 'last-write-wins', 'production-wins', 'local-wins', 
+    | Options: 'last-write-wins', 'production-wins', 'local-wins',
     |          'source-wins', 'target-wins', 'manual'
     */
     'conflict_strategy' => env('DB_SYNC_CONFLICT_STRATEGY', 'last-write-wins'),
@@ -74,10 +74,10 @@ return [
             'jobs',
             'failed_jobs',
         ],
-        
+
         // Specific tables to include (empty = all except excluded)
         'include' => [],
-        
+
         // Per-table overrides
         'overrides' => [
             'users' => [
@@ -147,10 +147,10 @@ return [
     | Define how to sanitize sensitive data when syncing to non-production
     */
     'sanitizers' => [
-        'email' => fn($value) => 'user_' . uniqid() . '@example.com',
-        'password' => fn() => bcrypt('password'),
-        'remember_token' => fn() => null,
-        'api_token' => fn() => Str::random(60),
+        'email' => fn ($value) => 'user_'.uniqid().'@example.com',
+        'password' => fn () => bcrypt('password'),
+        'remember_token' => fn () => null,
+        'api_token' => fn () => Str::random(60),
     ],
 
     /*

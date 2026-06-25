@@ -30,10 +30,12 @@ class DeveloperTools extends Component
     public function queueCommand(string $key): void
     {
         $allowed = array_column($this->commands, 'key');
-        if (!in_array($key, $allowed, true)) return;
+        if (! in_array($key, $allowed, true)) {
+            return;
+        }
 
         $command = collect($this->commands)->firstWhere('key', $key);
-        $label   = $command['name'] ?? $key;
+        $label = $command['name'] ?? $key;
 
         RunArtisanCommand::dispatch($key, $label)->onQueue('default');
         $this->statuses[$key] = 'queued';
