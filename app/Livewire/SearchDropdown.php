@@ -25,8 +25,10 @@ class SearchDropdown extends Component
         endif;
 
         return view('livewire.search-dropdown', [
-            'searchResults' => collect($searchResults)->take(5),
-            'searchTvResults' => collect($searchTvResults)->take(5),
+            'searchResults' => collect($searchResults)->take(3),
+            'searchTvResults' => collect($searchTvResults)->take(3),
+            'movieTotal' => count($searchResults),
+            'tvTotal' => count($searchTvResults),
         ]);
     }
 }

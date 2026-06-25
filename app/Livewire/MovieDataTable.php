@@ -16,16 +16,22 @@ class MovieDataTable extends Component
 
     public $query;
 
+    public $statusFilter = '';
+
+    public function updatingQuery(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStatusFilter(): void
+    {
+        $this->resetPage();
+    }
+
     public function mount($model, $paginate = 10)
     {
         $this->model = $model;
         $this->paginated = $paginate;
-
-        // ray(MovieUser::query()->join('movies', 'movies.id', '=', 'movie_user.movie_id')
-        //     ->join('users', 'users.id', '=', 'movie_user.user_id')
-        //     ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type', 'movies.movie_id as movie_id')
-        //     ->where('movie_user.user_id', auth()->user()->id)
-        //     ->search($this->query));
     }
 
     public function builder()
@@ -43,6 +49,10 @@ class MovieDataTable extends Component
 
         if ($this->query) {
             $builder = $builder->where('movies.name', 'like', '%'.$this->query.'%');
+        }
+
+        if ($this->statusFilter !== '') {
+            $builder = $builder->where('movie_user.watch_type', (int) $this->statusFilter);
         }
 
         return $builder->paginate($this->paginated);

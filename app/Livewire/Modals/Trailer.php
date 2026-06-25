@@ -9,11 +9,12 @@ class Trailer extends Component
 {
     use IsModal;
 
-    public $movie;
+    public string $videoKey = '';
 
     public function mount($movie)
     {
-        $this->movie = $movie;
+        $videos = $movie['videos']['results'] ?? [];
+        $this->videoKey = $videos[0]['key'] ?? '';
     }
 
     public function render()

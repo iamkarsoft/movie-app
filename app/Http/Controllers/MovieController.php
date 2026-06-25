@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\MovieUser;
 use App\Services\Movies\Apis\TmdbApi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
@@ -60,6 +61,25 @@ class MovieController extends Controller
             'nowPlayingMovies' => $nowPlayingMovies,
             'genres' => $genres,
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q', '');
+        $results = [];
+
+        if (strlen($query) > 2) {
+            $response = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/search/movie', ['query' => $query])
+                ->json();
+            $results = $response['results'] ?? [];
+        }
+
+        $genres = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/genre/movie/list')
+            ->json()['genres'] ?? [];
+
+        return view('search.movies', compact('results', 'query', 'genres'));
     }
 
     public function show($id)

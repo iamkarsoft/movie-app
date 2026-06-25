@@ -25,8 +25,9 @@ class WatchActions extends Component
 
     public function watched($data)
     {
-        $identifiable = $this->status['original_title'] ?? $this->status['title'] ??
-            $this->status['original_name'] ?? $this->status['name'] ?? null;
+        $identifiable = isset($this->status['first_air_date'])
+            ? ($this->status['name'] ?? $this->status['original_name'] ?? null)
+            : ($this->status['title'] ?? $this->status['original_title'] ?? null);
 
         // Normalize dispatched payload to scalar
         if (is_array($data)) {

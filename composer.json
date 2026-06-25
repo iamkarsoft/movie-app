@@ -9,16 +9,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "banditconsult/laravel-db-sync":"^0.0.1" ,
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/nightwatch": "^1.7",
+        "livewire/flux": "^2.15",
         "livewire/livewire": "^3.0",
         "monolog/monolog": "^3.0",
         "s-ichikawa/laravel-sendgrid-driver": "^4.0",
-        "spatie/laravel-backup": "^9.3",
         "spatie/ray": "^1.41",
         "webpatser/laravel-uuid": "^4.0"
     },

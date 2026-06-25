@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Movie App') }}</title>
+    <title>@yield('title', 'DB Sync') — {{ config('app.name', 'CineTrack') }}</title>
 
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
@@ -16,7 +16,7 @@
     <flux:sidebar sticky stashable class="bg-zinc-900 border-r border-zinc-800">
         <flux:sidebar.toggle class="lg:hidden" />
 
-        <flux:sidebar.brand href="{{ route('movies') }}" name="Movie App">
+        <flux:sidebar.brand href="{{ route('movies') }}" name="CineTrack">
             <x-slot name="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 text-rose-500">
                     <path d="M3.25 4A2.25 2.25 0 0 0 1 6.25v7.5A2.25 2.25 0 0 0 3.25 16h7.5A2.25 2.25 0 0 0 13 13.75v-7.5A2.25 2.25 0 0 0 10.75 4h-7.5ZM19 4.75a.75.75 0 0 0-1.28-.53l-3 3a.75.75 0 0 0-.22.53v4.5c0 .199.079.39.22.53l3 3a.75.75 0 0 0 1.28-.53V4.75Z" />
@@ -103,23 +103,16 @@
     <flux:header sticky class="lg:hidden bg-zinc-900 border-b border-zinc-800 px-4">
         <flux:sidebar.toggle icon="bars-3" variant="subtle" />
         <flux:spacer />
-        <span class="text-sm font-semibold text-white">Movie App</span>
+        <span class="text-sm font-semibold text-white">DB Sync</span>
         <flux:spacer />
     </flux:header>
 
     <flux:main class="bg-zinc-950 text-white">
         <div class="max-w-7xl mx-auto">
-            @if (isset($header))
-                <div class="mb-6 pb-6 border-b border-zinc-800">
-                    {{ $header }}
-                </div>
-            @endif
-
-            {{ $slot }}
+            @yield('content')
         </div>
     </flux:main>
 
-    @livewireScriptConfig
     @fluxScripts
 </body>
 </html>
