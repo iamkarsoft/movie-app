@@ -174,18 +174,27 @@ class DevToolsController extends Controller
     public function stop(): JsonResponse
     {
         $pidFile = $this->pidFile();
+        $pid = 0;
 
-        if (! file_exists($pidFile)) {
+        if (file_exists($pidFile)) {
+            $pid = (int) file_get_contents($pidFile);
+        }
+
+        if (! $pid) {
+            exec('pgrep -f '.escapeshellarg('queue:work.*default'), $pids);
+            $pid = isset($pids[0]) ? (int) trim($pids[0]) : 0;
+        }
+
+        if (! $pid) {
+            @unlink($pidFile);
+
             return response()->json(['message' => 'No worker running.']);
         }
 
-        $pid = (int) file_get_contents($pidFile);
-        if ($pid) {
-            if (function_exists('posix_kill')) {
-                posix_kill($pid, SIGTERM);
-            } else {
-                exec("kill {$pid} 2>/dev/null");
-            }
+        if (function_exists('posix_kill')) {
+            posix_kill($pid, SIGTERM);
+        } else {
+            exec("kill {$pid} 2>/dev/null");
         }
 
         @unlink($pidFile);
@@ -212,7 +221,7 @@ class DevToolsController extends Controller
 
     public function cancelJob(int $id): JsonResponse
     {
-        DB::table('jobs')->where('id', $id)->where('queue', 'default')->whereNull('reserved_at')->delete();
+        DB::table('jobs')->where('id', $id)->where('queue', 'default')->delete();
 
         return response()->json(['message' => 'Job cancelled.']);
     }
