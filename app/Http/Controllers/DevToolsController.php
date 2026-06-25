@@ -174,27 +174,18 @@ class DevToolsController extends Controller
     public function stop(): JsonResponse
     {
         $pidFile = $this->pidFile();
-        $pid = 0;
 
-        if (file_exists($pidFile)) {
-            $pid = (int) file_get_contents($pidFile);
-        }
-
-        if (! $pid) {
-            exec('pgrep -f '.escapeshellarg('queue:work.*default'), $pids);
-            $pid = isset($pids[0]) ? (int) trim($pids[0]) : 0;
-        }
-
-        if (! $pid) {
-            @unlink($pidFile);
-
+        if (! file_exists($pidFile)) {
             return response()->json(['message' => 'No worker running.']);
         }
 
-        if (function_exists('posix_kill')) {
-            posix_kill($pid, SIGTERM);
-        } else {
-            exec("kill {$pid} 2>/dev/null");
+        $pid = (int) file_get_contents($pidFile);
+        if ($pid) {
+            if (function_exists('posix_kill')) {
+                posix_kill($pid, SIGTERM);
+            } else {
+                exec("kill {$pid} 2>/dev/null");
+            }
         }
 
         @unlink($pidFile);
