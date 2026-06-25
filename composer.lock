@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec4315669a2f8aeefd8df8b4cc68e450",
+    "content-hash": "3440a62ee2f05353743dbd8a8367b63f",
     "packages": [
         {
             "name": "banditconsult/laravel-db-sync",
-            "version": "dev-updates/views-and-features",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/banditconsult/laravel-db-sync.git",
+                "reference": "ffe4d6ba904d89198b4ce4a9da700fe052fa33df"
+            },
             "dist": {
-                "type": "path",
-                "url": "../laravel-db-sync",
-                "reference": "3497e7fd9582765fa05243269b7abdd0635c4ffd"
+                "type": "zip",
+                "url": "https://api.github.com/repos/banditconsult/laravel-db-sync/zipball/ffe4d6ba904d89198b4ce4a9da700fe052fa33df",
+                "reference": "ffe4d6ba904d89198b4ce4a9da700fe052fa33df",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "^10.0|^11.0|^12.0",
@@ -35,16 +41,13 @@
                     "BanditConsult\\DbSync\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "BanditConsult\\DbSync\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "description": "Database synchronization for Laravel",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/banditconsult/laravel-db-sync/issues",
+                "source": "https://github.com/banditconsult/laravel-db-sync/tree/0.0.1"
+            },
+            "time": "2026-06-24T15:40:06+00:00"
         },
         {
             "name": "brick/math",
@@ -11556,9 +11559,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "banditconsult/laravel-db-sync": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "banditconsult/laravel-db-sync": "@dev",
+        "banditconsult/laravel-db-sync":"^0.0.1" ,
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.9",
@@ -58,15 +58,6 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-db-sync",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
