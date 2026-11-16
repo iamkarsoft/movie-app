@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Traits\IsModal;
-use App\Models\Movie;
+use App\Services\TmdbTitleResolver;
 use Livewire\Component;
 
 class UpdateMovieData extends Component
@@ -22,13 +22,7 @@ class UpdateMovieData extends Component
 
     public function syncData()
     {
-        $name = $this->updatemovie['original_title']
-            ?? $this->updatemovie['title']
-            ?? $this->updatemovie['original_name']
-            ?? $this->updatemovie['name']
-            ?? '';
-
-        $movie = Movie::where('name', $name)->first();
+        $movie = app(TmdbTitleResolver::class)->find($this->updatemovie);
 
         if (! $movie) {
             $this->dispatch('hide')->self();

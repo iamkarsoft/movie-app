@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
-use App\Models\MovieUser;
 use App\Services\Movies\Apis\TmdbApi;
+use App\Services\TmdbTitleResolver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -82,31 +81,15 @@ class MovieController extends Controller
         return view('search.movies', compact('results', 'query', 'genres'));
     }
 
-    public function show($id)
+    public function show($id, TmdbTitleResolver $resolver)
     {
         $token = 'services.tmdb.token';
         $movie = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
             ->json();
 
-        if (array_key_exists('original_title', $movie)) {
-            $identifiable = $movie['original_name'] ?? $movie['title'];
-        } else {
-            $identifiable = $movie['original_name'] ?? $movie['name'];
-        }
-
-        if (auth()->user()) :
-            $movie_db = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
-                ->join('users', 'users.id', '=', 'movie_user.user_id')
-                ->select('users.*', 'movies.*', 'movie_user.*')
-                ->where('movies.name', $identifiable)
-                ->where('movie_user.user_id', auth()->user()->id)
-                ->first();
-        else :
-
-            $movie_db = Movie::query()
-                ->where('movies.name', $identifiable);
-        endif;
+        // Match on TMDB id (not title), so renamed / translated titles still find the user's entry.
+        $movie_db = $resolver->tracked($movie, auth()->id());
 
         return view('movie', compact('movie', 'movie_db'));
     }

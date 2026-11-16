@@ -5,6 +5,7 @@ namespace App\Jobs;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class RunArtisanCommand implements ShouldQueue
 {
@@ -17,6 +18,8 @@ class RunArtisanCommand implements ShouldQueue
     private static array $allowed = [
         'movies:update',
         'movies:notifymember',
+        'movies:merge-duplicates',
+        'movies:backfill-tmdb-ids',
     ];
 
     public function __construct(
@@ -37,5 +40,7 @@ class RunArtisanCommand implements ShouldQueue
         }
 
         Artisan::call($this->command);
+
+        Log::info("[dev-tools] {$this->displayName()} finished", ['output' => trim(Artisan::output())]);
     }
 }

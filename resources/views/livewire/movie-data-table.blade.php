@@ -17,7 +17,15 @@
             <flux:select.option value="2">Watched</flux:select.option>
             <flux:select.option value="3">Abandoned</flux:select.option>
         </flux:select>
+        <flux:button icon="plus" class="!bg-rose-600 hover:!bg-rose-500 !text-white !border-0 shrink-0"
+            wire:click="$dispatchTo('custom-entry-form', 'create-custom-entry')">
+            Add custom entry
+        </flux:button>
     </div>
+
+    @if ($flash)
+        <flux:callout variant="success" icon="check-circle" class="mb-4" :heading="$flash" />
+    @endif
 
     <flux:table>
         <flux:table.columns>
@@ -50,6 +58,15 @@
                                     <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd" />
                                 </svg>
                             </a>
+                        @elseif ($item['is_custom'] && $item['created_by'] === auth()->id())
+                            <button type="button"
+                                wire:click="$dispatchTo('custom-entry-form', 'edit-custom-entry', { id: '{{ $item['movie_uuid'] }}' })"
+                                class="inline-flex items-center gap-2 text-left hover:text-amber-400 transition-colors"
+                                title="Edit custom entry">
+                                {{ $item['name'] }}
+                                <flux:badge color="amber" size="sm">Custom</flux:badge>
+                                <flux:icon.pencil-square variant="micro" class="text-zinc-500 shrink-0" />
+                            </button>
                         @else
                             {{ $item['name'] }}
                         @endif

@@ -27,6 +27,7 @@ class MovieDateUpdater
     {
         $titles = Movie::query()
             ->whereIn('type', [0, 1])
+            ->where('is_custom', false)
             ->whereNotNull('movie_id')
             ->select('movie_id', 'type')
             ->distinct()

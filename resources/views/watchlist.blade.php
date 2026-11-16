@@ -7,4 +7,6 @@
     <flux:card class="!bg-zinc-900 !border-zinc-800">
         <livewire:movie-data-table model="App\Models\MovieUser" paginate="15" />
     </flux:card>
+
+    <livewire:custom-entry-form :prefill="request()->query('add')" />
 </x-app-layout>
