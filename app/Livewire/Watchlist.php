@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
+use App\Services\TmdbTitleResolver;
 use Livewire\Component;
 
 class Watchlist extends Component
@@ -23,21 +24,8 @@ class Watchlist extends Component
 
     public function updateWatchlistStatus()
     {
-        if (! $this->watchItem) {
-            $this->isInWatchlist = false;
-
-            return;
-        }
-
-        $item = $this->getItemName();
-
-        $movie = Movie::where('name', $item)->first();
-
-        if ($movie && auth()->check()) {
-            $this->isInWatchlist = MovieUser::where('movie_id', $movie->id)
-                ->where('user_id', auth()->id())
-                ->exists();
-        }
+        $this->isInWatchlist = $this->watchItem && auth()->check()
+            && app(TmdbTitleResolver::class)->tracked($this->watchItem, auth()->id()) !== null;
     }
 
     public function toggleWatchlist()
@@ -54,22 +42,16 @@ class Watchlist extends Component
             return;
         }
 
-        $item = $this->getItemName();
+        $resolver = app(TmdbTitleResolver::class);
 
-        $movie = Movie::where('name', $item)->first();
-
-        if (! $movie) {
-            $movie = $this->createMovie();
-        }
-
-        $existingEntry = MovieUser::where('movie_id', $movie->id)
-            ->where('user_id', auth()->id())
-            ->first();
+        $existingEntry = $resolver->tracked($this->watchItem, auth()->id());
 
         if ($existingEntry) {
-            $existingEntry->delete();
+            // tracked() selects movie_user.* last, so id / movie_id are the pivot's.
+            MovieUser::whereKey($existingEntry->id)->delete();
             session()->flash('message', 'Removed from watch list');
         } else {
+            $movie = $resolver->find($this->watchItem) ?? $this->createMovie();
             auth()->user()->movies()->attach($movie->id);
             session()->flash('message', 'Added to watch list');
         }
@@ -94,6 +76,7 @@ class Watchlist extends Component
             $watchlist->release_date = $this->watchItem['first_air_date'];
             $watchlist->next_air_date = $this->watchItem['next_episode_to_air']['air_date'] ?? null;
             $watchlist->last_air_date = $this->watchItem['last_episode_to_air']['air_date'] ?? null;
+            $watchlist->movie_id = $this->watchItem['id'] ?? null;
         } else {
             $watchlist->type = Movie::Movies;
             $watchlist->name = $this->watchItem['title'];
@@ -106,13 +89,6 @@ class Watchlist extends Component
         $watchlist->save();
 
         return $watchlist;
-    }
-
-    private function getItemName()
-    {
-        return isset($this->watchItem['first_air_date'])
-            ? ($this->watchItem['name'] ?? $this->watchItem['original_name'])
-            : ($this->watchItem['title'] ?? '');
     }
 
     public function render()

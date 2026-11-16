@@ -25,6 +25,16 @@ class DeveloperTools extends Component
             'name'        => 'Notify Members',
             'description' => 'Sends email notifications to users about movies or series releasing or airing today.',
         ],
+        [
+            'key'         => 'movies:merge-duplicates',
+            'name'        => 'Merge Duplicate Titles',
+            'description' => 'Links titles missing a TMDB id, then merges rows that are the same movie or series, keeping watch status and season/episode progress. Saves an undo log to storage/app/duplicate-merges.',
+        ],
+        [
+            'key'         => 'movies:backfill-tmdb-ids',
+            'name'        => 'Link Missing TMDB IDs',
+            'description' => 'Looks up titles saved without a TMDB id and links them when there is exactly one match on title and release date, so they get nightly date updates.',
+        ],
     ];
 
     public function queueCommand(string $key): void

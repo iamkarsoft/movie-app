@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Movie;
 use App\Models\MovieUser;
+use App\Services\TmdbTitleResolver;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -25,21 +26,14 @@ class WatchActions extends Component
 
     public function watched($data)
     {
-        $identifiable = isset($this->status['first_air_date'])
-            ? ($this->status['name'] ?? $this->status['original_name'] ?? null)
-            : ($this->status['title'] ?? $this->status['original_title'] ?? null);
-
         // Normalize dispatched payload to scalar
         if (is_array($data)) {
             $data = $data[0] ?? null;
         }
 
-        $watchStatus = MovieUser::join('movies', 'movies.id', '=', 'movie_user.movie_id')
-            ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.*')
-            ->where('movies.name', $identifiable)
-            ->where('movie_user.user_id', Auth::id())
-            ->first();
+        $watchStatus = $this->status
+            ? app(TmdbTitleResolver::class)->tracked($this->status, Auth::id())
+            : null;
 
         if ($watchStatus && $data !== null) {
             $watchStatus->watch_type = $data;
@@ -47,7 +41,8 @@ class WatchActions extends Component
             return;
         }
 
-        $watchStatus->save();
+        // tracked() returns a joined row; update the pivot directly by its id.
+        MovieUser::whereKey($watchStatus->id)->update(['watch_type' => $watchStatus->watch_type]);
 
         session()->flash('message', 'Status Updated');
 

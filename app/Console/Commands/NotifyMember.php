@@ -42,11 +42,12 @@ class NotifyMember extends Command
      */
     public function handle(Movie $movie)
     {
-        $users = User::get();
+        $users = User::has('movies')->get();
         foreach ($users as $user) {
-            $upcomings_stuff = $user->movies()->where('release_date', '=', Carbon::today())
-                ->OrWhere('next_air_date', '=', Carbon::today())
-                ->where('user_id', $user->id)
+            $upcomings_stuff = $user->movies()
+                ->where(fn ($query) => $query
+                    ->whereDate('release_date', Carbon::today())
+                    ->orWhereDate('next_air_date', Carbon::today()))
                 ->get();
 
             if ($upcomings_stuff->count() > 0) {

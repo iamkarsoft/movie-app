@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\MovieUser;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +18,14 @@ class MovieDataTable extends Component
     public $query;
 
     public $statusFilter = '';
+
+    public ?string $flash = null;
+
+    #[On('custom-entry-saved')]
+    public function customEntrySaved(string $message = ''): void
+    {
+        $this->flash = $message ?: null;
+    }
 
     public function updatingQuery(): void
     {
@@ -38,7 +47,7 @@ class MovieDataTable extends Component
     {
         return MovieUser::query()->join('movies', 'movies.id', '=', 'movie_user.movie_id')
             ->join('users', 'users.id', '=', 'movie_user.user_id')
-            ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type', 'movies.movie_id as movie_id')
+            ->select('users.*', 'movies.*', 'movie_user.*', 'movie_user.watch_type as watch_type', 'movies.movie_id as movie_id', 'movies.id as movie_uuid')
             ->where('movie_user.user_id', auth()->user()->id)
             ->latest('movie_user.updated_at');
     }

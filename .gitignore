@@ -18,3 +18,7 @@ yarn-error.log
 .idea/
 .claude
 .claude/
+
+# Database backups and backup worker pid files
+/storage/db-backups/*
+!/storage/db-backups/.gitkeep
