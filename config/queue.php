@@ -38,7 +38,9 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            // Must be longer than the longest job timeout (RunArtisanCommand = 600s),
+            // otherwise a still-running job is handed out again.
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 660),
         ],
 
         'beanstalkd' => [

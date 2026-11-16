@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\MovieDateUpdater;
 use Illuminate\Console\Command;
 
 class UpdateDb extends Command
@@ -35,11 +36,12 @@ class UpdateDb extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(MovieDateUpdater $updater)
     {
-        $controller = app()->make(\App\Http\Controllers\UpdateMoviesController::class);
-        app()->call($controller);
+        $result = $updater->run();
 
-        return 0;
+        $this->info("Updated {$result['updated']} rows, {$result['failed']} TMDB requests failed.");
+
+        return self::SUCCESS;
     }
 }
