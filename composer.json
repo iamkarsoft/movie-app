@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "banditconsult/laravel-db-sync":"^0.0.1" ,
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^3.6",
@@ -37,6 +37,9 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
+        "platform": {
+            "php": "8.3"
+        },
         "platform-check": false
     },
     "extra": {

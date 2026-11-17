@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3440a62ee2f05353743dbd8a8367b63f",
+    "content-hash": "c57aa9e910adc2bf6a181ce5ed309cf5",
     "packages": [
         {
             "name": "banditconsult/laravel-db-sync",
@@ -11661,8 +11661,11 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2"
+        "php": "^8.3"
     },
     "platform-dev": {},
+    "platform-overrides": {
+        "php": "8.3"
+    },
     "plugin-api-version": "2.9.0"
 }
